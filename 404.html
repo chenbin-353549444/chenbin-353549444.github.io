@@ -15,14 +15,19 @@
 
 
 
+<meta name="description" content=".article-title {         font-size: 2.1em;     }     strong a {         color: #747474;     }     .player {         margin-left: -10px;     }     .sign {         text-align: right;         font-s">
 <meta property="og:type" content="website">
 <meta property="og:title" content="404 Not Found：该页无法显示">
-<meta property="og:url" content="http://www.chenb.club/404.html">
+<meta property="og:url" content="www.chenb.club/404.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
+<meta property="og:description" content=".article-title {         font-size: 2.1em;     }     strong a {         color: #747474;     }     .player {         margin-left: -10px;     }     .sign {         text-align: right;         font-s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-26T12:12:45.057Z">
+<meta property="og:image" content="/404.gif">
+<meta property="og:updated_time" content="2018-03-27T13:28:25.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="404 Not Found：该页无法显示">
+<meta name="twitter:description" content=".article-title {         font-size: 2.1em;     }     strong a {         color: #747474;     }     .player {         margin-left: -10px;     }     .sign {         text-align: right;         font-s">
+<meta name="twitter:image" content="/404.gif">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -70,7 +75,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: false
+        search: true
     }
 </script>
 
@@ -84,6 +89,8 @@
     <script> yiliaConfig.rootUrl = "\/";</script>
 
 
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
 
 
 
@@ -106,6 +113,13 @@
         <p class="header-subtitle">记录一些笔记和心得</p>
         
 
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
         
 
 
@@ -211,6 +225,18 @@
                       <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
                     
                       <a class="main-nav-link switch-friends-link" href="https://www.wx133.com/">星辰大海</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">yelee</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hub.docker.com/">Docker</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://jenkins.io/">Jenkins</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://projects.spring.io/spring-boot/">Spring boot</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/">Spring Data JPA</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://stackedit.io/editor">StackEdit</a>
                     
                     </div>
                 </section>
@@ -341,7 +367,61 @@
 
 
           
-        
+        <style type="text/css">
+    .article-title {
+        font-size: 2.1em;
+    }
+    strong a {
+        color: #747474;
+    }
+    .player {
+        margin-left: -10px;
+    }
+    .sign {
+        text-align: right;
+        font-style: italic;
+    }
+    .share,
+    #page-visit,
+    .visit span:nth-child(2),
+    .pic br {
+        display: none;
+    }
+    .center {
+        text-align: center;
+        height: 2.5em;
+        font-weight: bold;
+    }
+    .search2 {
+        height: 2.2em;
+        font-size: 1em;
+        width: 50%;
+        margin: auto 24%;
+        color: #727272;
+        opacity: .6;
+        border: 2px solid lightgray;
+    }
+    .search2:hover {
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
+        };
+    .article-entry hr {
+        margin: 0;
+    }
+    .pic {
+        text-align: center;
+        margin: 0;
+    }
+</style>
+
+<hr>
+<div class="pic"><br><img src="/404.gif" title="哎呀，悲剧啦！"><br></div>
+
+<p class="center">很抱歉，您所访问的地址并不存在: </p>
+
+<p class="center"><a href="/">回主页</a> · <a href="/archives">所有文章</a> · <a href="/about">关于我</a></p>
+
+<p class="center">可在边栏搜索框中对本站进行检索，以获取相关信息。</p>
       
     </div>
     
@@ -358,21 +438,9 @@
     
 <div class="share">
     
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
-        </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"404 Not Found：该页无法显示　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
 
+    
+        <div class="addthis_sharing_toolbox"></div>
     
 </div>
 

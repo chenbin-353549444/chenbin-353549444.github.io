@@ -18,7 +18,7 @@
 <meta name="description" content="这个人很懒，暂时没有留下任何有用信息">
 <meta property="og:type" content="website">
 <meta property="og:title" content="关于我">
-<meta property="og:url" content="http://www.chenb.club/about/index.html">
+<meta property="og:url" content="www.chenb.club/about/index.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
 <meta property="og:description" content="这个人很懒，暂时没有留下任何有用信息">
 <meta property="og:locale" content="zh-Hans">
@@ -73,7 +73,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: false
+        search: true
     }
 </script>
 
@@ -87,6 +87,8 @@
     <script> yiliaConfig.rootUrl = "\/";</script>
 
 
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
 
 
 
@@ -109,6 +111,13 @@
         <p class="header-subtitle">记录一些笔记和心得</p>
         
 
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
         
 
 
@@ -214,6 +223,18 @@
                       <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
                     
                       <a class="main-nav-link switch-friends-link" href="https://www.wx133.com/">星辰大海</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">yelee</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hub.docker.com/">Docker</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://jenkins.io/">Jenkins</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://projects.spring.io/spring-boot/">Spring boot</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/">Spring Data JPA</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://stackedit.io/editor">StackEdit</a>
                     
                     </div>
                 </section>
@@ -362,21 +383,9 @@
     
 <div class="share">
     
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
-        </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"关于我　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
 
+    
+        <div class="addthis_sharing_toolbox"></div>
     
 </div>
 
@@ -386,6 +395,20 @@
 
 
 
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2160086';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
     
 
 

@@ -17,7 +17,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="ChenBin&#39;s Blog">
-<meta property="og:url" content="http://www.chenb.club/archives/2018/03/index.html">
+<meta property="og:url" content="www.chenb.club/archives/2018/03/index.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -69,7 +69,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: false
+        search: true
     }
 </script>
 
@@ -83,6 +83,8 @@
     <script> yiliaConfig.rootUrl = "\/";</script>
 
 
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
 
 
 
@@ -105,6 +107,13 @@
         <p class="header-subtitle">记录一些笔记和心得</p>
         
 
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
         
 
 
@@ -210,6 +219,18 @@
                       <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
                     
                       <a class="main-nav-link switch-friends-link" href="https://www.wx133.com/">星辰大海</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">yelee</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hub.docker.com/">Docker</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://jenkins.io/">Jenkins</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://projects.spring.io/spring-boot/">Spring boot</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/">Spring Data JPA</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://stackedit.io/editor">StackEdit</a>
                     
                     </div>
                 </section>
