@@ -46,15 +46,15 @@
             
             <tag> Java </tag>
             
+            <tag> Maven </tag>
+            
             <tag> Docker </tag>
             
             <tag> Jenkins </tag>
             
-            <tag> 持续集成 </tag>
-            
-            <tag> Maven </tag>
-            
             <tag> Spring boot </tag>
+            
+            <tag> 持续集成 </tag>
             
         </tags>
       
@@ -156,15 +156,15 @@
             
             <tag> Shell </tag>
             
+            <tag> 错误处理 </tag>
+            
             <tag> Java </tag>
+            
+            <tag> Maven </tag>
             
             <tag> Docker </tag>
             
-            <tag> 错误处理 </tag>
-            
             <tag> Jenkins </tag>
-            
-            <tag> Maven </tag>
             
             <tag> Spring boot </tag>
             
@@ -187,9 +187,9 @@
       
         <tags>
             
-            <tag> Markdown </tag>
-            
             <tag> Blog </tag>
+            
+            <tag> Markdown </tag>
             
         </tags>
       
@@ -210,9 +210,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> MySQL </tag>
+            
+            <tag> Java </tag>
             
             <tag> Test </tag>
             
@@ -258,9 +258,9 @@
       
         <tags>
             
-            <tag> Blog </tag>
-            
             <tag> Hexo </tag>
+            
+            <tag> Blog </tag>
             
         </tags>
       
