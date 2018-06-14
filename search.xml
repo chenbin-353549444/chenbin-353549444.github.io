@@ -19,9 +19,9 @@
             
             <tag> Spring boot </tag>
             
-            <tag> https </tag>
-            
             <tag> Gzip </tag>
+            
+            <tag> https </tag>
             
         </tags>
       
@@ -92,11 +92,11 @@
       
         <tags>
             
-            <tag> Java </tag>
+            <tag> Linux </tag>
             
             <tag> Docker </tag>
             
-            <tag> Linux </tag>
+            <tag> Java </tag>
             
             <tag> Maven </tag>
             
@@ -125,9 +125,9 @@
       
         <tags>
             
-            <tag> Docker </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Jenkins </tag>
             
@@ -204,11 +204,11 @@
       
         <tags>
             
-            <tag> Java </tag>
+            <tag> Shell </tag>
             
             <tag> Docker </tag>
             
-            <tag> Shell </tag>
+            <tag> Java </tag>
             
             <tag> Maven </tag>
             
@@ -237,9 +237,9 @@
       
         <tags>
             
-            <tag> Blog </tag>
-            
             <tag> Markdown </tag>
+            
+            <tag> Blog </tag>
             
         </tags>
       
@@ -260,9 +260,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> MySQL </tag>
+            
+            <tag> Java </tag>
             
             <tag> Test </tag>
             
@@ -308,9 +308,9 @@
       
         <tags>
             
-            <tag> Hexo </tag>
-            
             <tag> Blog </tag>
+            
+            <tag> Hexo </tag>
             
         </tags>
       
