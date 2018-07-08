@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ChenBin&#39;s Blog</title>
+  
+  <subtitle>坚持梦想，永不放弃！</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="www.chenb.top/"/>
+  <updated>2018-06-18T13:01:35.836Z</updated>
+  <id>www.chenb.top/</id>
+  
+  <author>
+    <name>Chen Bin</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring boot开启Gzip压缩</title>
+    <link href="www.chenb.top/2018/06/13/spring-boot-gzip/"/>
+    <id>www.chenb.top/2018/06/13/spring-boot-gzip/</id>
+    <published>2018-06-13T14:30:12.000Z</published>
+    <updated>2018-06-18T13:01:35.836Z</updated>
+    
+    <summary type="html">
+    
+      Spring boot开启Gzip压缩，优化接口速度
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+    
+      <category term="https" scheme="www.chenb.top/tags/https/"/>
+    
+      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>发布自己的npm包，hexo文章排序插件</title>
+    <link href="www.chenb.top/2018/06/11/npm-publish/"/>
+    <id>www.chenb.top/2018/06/11/npm-publish/</id>
+    <published>2018-06-11T12:36:46.000Z</published>
+    <updated>2018-06-11T14:33:52.740Z</updated>
+    
+    <summary type="html">
+    
+      第一次发布自己的npm包，解决了hexo文章排序的问题
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+    
+      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+    
+      <category term="Npm" scheme="www.chenb.top/tags/Npm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring boot同时支持http和https访问</title>
+    <link href="www.chenb.top/2018/05/17/spring-boot-https/"/>
+    <id>www.chenb.top/2018/05/17/spring-boot-https/</id>
+    <published>2018-05-17T06:22:03.000Z</published>
+    <updated>2018-05-17T13:07:10.798Z</updated>
+    
+    <summary type="html">
+    
+      Spring boot同时支持http和https访问
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+    
+      <category term="https" scheme="www.chenb.top/tags/https/"/>
+    
+      <category term="java" scheme="www.chenb.top/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Jenkins和Docker持续集成java项目</title>
+    <link href="www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/"/>
+    <id>www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/</id>
+    <published>2018-05-14T09:20:50.000Z</published>
+    <updated>2018-05-25T15:19:51.107Z</updated>
+    
+    <summary type="html">
+    
+      使用Jenkins和Docker持续集成java项目，本例是Spring boot admin项目，较为简单，可做为参考。
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+    
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+    
+      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
+    
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+    
+      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+    
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+    
+      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins服务器容器化</title>
+    <link href="www.chenb.top/2018/04/07/jenkins-docker/"/>
+    <id>www.chenb.top/2018/04/07/jenkins-docker/</id>
+    <published>2018-04-07T12:18:15.000Z</published>
+    <updated>2018-05-17T13:07:10.798Z</updated>
+    
+    <summary type="html">
+    
+      Jenkins-Docker是一个使用Dockerfile创建可执行docker命令的Jenkins镜像的项目。
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+    
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+    
+      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+    
+      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL存储过程</title>
+    <link href="www.chenb.top/2018/03/30/mysql-procedure/"/>
+    <id>www.chenb.top/2018/03/30/mysql-procedure/</id>
+    <published>2018-03-30T08:00:23.000Z</published>
+    <updated>2018-03-31T11:55:13.964Z</updated>
+    
+    <summary type="html">
+    
+      MySQL存储过程定义，与函数的对比，结合游标、错误处理写的样例代码
+    
+    </summary>
+    
+      <category term="个人笔记" scheme="www.chenb.top/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+    
+      <category term="错误处理" scheme="www.chenb.top/tags/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/"/>
+    
+      <category term="存储过程" scheme="www.chenb.top/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/"/>
+    
+      <category term="函数" scheme="www.chenb.top/tags/%E5%87%BD%E6%95%B0/"/>
+    
+      <category term="游标" scheme="www.chenb.top/tags/%E6%B8%B8%E6%A0%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL常用命令</title>
+    <link href="www.chenb.top/2018/03/26/mysql-command/"/>
+    <id>www.chenb.top/2018/03/26/mysql-command/</id>
+    <published>2018-03-26T14:30:39.000Z</published>
+    <updated>2018-06-11T12:34:52.705Z</updated>
+    
+    <summary type="html">
+    
+      MySQL导入导出，查看线程等
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+    
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多环境jar部署脚本示例</title>
+    <link href="www.chenb.top/2018/03/26/shell-scripts/"/>
+    <id>www.chenb.top/2018/03/26/shell-scripts/</id>
+    <published>2018-03-26T14:23:32.000Z</published>
+    <updated>2018-05-25T15:21:36.287Z</updated>
+    
+    <summary type="html">
+    
+      Shell部署java项目的脚本
+    
+    </summary>
+    
+      <category term="个人笔记" scheme="www.chenb.top/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Shell" scheme="www.chenb.top/tags/Shell/"/>
+    
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+    
+      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
+    
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+    
+      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+    
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+    
+      <category term="错误处理" scheme="www.chenb.top/tags/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Markdown基本用法</title>
+    <link href="www.chenb.top/2018/03/26/markdown-preview/"/>
+    <id>www.chenb.top/2018/03/26/markdown-preview/</id>
+    <published>2018-03-26T14:14:55.000Z</published>
+    <updated>2018-03-26T14:19:43.923Z</updated>
+    
+    <summary type="html">
+    
+      Markdown基本用法和效果展示
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Blog" scheme="www.chenb.top/tags/Blog/"/>
+    
+      <category term="Markdown" scheme="www.chenb.top/tags/Markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>后端编程规范</title>
+    <link href="www.chenb.top/2018/03/26/programming-standard/"/>
+    <id>www.chenb.top/2018/03/26/programming-standard/</id>
+    <published>2018-03-26T13:31:36.000Z</published>
+    <updated>2018-05-29T13:34:40.927Z</updated>
+    
+    <summary type="html">
+    
+      后端编程规范，包括代码、测试、数据库、异常、注释等
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+    
+      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+    
+      <category term="Test" scheme="www.chenb.top/tags/Test/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux常用命令</title>
+    <link href="www.chenb.top/2018/03/26/linux-command/"/>
+    <id>www.chenb.top/2018/03/26/linux-command/</id>
+    <published>2018-03-26T13:14:36.000Z</published>
+    <updated>2018-06-13T12:46:38.360Z</updated>
+    
+    <summary type="html">
+    
+      记录一些Linux服务器常用的命令
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+    
+      <category term="Shell" scheme="www.chenb.top/tags/Shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="www.chenb.top/2018/03/25/hello-world/"/>
+    <id>www.chenb.top/2018/03/25/hello-world/</id>
+    <published>2018-03-25T13:14:36.000Z</published>
+    <updated>2018-03-26T14:18:01.071Z</updated>
+    
+    <summary type="html">
+    
+      Welcome to Hexo! This is your very first post.
+    
+    </summary>
+    
+      <category term="博客相关" scheme="www.chenb.top/categories/%E5%8D%9A%E5%AE%A2%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+    
+      <category term="Blog" scheme="www.chenb.top/tags/Blog/"/>
+    
+  </entry>
+  
+</feed>

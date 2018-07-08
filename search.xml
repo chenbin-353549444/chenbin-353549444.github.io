@@ -94,11 +94,11 @@
             
             <tag> Linux </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Java </tag>
             
             <tag> Maven </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Jenkins </tag>
             
@@ -154,13 +154,13 @@
             
             <tag> MySQL </tag>
             
+            <tag> 错误处理 </tag>
+            
             <tag> 存储过程 </tag>
             
             <tag> 函数 </tag>
             
             <tag> 游标 </tag>
-            
-            <tag> 错误处理 </tag>
             
         </tags>
       
@@ -206,17 +206,17 @@
             
             <tag> Shell </tag>
             
-            <tag> Docker </tag>
-            
-            <tag> 错误处理 </tag>
-            
             <tag> Java </tag>
             
             <tag> Maven </tag>
             
+            <tag> Docker </tag>
+            
             <tag> Jenkins </tag>
             
             <tag> Spring boot </tag>
+            
+            <tag> 错误处理 </tag>
             
         </tags>
       
@@ -260,9 +260,9 @@
       
         <tags>
             
-            <tag> MySQL </tag>
-            
             <tag> Java </tag>
+            
+            <tag> MySQL </tag>
             
             <tag> Test </tag>
             

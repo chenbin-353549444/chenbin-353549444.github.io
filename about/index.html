@@ -193,6 +193,8 @@
                             
                                 <a class="fa GitHub" href="https://github.com/chenbin-353549444" title="GitHub"></a>
                             
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
                                 <a class="fa 博客园" href="http://www.cnblogs.com/bchen" title="博客园"></a>
                             
                                 <a class="fa QQ" href="https://user.qzone.qq.com/353549444/" title="QQ"></a>
@@ -215,10 +217,6 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
-                    
                       <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
                     
                       <a class="main-nav-link switch-friends-link" href="https://www.wx133.com/">星辰大海</a>
@@ -226,16 +224,6 @@
                       <a class="main-nav-link switch-friends-link" href="https://www.ty0924.cn/">TY&#39;s Blog</a>
                     
                       <a class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">yelee</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://www.docker.com/">Docker</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://jenkins.io/">Jenkins</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://projects.spring.io/spring-boot/">Spring boot</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/">Spring Data JPA</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://stackedit.io/editor">StackEdit</a>
                     
                     </div>
                 </section>
@@ -290,6 +278,8 @@
                                 <a class="fa Email" target="_blank" href="mailto:353549444@qq.com" title="Email"></a>
                             
                                 <a class="fa GitHub" target="_blank" href="https://github.com/chenbin-353549444" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
                             
                                 <a class="fa 博客园" target="_blank" href="http://www.cnblogs.com/bchen" title="博客园"></a>
                             
@@ -374,6 +364,8 @@
         background: rgba(158,188,226,0.21);
     }
     .site-img {
+        max-width: 100px !important;
+        max-height: 75px !important;
         padding-top: 25px;
         display: block;
         height: 75px;
@@ -400,7 +392,7 @@
 </style>
 <hr>
 <br>
-<div>
+<div class="site">
     <a class="site-a" href="https://github.com/chenbin-353549444">
         <img src="/img/github-octocat.svg" class="site-img">
         <span class="site-text">GitHub</span>
@@ -412,6 +404,10 @@
     <a class="site-a" href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html">
         <img src="https://www.jhipster.tech/images/logo/icons/spring.png" class="site-img">
         <span class="site-text">Spring Data JPA</span>
+    </a>
+    <a class="site-a" href="https://www.npmjs.com">
+        <img src="https://www.npmjs.com.cn/images/npm.svg" class="site-img">
+        <span class="site-text">Npm</span>
     </a>
     <a class="site-a" href="https://www.docker.com">
         <img src="https://www.jhipster.tech/images/logo/svg/docker.svg" class="site-img">
@@ -566,6 +562,7 @@
             
             
             
+             mySite: ".site a", 
             
             
              archives: ".archive-article-title", 
