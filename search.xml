@@ -144,19 +144,19 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Java </tag>
             
-            <tag> Jenkins </tag>
+            <tag> Linux </tag>
             
             <tag> Docker </tag>
             
-            <tag> 持续集成 </tag>
-            
             <tag> Maven </tag>
             
+            <tag> Jenkins </tag>
+            
             <tag> Spring boot </tag>
+            
+            <tag> 持续集成 </tag>
             
         </tags>
       
@@ -179,9 +179,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Jenkins </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Jenkins </tag>
             
             <tag> 持续集成 </tag>
             
@@ -256,15 +256,15 @@
       
         <tags>
             
-            <tag> Shell </tag>
-            
             <tag> Java </tag>
             
-            <tag> Jenkins </tag>
+            <tag> Shell </tag>
             
             <tag> Docker </tag>
             
             <tag> Maven </tag>
+            
+            <tag> Jenkins </tag>
             
             <tag> Spring boot </tag>
             
