@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chen Bin" />
+
+
+
+<meta name="description" content="风控项目每个月的定时任务发现了连接超时的问题，解决该问题的方法：修改数据库连接池的配置">
+<meta name="keywords" content="MySQL,Spring boot,Tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring boot MySQL连接超时">
+<meta property="og:url" content="www.chenb.top/2018/07/09/spring-boot-mysql-timeout/index.html">
+<meta property="og:site_name" content="ChenBin&#39;s Blog">
+<meta property="og:description" content="风控项目每个月的定时任务发现了连接超时的问题，解决该问题的方法：修改数据库连接池的配置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-12T13:00:05.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring boot MySQL连接超时">
+<meta name="twitter:description" content="风控项目每个月的定时任务发现了连接超时的问题，解决该问题的方法：修改数据库连接池的配置">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="ChenBin&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+    <link href="/css/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Spring boot MySQL连接超时 | ChenBin&#39;s Blog</title>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js", "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a637ced513007ab6ba19c15cce76962a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Chen Bin</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">坚持梦想，永不放弃！</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">收藏夹</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:353549444@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/chenbin-353549444" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 博客园" href="http://www.cnblogs.com/bchen" title="博客园"></a>
+                            
+                                <a class="fa QQ" href="https://user.qzone.qq.com/353549444/" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="/Wechat" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gzip/">Gzip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html/">Html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jsoup/">Jsoup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Npm/">Npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/https/">https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数/">函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/存储过程/">存储过程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/持续集成/">持续集成</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游标/">游标</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/错误处理/">错误处理</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.wx133.com/">星辰大海</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.ty0924.cn/">TY&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于后端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Chen Bin</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Chen Bin</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">坚持梦想，永不放弃！</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">收藏夹</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:353549444@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chenbin-353549444" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 博客园" target="_blank" href="http://www.cnblogs.com/bchen" title="博客园"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="https://user.qzone.qq.com/353549444/" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/Wechat" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-spring-boot-mysql-timeout" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/09/spring-boot-mysql-timeout/" class="article-date">
+      <time datetime="2018-07-09T06:15:14.000Z" itemprop="datePublished">2018-07-09</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring boot MySQL连接超时
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/技术总结/">技术总结</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tomcat/">Tomcat</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="错误场景"><a href="#错误场景" class="headerlink" title="错误场景"></a>错误场景</h2><blockquote>
+<p>风控项目每个月都要执行定时任务计算大量数据，最近发现定时任务执行失败了，查了一下日志是数据库连接超时导致的，查阅资料后解决该问题</p>
+</blockquote>
+<ul>
+<li>Spring boot版本：<code>1.5.8.RELEASE</code></li>
+</ul>
+<h3 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">The last packet successfully received from the server was 1,607,221,718 milliseconds ago.  </span><br><span class="line">    The last packet sent successfully to the server was 1,607,221,719 milliseconds ago. </span><br><span class="line">    is longer than the server configured value of &apos;wait_timeout&apos;. </span><br><span class="line">    You should consider either expiring and/or testing connection validity before use in your application, </span><br><span class="line">    increasing the server configured values for client timeouts, </span><br><span class="line">    or using the Connector/J connection property &apos;autoReconnect=true&apos; to avoid this problem.</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><blockquote>
+<p><strong>注意：</strong> 错误提示中说的<code>autoReconnect=true</code>配置只在低版本（MySQL1.5以下）数据库中适用</p>
+</blockquote>
+<p>使用Spring boot数据源的连接池配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#验证连接的有效性</span><br><span class="line">#获取连接时候验证，会影响性能</span><br><span class="line">#空闲连接回收的时间间隔，与test-while-idle一起使用，设置5分钟</span><br><span class="line">#连接池空闲连接的有效时间 ，设置30分钟</span><br><span class="line">spring.datasource.prod.test-while-idle=true</span><br><span class="line">#spring.datasource.prod.test-on-borrow=true</span><br><span class="line">spring.datasource.prod.validation-query=SELECT 1 FROM DUAL</span><br><span class="line">spring.datasource.prod.time-between-eviction-runs-millis=300000</span><br><span class="line">spring.datasource.prod.min-evictable-idle-time-millis=1800000</span><br><span class="line"></span><br><span class="line">spring.datasource.credit.test-while-idle=true</span><br><span class="line">#spring.datasource.credit.test-on-borrow=true</span><br><span class="line">spring.datasource.credit.validation-query=SELECT 1 FROM DUAL</span><br><span class="line">spring.datasource.credit.time-between-eviction-runs-millis=300000</span><br><span class="line">spring.datasource.credit.min-evictable-idle-time-millis=1800000</span><br></pre></td></tr></table></figure></p>
+<p>参照<a href="https://docs.spring.io/spring-boot/docs/1.5.8.RELEASE/reference/htmlsingle/#howto-two-datasources" target="_blank" rel="noopener">官网多数据源配置</a></p>
+<h3 id="Tomcat连接池详细配置"><a href="#Tomcat连接池详细配置" class="headerlink" title="Tomcat连接池详细配置"></a>Tomcat连接池详细配置</h3><ul>
+<li><p>spring.dao.exceptiontranslation.enabled<br>是否开启PersistenceExceptionTranslationPostProcessor，默认为true</p>
+</li>
+<li><p>spring.datasource.abandon-when-percentage-full<br>设定超时被废弃的连接占到多少比例时要被关闭或上报</p>
+</li>
+<li><p>spring.datasource.allow-pool-suspension<br>使用Hikari pool时，是否允许连接池暂停，默认为: false</p>
+</li>
+<li><p>spring.datasource.alternate-username-allowed<br>是否允许替代的用户名.</p>
+</li>
+<li><p>spring.datasource.auto-commit<br>指定updates是否自动提交.</p>
+</li>
+<li><p>spring.datasource.catalog<br>指定默认的catalog.</p>
+</li>
+<li><p>spring.datasource.commit-on-return<br>设置当连接被归还时，是否要提交所有还未完成的事务</p>
+</li>
+<li><p>spring.datasource.connection-init-sql<br>指定连接被创建，再被添加到连接池之前执行的sql.</p>
+</li>
+<li><p>spring.datasource.connection-init-sqls<br>使用DBCP connection pool时，指定初始化时要执行的sql</p>
+</li>
+<li><p>spring.datasource.connection-properties.[key]<br>在使用DBCP connection pool时指定要配置的属性</p>
+</li>
+<li><p>spring.datasource.connection-test-query<br>指定校验连接合法性执行的sql语句</p>
+</li>
+<li><p>spring.datasource.connection-timeout<br>指定连接的超时时间，毫秒单位.</p>
+</li>
+<li><p>spring.datasource.continue-on-error<br>在初始化数据库时，遇到错误是否继续，默认false</p>
+</li>
+<li><p>spring.datasource.data<br>指定Data (DML)脚本</p>
+</li>
+<li><p>spring.datasource.data-source-class-name<br>指定数据源的全限定名.</p>
+</li>
+<li><p>spring.datasource.data-source-jndi<br>指定jndi的地址</p>
+</li>
+<li><p>spring.datasource.data-source-properties.[key]<br>使用Hikari connection pool时，指定要设置的属性</p>
+</li>
+<li><p>spring.datasource.db-properties<br>使用Tomcat connection pool，指定要设置的属性</p>
+</li>
+<li><p>spring.datasource.default-auto-commit<br>是否自动提交.</p>
+</li>
+<li><p>spring.datasource.default-catalog<br>指定连接默认的catalog.</p>
+</li>
+<li><p>spring.datasource.default-read-only<br>是否设置默认连接只读.</p>
+</li>
+<li><p>spring.datasource.default-transaction-isolation<br>指定连接的事务的默认隔离级别.</p>
+</li>
+<li><p>spring.datasource.driver-class-name<br>指定driver的类名，默认从jdbc url中自动探测.</p>
+</li>
+<li><p>spring.datasource.fair-queue<br>是否采用FIFO返回连接.</p>
+</li>
+<li><p>spring.datasource.health-check-properties.[key]<br>使用Hikari connection pool时，在心跳检查时传递的属性</p>
+</li>
+<li><p>spring.datasource.idle-timeout<br>指定连接多久没被使用时，被设置为空闲，默认为10ms</p>
+</li>
+<li><p>spring.datasource.ignore-exception-on-pre-load<br>当初始化连接池时，是否忽略异常.</p>
+</li>
+<li><p>spring.datasource.init-sql<br>当连接创建时，执行的sql</p>
+</li>
+<li><p>spring.datasource.initial-size<br>指定启动连接池时，初始建立的连接数量</p>
+</li>
+<li><p>spring.datasource.initialization-fail-fast<br>当创建连接池时，没法创建指定最小连接数量是否抛异常</p>
+</li>
+<li><p>spring.datasource.initialize<br>指定初始化数据源，是否用data.sql来初始化，默认: true</p>
+</li>
+<li><p>spring.datasource.isolate-internal-queries<br>指定内部查询是否要被隔离，默认为false</p>
+</li>
+<li><p>spring.datasource.jdbc-interceptors<br>使用Tomcat connection pool时，指定jdbc拦截器，分号分隔</p>
+</li>
+<li><p>spring.datasource.jdbc-url<br>指定JDBC URL.</p>
+</li>
+<li><p>spring.datasource.jmx-enabled<br>是否开启JMX，默认为: false</p>
+</li>
+<li><p>spring.datasource.jndi-name<br>指定jndi的名称.</p>
+</li>
+<li><p>spring.datasource.leak-detection-threshold<br>使用Hikari connection pool时，多少毫秒检测一次连接泄露.</p>
+</li>
+<li><p>spring.datasource.log-abandoned<br>使用DBCP connection pool，是否追踪废弃statement或连接，默认为: false</p>
+</li>
+<li><p>spring.datasource.log-validation-errors<br>当使用Tomcat connection pool是否打印校验错误.</p>
+</li>
+<li><p>spring.datasource.login-timeout<br>指定连接数据库的超时时间.</p>
+</li>
+<li><p>spring.datasource.max-active<br>指定连接池中最大的活跃连接数.</p>
+</li>
+<li><p>spring.datasource.max-age<br>指定连接池中连接的最大年龄</p>
+</li>
+<li><p>spring.datasource.max-idle<br>指定连接池最大的空闲连接数量.</p>
+</li>
+<li><p>spring.datasource.max-lifetime<br>指定连接池中连接的最大生存时间，毫秒单位.</p>
+</li>
+<li><p>spring.datasource.max-open-prepared-statements<br>指定最大的打开的prepared statements数量.</p>
+</li>
+<li><p>spring.datasource.max-wait<br>指定连接池等待连接返回的最大等待时间，毫秒单位.</p>
+</li>
+<li><p>spring.datasource.maximum-pool-size<br>指定连接池最大的连接数，包括使用中的和空闲的连接.</p>
+</li>
+<li><p>spring.datasource.min-evictable-idle-time-millis<br>指定一个空闲连接最少空闲多久后可被清除.</p>
+</li>
+<li><p>spring.datasource.min-idle<br>指定必须保持连接的最小值(For DBCP and Tomcat connection pools)</p>
+</li>
+<li><p>spring.datasource.minimum-idle<br>指定连接维护的最小空闲连接数，当使用HikariCP时指定.</p>
+</li>
+<li><p>spring.datasource.name<br>指定数据源名.</p>
+</li>
+<li><p>spring.datasource.num-tests-per-eviction-run<br>指定运行每个idle object evictor线程时的对象数量</p>
+</li>
+<li><p>spring.datasource.password<br>指定数据库密码.</p>
+</li>
+<li><p>spring.datasource.platform<br>指定schema要使用的Platform(schema-${platform}.sql)，默认为: all</p>
+</li>
+<li><p>spring.datasource.pool-name<br>指定连接池名字.</p>
+</li>
+<li><p>spring.datasource.pool-prepared-statements<br>指定是否池化statements.</p>
+</li>
+<li><p>spring.datasource.propagate-interrupt-state<br>在等待连接时，如果线程被中断，是否传播中断状态.</p>
+</li>
+<li><p>spring.datasource.read-only<br>当使用Hikari connection pool时，是否标记数据源只读</p>
+</li>
+<li><p>spring.datasource.register-mbeans<br>指定Hikari connection pool是否注册JMX MBeans.</p>
+</li>
+<li><p>spring.datasource.remove-abandoned<br>指定当连接超过废弃超时时间时，是否立刻删除该连接.</p>
+</li>
+<li><p>spring.datasource.remove-abandoned-timeout<br>指定连接应该被废弃的时间.</p>
+</li>
+<li><p>spring.datasource.rollback-on-return<br>在归还连接时，是否回滚等待中的事务.</p>
+</li>
+<li><p>spring.datasource.schema<br>指定Schema (DDL)脚本.</p>
+</li>
+<li><p>spring.datasource.separator<br>指定初始化脚本的语句分隔符，默认: ;</p>
+</li>
+<li><p>spring.datasource.sql-script-encoding<br>指定SQL scripts编码.</p>
+</li>
+<li><p>spring.datasource.suspect-timeout<br>指定打印废弃连接前的超时时间.</p>
+</li>
+<li><p>spring.datasource.test-on-borrow<br>当从连接池借用连接时，是否测试该连接.</p>
+</li>
+<li><p>spring.datasource.test-on-connect<br>创建时，是否测试连接</p>
+</li>
+<li><p>spring.datasource.test-on-return<br>在连接归还到连接池时是否测试该连接.</p>
+</li>
+<li><p>spring.datasource.test-while-idle<br>当连接空闲时，是否执行连接测试.</p>
+</li>
+<li><p>spring.datasource.time-between-eviction-runs-millis<br>指定空闲连接检查、废弃连接清理、空闲连接池大小调整之间的操作时间间隔</p>
+</li>
+<li><p>spring.datasource.transaction-isolation<br>指定事务隔离级别，使用Hikari connection pool时指定</p>
+</li>
+<li><p>spring.datasource.url<br>指定JDBC URL.</p>
+</li>
+<li><p>spring.datasource.use-disposable-connection-facade<br>是否对连接进行包装，防止连接关闭之后被使用.</p>
+</li>
+<li><p>spring.datasource.use-equals<br>比较方法名时是否使用String.equals()替换==.</p>
+</li>
+<li><p>spring.datasource.use-lock<br>是否对连接操作加锁</p>
+</li>
+<li><p>spring.datasource.username<br>指定数据库名.</p>
+</li>
+<li><p>spring.datasource.validation-interval<br>指定多少ms执行一次连接校验.</p>
+</li>
+<li><p>spring.datasource.validation-query<br>指定获取连接时连接校验的sql查询语句.</p>
+</li>
+<li><p>spring.datasource.validation-query-timeout<br>指定连接校验查询的超时时间.</p>
+</li>
+<li><p>spring.datasource.validation-timeout<br>设定连接校验的超时时间，当使用Hikari connection pool时指定</p>
+</li>
+<li><p>spring.datasource.validator-class-name<br>用来测试查询的validator全限定名.</p>
+</li>
+<li><p>spring.datasource.xa.data-source-class-name<br>指定数据源的全限定名.</p>
+</li>
+<li><p>spring.datasource.xa.properties<br>指定传递给XA data source的属性</p>
+</li>
+</ul>
+<blockquote>
+<p>参照:<br><a href="https://tomcat.apache.org/tomcat-8.0-doc/jdbc-pool.html#Common_Attributes" target="_blank" rel="noopener">Tomcat官网配置</a><br><a href="https://segmentfault.com/a/1190000004316491" target="_blank" rel="noopener">转载博文</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/09/spring-boot-mysql-timeout/">Spring boot MySQL连接超时</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
+        <p><span>发布时间:</span>2018-07-09, 14:15:14</p>
+        <p><span>最后更新:</span>2018-07-12, 21:00:05</p>
+        
+            <p>
+                <span>更新历史:</span><i class="fa fa-github"></i>
+                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2018-07-09.spring-boot-mysql-timeout.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
+                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2018-07-09.spring-boot-mysql-timeout.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
+                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2018-07-09.spring-boot-mysql-timeout.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
+            </p>
+        
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/09/spring-boot-mysql-timeout/" title="Spring boot MySQL连接超时">www.chenb.top/2018/07/09/spring-boot-mysql-timeout/</a>
+            <span class="copy-path" data-clipboard-text="原文: www.chenb.top/2018/07/09/spring-boot-mysql-timeout/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/09/jsoup-company-info/">
+                    Java爬虫获取企业工商信息
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/06/13/spring-boot-gzip/">
+                    Spring boot开启Gzip压缩
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#错误场景"><span class="toc-number">1.</span> <span class="toc-text">错误场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误信息"><span class="toc-number">1.1.</span> <span class="toc-text">错误信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法"><span class="toc-number">1.2.</span> <span class="toc-text">解决方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat连接池详细配置"><span class="toc-number">1.3.</span> <span class="toc-text">Tomcat连接池详细配置</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+        <!--PC版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+    appid: 'cytFjlINt',
+    conf: 'prod_e1b00bd7124f05986d055a53f2d8a253'
+    });
+</script>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/09/jsoup-company-info/" title="上一篇: Java爬虫获取企业工商信息">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/06/13/spring-boot-gzip/" title="下一篇: Spring boot开启Gzip压缩">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/jsoup-company-info/">Java爬虫获取企业工商信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/spring-boot-mysql-timeout/">Spring boot MySQL连接超时</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/spring-boot-gzip/">Spring boot开启Gzip压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/11/npm-publish/">发布自己的npm包，hexo文章排序插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/17/spring-boot-https/">Spring boot同时支持http和https访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/spring-boot-admin-jenkins-docker/">使用Jenkins和Docker持续集成java项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/07/jenkins-docker/">Jenkins服务器容器化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/30/mysql-procedure/">MySQL存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/mysql-command/">MySQL常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/shell-scripts/">多环境jar部署脚本示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/markdown-preview/">Markdown基本用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/programming-standard/">后端编程规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/linux-command/">Linux常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/25/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018 Chen Bin
+                <a href="http://www.miitbeian.gov.cn">苏ICP备17039650号-1</a>
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+             mySite: ".site a", 
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":70,"height":140},"mobile":{"show":false}});</script></body>
+</html>
