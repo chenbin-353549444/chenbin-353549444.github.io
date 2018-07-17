@@ -166,11 +166,11 @@
       <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
-    
       <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
     
       <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+    
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
       <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
     
@@ -282,11 +282,11 @@
       <category term="个人笔记" scheme="www.chenb.top/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
-    
       <category term="Shell" scheme="www.chenb.top/tags/Shell/"/>
     
       <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+    
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
       <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
     
@@ -340,9 +340,9 @@
       <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
-    
       <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+    
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
       <category term="Test" scheme="www.chenb.top/tags/Test/"/>
     

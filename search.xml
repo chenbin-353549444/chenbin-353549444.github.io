@@ -144,11 +144,11 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Linux </tag>
             
             <tag> Docker </tag>
+            
+            <tag> Java </tag>
             
             <tag> Maven </tag>
             
@@ -256,11 +256,11 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> Shell </tag>
             
             <tag> Docker </tag>
+            
+            <tag> Java </tag>
             
             <tag> Maven </tag>
             
@@ -312,9 +312,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> MySQL </tag>
+            
+            <tag> Java </tag>
             
             <tag> Test </tag>
             
