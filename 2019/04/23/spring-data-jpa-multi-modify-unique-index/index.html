@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
 <meta property="og:description" content="Spring Data JPA解决批量修改与唯一索引冲突的问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T09:46:29.458Z">
+<meta property="og:updated_time" content="2019-04-23T09:52:32.805Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Data JPA解决批量修改与唯一索引冲突的问题">
 <meta name="twitter:description" content="Spring Data JPA解决批量修改与唯一索引冲突的问题">
@@ -354,6 +354,7 @@
 <ul>
 <li>flush,saveAndFlush会刷新当前session中所有持久化对象的状态到数据库，所以在调用时要考虑别的持久化对象的状态</li>
 <li>保存顺序不是按照list的顺序，所以要手动控制</li>
+<li>flush,saveAndFlush需要dao继承<code>JpaRepository</code>才能使用</li>
 </ul>
 
       
@@ -366,7 +367,7 @@
         <p><span>本文标题:</span><a href="/2019/04/23/spring-data-jpa-multi-modify-unique-index/">Spring Data JPA解决批量修改与唯一索引冲突的问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
         <p><span>发布时间:</span>2019-04-23, 17:17:30</p>
-        <p><span>最后更新:</span>2019-04-23, 17:46:29</p>
+        <p><span>最后更新:</span>2019-04-23, 17:52:32</p>
         
             <p>
                 <span>更新历史:</span><i class="fa fa-github"></i>
