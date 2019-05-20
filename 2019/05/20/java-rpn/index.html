@@ -15,20 +15,18 @@
 
 
 
-<meta name="description" content="Jenkins-Docker是一个使用Dockerfile创建可执行docker命令的Jenkins镜像的项目。">
-<meta name="keywords" content="Linux,Docker,Jenkins,持续集成">
+<meta name="description" content="Java实现数学公式计算，支持浮点数，使用逆波兰表达式计算">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jenkins服务器容器化">
-<meta property="og:url" content="www.chenb.top/2018/04/07/jenkins-docker/index.html">
+<meta property="og:title" content="Java实现数学公式计算">
+<meta property="og:url" content="www.chenb.top/2019/05/20/java-rpn/index.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
-<meta property="og:description" content="Jenkins-Docker是一个使用Dockerfile创建可执行docker命令的Jenkins镜像的项目。">
+<meta property="og:description" content="Java实现数学公式计算，支持浮点数，使用逆波兰表达式计算">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img.shields.io/badge/docker-17.06.1--ce-blue.svg">
-<meta property="og:updated_time" content="2018-05-17T13:07:10.798Z">
+<meta property="og:updated_time" content="2019-05-20T13:39:12.081Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jenkins服务器容器化">
-<meta name="twitter:description" content="Jenkins-Docker是一个使用Dockerfile创建可执行docker命令的Jenkins镜像的项目。">
-<meta name="twitter:image" content="https://img.shields.io/badge/docker-17.06.1--ce-blue.svg">
+<meta name="twitter:title" content="Java实现数学公式计算">
+<meta name="twitter:description" content="Java实现数学公式计算，支持浮点数，使用逆波兰表达式计算">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +58,7 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Jenkins服务器容器化 | ChenBin&#39;s Blog</title>
+<title>Java实现数学公式计算 | ChenBin&#39;s Blog</title>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -302,11 +300,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-jenkins-docker" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-java-rpn" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/04/07/jenkins-docker/" class="article-date">
-      <time datetime="2018-04-07T12:18:15.000Z" itemprop="datePublished">2018-04-07</time>
+      <a href="/2019/05/20/java-rpn/" class="article-date">
+      <time datetime="2019-05-20T09:48:52.000Z" itemprop="datePublished">2019-05-20</time>
 </a>
 
 
@@ -321,7 +319,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Jenkins服务器容器化
+      Java实现数学公式计算
     </h1>
   
 
@@ -336,7 +334,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/持续集成/">持续集成</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -346,33 +344,36 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="Jenkins-Docker"><a href="#Jenkins-Docker" class="headerlink" title="Jenkins-Docker"></a><strong>Jenkins-Docker</strong></h1><blockquote>
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>最近国家税务政策变动，财务报表需要更新公式和格式了，这类更新经常会发生，为了以后维护方便，想到了解析字符串格式的数学公式。查阅了一下资料，可以用逆波兰表达式实现。</p>
+<h3 id="中缀表达式转后缀表达式"><a href="#中缀表达式转后缀表达式" class="headerlink" title="中缀表达式转后缀表达式"></a>中缀表达式转后缀表达式</h3><p>中缀表达式：平常见到的表达式，如<code>3+(5*(6-1/2))</code><br>后缀表达式：即逆波兰表达式，指的是不包含括号，运算符放在两个运算对象的后面，所有的计算按运算符出现的顺序，严格从左向右进行（不再考虑运算符的优先规则），既然没了运算符的优先规则，那么计算机解析起来自然容易的多。上面的中缀表达式对应的后缀表达式<code>[3, 5, 6, 1, 2, /, -, *, +]</code><br>解析公式需要先将通俗的中缀表达式转化成后缀表达式，具体算法如下：</p>
 <ul>
-<li>Jenkins-Docker是一个使用Dockerfile创建可执行docker命令的Jenkins镜像的项目。之前有使用Jenkins持续集成的经历，最近开始接触Docker，那么就没有理由继续之前痛苦的Jenkins安装过程。但是使用官方镜像无法在Docker容器内使用Docker命令，所以就有了这个项目。</li>
-<li>本项目是早期写的，在存储、权限等方面还有些缺陷，可参考新的持续集成例子：<a href="/2018/05/14/spring-boot-admin-jenkins-docker">spring-boot-admin-jenkins-docker</a></li>
+<li>首先设置运算符的优先级（这样设置也是为了简化程序）： <ul>
+<li><code>null</code> 栈顶若为空，假设优先级为0</li>
+<li><code>左括号</code> 优先级设为1</li>
+<li><code>+-</code> 优先级设为2</li>
+<li><code>*/</code> 优先级设为3</li>
 </ul>
-</blockquote>
-<p>项目地址： <a href="https://github.com/chenbin-353549444/Jenkins-Docker" target="_blank" rel="noopener">https://github.com/chenbin-353549444/Jenkins-Docker</a><br><a href=""><img src="https://img.shields.io/badge/docker-17.06.1--ce-blue.svg" alt="Travis"></a></p>
-<h2 id="详细说明"><a href="#详细说明" class="headerlink" title="详细说明"></a>详细说明</h2><h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> jenkins:alpine</span><br><span class="line"><span class="comment"># 下载安装Docker CLI</span></span><br><span class="line"><span class="keyword">USER</span> root</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; tar zxvf docker-latest.tgz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; cp docker/docker /usr/<span class="built_in">local</span>/bin/ \</span></span><br><span class="line"><span class="bash">    &amp;&amp; rm -rf docker docker-latest.tgz</span></span><br><span class="line"><span class="bash"><span class="comment"># 将 `jenkins` 用户的组 ID 改为宿主 `docker` 组的组ID，从而具有执行 `docker` 命令的权限。</span></span></span><br><span class="line"><span class="bash">ARG DOCKER_GID=993</span></span><br><span class="line"><span class="bash">USER jenkins:<span class="variable">$&#123;DOCKER_GID&#125;</span></span></span><br></pre></td></tr></table></figure>
-<p>在这里，我们下载了静态编译的docker可执行文件，并提取命令行安装到系统目录下。然后调整了jenkins用户的组ID，调整为宿主docker组ID，从而使其具有执行docker命令的权限。</p>
-<h3 id="生成镜像"><a href="#生成镜像" class="headerlink" title="生成镜像"></a>生成镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t jenkins-docker .</span><br></pre></td></tr></table></figure>
-<p>组ID使用了<code>DOCKER_GID</code>参数来定义，以方便进一步定制。构建时可以通过–build-arg来改变DOCKER_GID的默认值，运行时也可以通过–user jenkins:1234来改变运行用户的身份。</p>
-<blockquote>
-<p>阿里云初始的CentOS系统中直接安装docker时，docker组ID为993</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t jenkins-docker --build-arg DOCKER_GID=1234 .</span><br></pre></td></tr></table></figure>
-<p>这里由于国内云主机curl步骤时间太长，所以把项目关联到<code>DockerHub</code>上生成镜像: <a href="https://hub.docker.com/r/superbin/jenkins-docker/" target="_blank" rel="noopener">https://hub.docker.com/r/superbin/jenkins-docker/</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull superbin/jenkins-docker</span><br></pre></td></tr></table></figure></p>
-<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --name jenkins \</span><br><span class="line">      -d \</span><br><span class="line">      -p 8080:8080 \</span><br><span class="line">      -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">      -v /var/jenkins_home:/var/jenkins_home \</span><br><span class="line">      -e TZ=Asia/Shanghai \</span><br><span class="line">      superbin/jenkins-docker:20171001</span><br></pre></td></tr></table></figure>
-<p>运行jenkins容器，将宿主的/var/run/docker.sock文件挂载到容器内的同样位置，从而让容器内可以通过unix socket调用宿主的Docker引擎；将jenkins目录挂载到宿主机同样位置，以便查看初始密码和workspace<br>在这里，如果是第一次运行本项目，需要查看宿主机中的/var/jenkins_home目录，如果没有该目录要新建一个，并加上权限<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /var/jenkins_home</span><br><span class="line">$ chmod 777 /var/jenkins_home</span><br></pre></td></tr></table></figure></p>
-<p>如果要删除jenkins数据重新安装，需要删除宿主机的/var/jenkins_home目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf /var/jenkins_home</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li>这里使用了挂载目录，并给出最高权限，这样做违背了linux的<code>最小权限原则</code>，可以改进为使用Docker命名卷</li>
-<li><code>-e TZ=Asia/Shanghai</code>可以解决容器内时间相差8小时的问题</li>
+</li>
+<li>从左向右遍历中缀表达式<ul>
+<li>遇到数字直接输出</li>
+<li>遇到符号 <ul>
+<li>遇到左括号，直接压栈</li>
+<li>遇到右括号，弹栈输出直到弹出左括号（左括号不输出）</li>
+<li>遇到运算符，比较栈顶符号，若该运算符优先级大于栈顶，直接压栈；若小于栈顶，弹栈输出直到大于栈顶，然后将改运算符压栈。</li>
 </ul>
-</blockquote>
-<p>现在jenkins容器已经运行，并且可以执行docker命令了</p>
-
+</li>
+</ul>
+</li>
+<li>最后将符合栈弹栈并输出</li>
+</ul>
+<h3 id="后缀表达式计算结果"><a href="#后缀表达式计算结果" class="headerlink" title="后缀表达式计算结果"></a>后缀表达式计算结果</h3><ul>
+<li>从左往右遍历</li>
+<li>遇到数字直接放入容器</li>
+<li>遇到运算符，将最后两个数字取出，进行该运算，将结果再放入容器</li>
+<li>遍历结束后，容器中的数字即为运算结果</li>
+</ul>
+<h3 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h3><p>以上算法不难实现，下面是我修改后的工具类，可以计算浮点数的公式，精确到2位有效数字<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.StringUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.hongfund.efi.utils.RegExpUtil.FLOAT_NUMBER;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.math.BigDecimal.ZERO;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.math.RoundingMode.HALF_UP;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数学公式计算</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chenbin</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpnUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; test = Arrays.asList(<span class="string">"3 + ( 5 * ( 6 - 1 / 2 ) )"</span>.split(<span class="string">" "</span>));</span><br><span class="line">        System.out.println(getRpn(test));</span><br><span class="line">        System.out.println(calculate(test));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算指定公式的数值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">calculate</span><span class="params">(List&lt;String&gt; formulaList)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; rpn = getRpn(formulaList);</span><br><span class="line">        <span class="keyword">return</span> calculateRpn(rpn);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 中序转后序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">getRpn</span><span class="params">(List&lt;String&gt; formulaList)</span> </span>&#123;</span><br><span class="line">        Stack&lt;String&gt; operators=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String formula : formulaList) &#123;</span><br><span class="line">            <span class="keyword">if</span> (formula.matches(FLOAT_NUMBER)) &#123;</span><br><span class="line">                result.add(formula);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (formula.equals(<span class="string">"("</span>)) &#123;</span><br><span class="line">                operators.push(formula);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (formula.equals(<span class="string">")"</span>)) &#123;</span><br><span class="line">                <span class="keyword">while</span> (!operators.peek().equals(<span class="string">"("</span>)) &#123;</span><br><span class="line">                    result.add(operators.pop());</span><br><span class="line">                &#125;</span><br><span class="line">                operators.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (operators.size() != <span class="number">0</span> &amp;&amp; getLevel(operators.peek()) &gt;= getLevel(formula)) &#123;</span><br><span class="line">                    result.add(operators.pop());</span><br><span class="line">                &#125;</span><br><span class="line">                operators.push(formula);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (operators.size() != <span class="number">0</span>) &#123;</span><br><span class="line">            result.add(operators.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 逆序计算结果</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">calculateRpn</span><span class="params">(List&lt;String&gt; formulaList)</span> </span>&#123;</span><br><span class="line">        Stack&lt;BigDecimal&gt; s=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String formula : formulaList) &#123;</span><br><span class="line">            <span class="keyword">if</span> (formula.matches(FLOAT_NUMBER)) &#123;</span><br><span class="line">                s.push(BigDecimalUtils.getDecimalValue(formula));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                BigDecimal b = s.pop();</span><br><span class="line">                BigDecimal a = s.pop();</span><br><span class="line">                BigDecimal temp = ZERO;</span><br><span class="line">                <span class="keyword">switch</span> (formula) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"+"</span> : temp = a.add(b);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"-"</span> : temp = a.subtract(b);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"*"</span> : temp = a.multiply(b);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"/"</span> : temp = a.divide(b, <span class="number">2</span>, HALF_UP);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"max"</span> : temp = a.max(b);<span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                s.push(temp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> FormatUtils.DECIMAL_FORMAT_2.format(s.pop());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 运算符优先级</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getLevel</span><span class="params">(String operator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(operator)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">switch</span> (operator) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"("</span> : <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"+"</span> :</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"-"</span> : <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"*"</span> :</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"/"</span> :</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"max"</span> : <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">default</span> : <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="判断浮点数的正则"><a href="#判断浮点数的正则" class="headerlink" title="判断浮点数的正则"></a>判断浮点数的正则</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 正则表达式工具类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RegExpUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 匹配浮点数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FLOAT_NUMBER = <span class="string">"^(-?\\d+)(\\.\\d+)?$"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -380,21 +381,21 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/04/07/jenkins-docker/">Jenkins服务器容器化</a></p>
+        <p><span>本文标题:</span><a href="/2019/05/20/java-rpn/">Java实现数学公式计算</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
-        <p><span>发布时间:</span>2018-04-07, 20:18:15</p>
-        <p><span>最后更新:</span>2018-05-17, 21:07:10</p>
+        <p><span>发布时间:</span>2019-05-20, 17:48:52</p>
+        <p><span>最后更新:</span>2019-05-20, 21:39:12</p>
         
             <p>
                 <span>更新历史:</span><i class="fa fa-github"></i>
-                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2018-04-07.jenkins-docker.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
-                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2018-04-07.jenkins-docker.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
-                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2018-04-07.jenkins-docker.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
+                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2019-05-20.java-rpn.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
+                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2019-05-20.java-rpn.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
+                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2019-05-20.java-rpn.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
             </p>
         
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/04/07/jenkins-docker/" title="Jenkins服务器容器化">www.chenb.top/2018/04/07/jenkins-docker/</a>
-            <span class="copy-path" data-clipboard-text="原文: www.chenb.top/2018/04/07/jenkins-docker/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/05/20/java-rpn/" title="Java实现数学公式计算">www.chenb.top/2019/05/20/java-rpn/</a>
+            <span class="copy-path" data-clipboard-text="原文: www.chenb.top/2019/05/20/java-rpn/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -406,16 +407,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018/05/14/spring-boot-admin-jenkins-docker/">
-                    使用Jenkins和Docker持续集成java项目
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/03/30/mysql-procedure/">
-                    MySQL存储过程
+                <a href="/2019/04/23/spring-data-jpa-multi-modify-unique-index/">
+                    Spring Data JPA解决批量修改与唯一索引冲突的问题
                 </a>
             </div>
         
@@ -427,7 +422,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jenkins-Docker"><span class="toc-number">1.</span> <span class="toc-text">Jenkins-Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#详细说明"><span class="toc-number">1.1.</span> <span class="toc-text">详细说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dockerfile"><span class="toc-number">1.1.1.</span> <span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成镜像"><span class="toc-number">1.1.2.</span> <span class="toc-text">生成镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行"><span class="toc-number">1.1.3.</span> <span class="toc-text">运行</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#中缀表达式转后缀表达式"><span class="toc-number">1.1.</span> <span class="toc-text">中缀表达式转后缀表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后缀表达式计算结果"><span class="toc-number">1.2.</span> <span class="toc-text">后缀表达式计算结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现代码"><span class="toc-number">1.3.</span> <span class="toc-text">实现代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断浮点数的正则"><span class="toc-number">1.4.</span> <span class="toc-text">判断浮点数的正则</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -463,7 +458,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Jenkins服务器容器化　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Java实现数学公式计算　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -483,15 +478,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/05/14/spring-boot-admin-jenkins-docker/" title="上一篇: 使用Jenkins和Docker持续集成java项目">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/03/30/mysql-procedure/" title="下一篇: MySQL存储过程">
+            <a href="/2019/04/23/spring-data-jpa-multi-modify-unique-index/" title="下一篇: Spring Data JPA解决批量修改与唯一索引冲突的问题">
                 <i class="fa fa-angle-right"></i>
             </a>
         
