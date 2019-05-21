@@ -353,9 +353,9 @@
             
             <tag> Spring boot </tag>
             
-            <tag> Gzip </tag>
-            
             <tag> https </tag>
+            
+            <tag> Gzip </tag>
             
         </tags>
       
@@ -430,9 +430,9 @@
             
             <tag> Spring boot </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Maven </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Jenkins </tag>
             
@@ -536,9 +536,9 @@
             
             <tag> Shell </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Maven </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Jenkins </tag>
             

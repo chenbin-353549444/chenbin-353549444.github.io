@@ -384,9 +384,9 @@
     
       <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
-    
       <category term="https" scheme="www.chenb.top/tags/https/"/>
+    
+      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
     
   </entry>
   
@@ -464,9 +464,9 @@
     
       <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
-    
       <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
+    
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
     
       <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
     
