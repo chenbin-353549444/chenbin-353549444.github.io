@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>ChenBin&#39;s Blog</title>
   
-  <subtitle>世事如棋，乾坤莫测，笑尽英雄</subtitle>
+  <subtitle>🎉✨🎨🚀🐳</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="www.chenb.top/"/>
-  <updated>2019-05-20T13:39:12.081Z</updated>
+  <updated>2019-05-21T08:19:29.809Z</updated>
   <id>www.chenb.top/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring boot 自定义注解+AOP实现互斥锁</title>
+    <link href="www.chenb.top/2019/05/21/spring-boot-aop-lock/"/>
+    <id>www.chenb.top/2019/05/21/spring-boot-aop-lock/</id>
+    <published>2019-05-21T07:48:36.000Z</published>
+    <updated>2019-05-21T08:19:29.809Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>随着业务量的不断增长，并发问题时有出现，要解决这些问题需要引入锁机制</p><h3 id="同步关键字解决方案"><a href="#同步关键字解决方案" class="headerlink" title="同步关键字解决方案"></a>同步关键字解决方案</h3><p>最初在方法上加同步关键字<code>synchronized</code>，这种方式只能限制同一个类中的方法，不同类中的方法仍然可以并发<br>那么可以使用同步代码块解决该问题，定义一个公共的锁，然后在需要同步的方法开始和结束加上同步代码块，这样就能解决问题了，但是这种写法很繁琐，需要每个方法头尾去加代码，由此想到了AOP和自定义注解</p><h3 id="定义锁注解"><a href="#定义锁注解" class="headerlink" title="定义锁注解"></a>定义锁注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.PARAMETER, ElementType.METHOD&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ServiceLock &#123;</span><br><span class="line">    <span class="function">String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> "service lock"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="AOP切面"><a href="#AOP切面" class="headerlink" title="AOP切面"></a>AOP切面</h3><p>在Service层定义切面，方法执行前后分别加锁和解锁，使用时需要同步的方法加上<code>@ServiceLock</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 同步锁 AOP</span></span><br><span class="line"><span class="comment"> * https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#transaction-declarative-annotations</span></span><br><span class="line"><span class="comment"> * https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Order</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockAspect</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 互斥锁 参数默认false，不公平锁</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Lock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Service层切点     用于记录错误日志</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@annotation(com.xxx.xxx.service.lock.ServiceLock)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lockAspect</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"lockAspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        Object obj;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            obj = joinPoint.proceed();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      Spring boot 自定义注解+AOP实现互斥锁
+    
+    </summary>
+    
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+    
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+    
+  </entry>
   
   <entry>
     <title>Java实现数学公式计算</title>
@@ -499,30 +523,6 @@
       <category term="代码块" scheme="www.chenb.top/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     
       <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL常用命令</title>
-    <link href="www.chenb.top/2018/03/26/mysql-command/"/>
-    <id>www.chenb.top/2018/03/26/mysql-command/</id>
-    <published>2018-03-26T14:30:39.000Z</published>
-    <updated>2019-04-23T01:20:50.149Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="MySQL-常用命令"><a href="#MySQL-常用命令" class="headerlink" title="MySQL 常用命令"></a>MySQL 常用命令</h2><ul><li><strong>转换日志文件</strong><br><i class="mylink"></i><a href="https://dev.mysql.com/doc/refman/5.7/en/mysqlbinlog-row-events.html" title="mysqlbinlog行事件显示" target="_blank" rel="noopener">参考官网链接</a><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog -v --base64-output=DECODE-ROWS log_file &gt; a.txt</span><br><span class="line">./mysqlbinlog -v --base64-output=DECODE-ROWS -d efi --start-datetime=<span class="string">"2009-04-12 12:00:00"</span> --stop-datetime=<span class="string">"2019-04-12 14:00:00"</span> D:/mysql/mysql-bin.002715 &gt; D:/mysql/20190412.txt</span><br></pre></td></tr></table></figure></li></ul><hr><ul><li><strong>导入导出</strong><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 导出</span></span><br><span class="line">mysqldump -h主机 -P端口 -u用户名 -p密码 数据库名 &gt; 文件名.sql</span><br><span class="line"><span class="comment">-- 导入</span></span><br><span class="line">mysql -h主机 -P端口 -u用户名 -p密码 数据库名 &lt; 文件名.sql</span><br></pre></td></tr></table></figure></li></ul><hr><ul><li><strong>查看线程</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 可以解决数据库CPU占用过高的问题，根据看到的sql语句考虑加索引</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">full</span> <span class="keyword">processlist</span>;</span><br></pre></td></tr></table></figure></li></ul><hr><ul><li><strong>查看全局配置信息</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> <span class="keyword">variables</span>;</span><br></pre></td></tr></table></figure></li></ul><hr><ul><li><strong>最大连接数</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看最大连接数</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%max_connections%'</span>;</span><br><span class="line"><span class="comment">-- 修改最大连接数</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> max_connections=<span class="number">1000</span>;</span><br></pre></td></tr></table></figure></li></ul><hr><ul><li><strong>Docker运行MySQL</strong></li><li>用户名密码是上面命令中的操作员用户名密码，不需要用root登录，默认操作员只能操作efi这个数据库</li><li>使用命名卷管理数据，保持宿主机清洁</li></ul><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span><span class="bash"> --name mysql \</span></span><br><span class="line"><span class="bash">    -d \</span></span><br><span class="line"><span class="bash">    -p 3306:3306 \</span></span><br><span class="line"><span class="bash">    -e MYSQL\_ROOT\_PASSWORD=rootpsw \</span></span><br><span class="line"><span class="bash">    -e MYSQL\_USER=user \</span></span><br><span class="line"><span class="bash">    -e MYSQL\_PASSWORD=userpsw \</span></span><br><span class="line"><span class="bash">    -e MYSQL\_DATABASE=efi \</span></span><br><span class="line"><span class="bash">    -v mysql:/var/lib/mysql \</span></span><br><span class="line"><span class="bash">    mysql:5.7.18 \</span></span><br><span class="line"><span class="bash">    --character-set-server=utf8mb4 \</span></span><br><span class="line"><span class="bash">    --collation-server=utf8mb4_unicode_ci</span></span><br></pre></td></tr></table></figure><hr>]]></content>
-    
-    <summary type="html">
-    
-      MySQL导入导出，查看线程等
-    
-    </summary>
-    
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
-    
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
     
   </entry>
   

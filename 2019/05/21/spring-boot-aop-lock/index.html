@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="IO-输入输出规范代码">
-<meta name="keywords" content="Java,Java SE笔记">
+<meta name="description" content="Spring boot 自定义注解+AOP实现互斥锁">
+<meta name="keywords" content="Java,Spring boot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java SE笔记： IO-输入输出规范代码">
-<meta property="og:url" content="www.chenb.top/2016/08/23/java-2/index.html">
+<meta property="og:title" content="Spring boot 自定义注解+AOP实现互斥锁">
+<meta property="og:url" content="www.chenb.top/2019/05/21/spring-boot-aop-lock/index.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
-<meta property="og:description" content="IO-输入输出规范代码">
+<meta property="og:description" content="Spring boot 自定义注解+AOP实现互斥锁">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2016-08-23T13:20:00.000Z">
+<meta property="og:updated_time" content="2019-05-21T08:19:29.809Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java SE笔记： IO-输入输出规范代码">
-<meta name="twitter:description" content="IO-输入输出规范代码">
+<meta name="twitter:title" content="Spring boot 自定义注解+AOP实现互斥锁">
+<meta name="twitter:description" content="Spring boot 自定义注解+AOP实现互斥锁">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Java SE笔记： IO-输入输出规范代码 | ChenBin&#39;s Blog</title>
+<title>Spring boot 自定义注解+AOP实现互斥锁 | ChenBin&#39;s Blog</title>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -296,11 +296,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-java-2" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-spring-boot-aop-lock" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/23/java-2/" class="article-date">
-      <time datetime="2016-08-23T13:20:00.000Z" itemprop="datePublished">2016-08-23</time>
+      <a href="/2019/05/21/spring-boot-aop-lock/" class="article-date">
+      <time datetime="2019-05-21T07:48:36.000Z" itemprop="datePublished">2019-05-21</time>
 </a>
 
 
@@ -315,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Java SE笔记： IO-输入输出规范代码
+      Spring boot 自定义注解+AOP实现互斥锁
     </h1>
   
 
@@ -324,13 +324,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/个人笔记/">个人笔记</a>
+    <a class="article-category-link" href="/categories/技术总结/">技术总结</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-SE笔记/">Java SE笔记</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -340,29 +340,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="文件路径4种写法："><a href="#文件路径4种写法：" class="headerlink" title="文件路径4种写法："></a>文件路径4种写法：</h3><ul>
-<li>相对路径，相对当前而言，在当前路径下找：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String filePath = <span class="string">"temp01"</span>;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>绝对路径：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String filePath = <span class="string">"D:\\course\\JavaProjects\\02-JavaSE\\chapter08\\temp01"</span>;<span class="comment">//普通写法，需要用转义字符</span></span><br><span class="line">String filePath = <span class="string">"D:/course/JavaProjects/02-JavaSE/chapter08/temp01"</span>;<span class="comment">//反斜杠写法，windows系统下支持</span></span><br><span class="line">String filePath = <span class="string">"D:"</span>+File.separator+<span class="string">"course"</span>+File.separator+<span class="string">"JavaProjects"</span>+File.separator+<span class="string">"02-JavaSE"</span>+File.separator+<span class="string">"chapter08"</span>+File.separator+<span class="string">"temp01"</span>;<span class="comment">//最标准写法：用系统相关默认名称分隔符</span></span><br></pre></td></tr></table></figure>
-<h3 id="输入输出流标准写法："><a href="#输入输出流标准写法：" class="headerlink" title="输入输出流标准写法："></a>输入输出流标准写法：</h3><ol>
-<li>创建流对象：<ul>
-<li>创建输入流对象会抛出FileNotFoundException异常，该异常可以细化处理</li>
-<li>创建输出流对象时若文件不存在则自动创建，默认为覆盖写入，如果要追加方式写入，在构造方法参数列表后加一个true</li>
-</ul>
-</li>
-<li>进行读写操作：抛出IOException</li>
-<li>关闭流对象：抛出IOException</li>
-</ol>
-<h3 id="字符流和字节流："><a href="#字符流和字节流：" class="headerlink" title="字符流和字节流："></a>字符流和字节流：</h3><ul>
-<li>字节流可以用于所有文件</li>
-<li>字符流编程比较方便（可用readline方法），但只能用于纯文本文件</li>
-</ul>
-<h3 id="copy代码范例（字节流）："><a href="#copy代码范例（字节流）：" class="headerlink" title="copy代码范例（字节流）："></a>copy代码范例（字节流）：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">FileInputStream fIn = <span class="keyword">null</span>;</span><br><span class="line">FileOutputStream fOut = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">byte</span>[] buff = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//定义输入流对象，会抛出FileNotFoundException</span></span><br><span class="line">    fIn = <span class="keyword">new</span> FileInputStream(<span class="string">"F://test//1.avi"</span>);</span><br><span class="line">    <span class="comment">//定义输出流对象，文件不存在则自动创建，如果要追加方式写入，在构造方法参数列表后加一个true</span></span><br><span class="line">    fOut = <span class="keyword">new</span> FileOutputStream(<span class="string">"F://test//2.avi"</span>);</span><br><span class="line">    <span class="comment">//读写的操作</span></span><br><span class="line">    <span class="keyword">while</span>((temp = fIn.read(buff)) != -<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        fOut.write(buff, <span class="number">0</span>, temp);</span><br><span class="line">    &#125;</span><br><span class="line">    fOut.flush();<span class="comment">//为了保证数据完全写入硬盘，推荐用强制刷新写入</span></span><br><span class="line">&#125;<span class="keyword">catch</span>(FileNotFoundException e)<span class="comment">//输入流抛出异常的细化处理</span></span><br><span class="line">&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;<span class="keyword">catch</span>(IOException e)<span class="comment">//读写操作的异常处理</span></span><br><span class="line">&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;<span class="keyword">finally</span><span class="comment">//关闭流对象，写在finally语句块中确保一定执行</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(fIn!=<span class="keyword">null</span>)<span class="comment">//防止空指针异常</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            fIn.close();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(IOException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(fOut!=<span class="keyword">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            fOut.close();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(IOException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="copy不规范代码（字符流使用readline）："><a href="#copy不规范代码（字符流使用readline）：" class="headerlink" title="copy不规范代码（字符流使用readline）："></a>copy不规范代码（字符流使用readline）：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"Copy03.java"</span>));</span><br><span class="line">BufferedWriter bw = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">"c:/Copy03.java"</span>));</span><br><span class="line">String temp = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//用于防止在文件最后写一个换行符</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    count++;</span><br><span class="line">    temp = br.readLine();</span><br><span class="line">    <span class="keyword">if</span>(temp==<span class="keyword">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(count&gt;<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        bw.newLine();<span class="comment">//如果不写换行符，文件不会换行</span></span><br><span class="line">    &#125;</span><br><span class="line">    bw.write(temp);</span><br><span class="line">&#125;</span><br><span class="line">bw.flush();</span><br><span class="line">br.close();</span><br><span class="line">bw.close();</span><br></pre></td></tr></table></figure>
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>随着业务量的不断增长，并发问题时有出现，要解决这些问题需要引入锁机制</p>
+<h3 id="同步关键字解决方案"><a href="#同步关键字解决方案" class="headerlink" title="同步关键字解决方案"></a>同步关键字解决方案</h3><p>最初在方法上加同步关键字<code>synchronized</code>，这种方式只能限制同一个类中的方法，不同类中的方法仍然可以并发<br>那么可以使用同步代码块解决该问题，定义一个公共的锁，然后在需要同步的方法开始和结束加上同步代码块，这样就能解决问题了，但是这种写法很繁琐，需要每个方法头尾去加代码，由此想到了AOP和自定义注解</p>
+<h3 id="定义锁注解"><a href="#定义锁注解" class="headerlink" title="定义锁注解"></a>定义锁注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.PARAMETER, ElementType.METHOD&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ServiceLock &#123;</span><br><span class="line">    <span class="function">String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> "service lock"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="AOP切面"><a href="#AOP切面" class="headerlink" title="AOP切面"></a>AOP切面</h3><p>在Service层定义切面，方法执行前后分别加锁和解锁，使用时需要同步的方法加上<code>@ServiceLock</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 同步锁 AOP</span></span><br><span class="line"><span class="comment"> * https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/htmlsingle/#transaction-declarative-annotations</span></span><br><span class="line"><span class="comment"> * https://docs.spring.io/spring/docs/4.3.14.RELEASE/javadoc-api/</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Order</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockAspect</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 互斥锁 参数默认false，不公平锁</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Lock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Service层切点     用于记录错误日志</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@annotation(com.xxx.xxx.service.lock.ServiceLock)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lockAspect</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"lockAspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        Object obj;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            obj = joinPoint.proceed();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -370,21 +352,21 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/08/23/java-2/">Java SE笔记： IO-输入输出规范代码</a></p>
+        <p><span>本文标题:</span><a href="/2019/05/21/spring-boot-aop-lock/">Spring boot 自定义注解+AOP实现互斥锁</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
-        <p><span>发布时间:</span>2016-08-23, 21:20:00</p>
-        <p><span>最后更新:</span>2016-08-23, 21:20:00</p>
+        <p><span>发布时间:</span>2019-05-21, 15:48:36</p>
+        <p><span>最后更新:</span>2019-05-21, 16:19:29</p>
         
             <p>
                 <span>更新历史:</span><i class="fa fa-github"></i>
-                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2016-08-23.java-2.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
-                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2016-08-23.java-2.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
-                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2016-08-23.java-2.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
+                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2019-05-21.spring-boot-aop-lock.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
+                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2019-05-21.spring-boot-aop-lock.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
+                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2019-05-21.spring-boot-aop-lock.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
             </p>
         
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/08/23/java-2/" title="Java SE笔记： IO-输入输出规范代码">www.chenb.top/2016/08/23/java-2/</a>
-            <span class="copy-path" data-clipboard-text="原文: www.chenb.top/2016/08/23/java-2/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/05/21/spring-boot-aop-lock/" title="Spring boot 自定义注解+AOP实现互斥锁">www.chenb.top/2019/05/21/spring-boot-aop-lock/</a>
+            <span class="copy-path" data-clipboard-text="原文: www.chenb.top/2019/05/21/spring-boot-aop-lock/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -396,16 +378,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/08/23/java-3/">
-                    Java SE笔记： IO-转换流的作用
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/23/java-1/">
-                    Java SE笔记： IO-输入输出流概念
+                <a href="/2019/05/20/java-rpn/">
+                    Java实现数学公式计算
                 </a>
             </div>
         
@@ -417,7 +393,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件路径4种写法："><span class="toc-number">1.</span> <span class="toc-text">文件路径4种写法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入输出流标准写法："><span class="toc-number">2.</span> <span class="toc-text">输入输出流标准写法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符流和字节流："><span class="toc-number">3.</span> <span class="toc-text">字符流和字节流：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copy代码范例（字节流）："><span class="toc-number">4.</span> <span class="toc-text">copy代码范例（字节流）：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copy不规范代码（字符流使用readline）："><span class="toc-number">5.</span> <span class="toc-text">copy不规范代码（字符流使用readline）：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同步关键字解决方案"><span class="toc-number">1.1.</span> <span class="toc-text">同步关键字解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义锁注解"><span class="toc-number">1.2.</span> <span class="toc-text">定义锁注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP切面"><span class="toc-number">1.3.</span> <span class="toc-text">AOP切面</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -453,7 +429,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： IO-输入输出规范代码　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Spring boot 自定义注解+AOP实现互斥锁　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -473,15 +449,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/08/23/java-3/" title="上一篇: Java SE笔记： IO-转换流的作用">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/23/java-1/" title="下一篇: Java SE笔记： IO-输入输出流概念">
+            <a href="/2019/05/20/java-rpn/" title="下一篇: Java实现数学公式计算">
                 <i class="fa fa-angle-right"></i>
             </a>
         
