@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
 <meta property="og:description" content="记录搭建博客碰到的问题和解决办法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T01:20:50.165Z">
+<meta property="og:updated_time" content="2019-05-21T01:35:34.212Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客成长之路">
 <meta name="twitter:description" content="记录搭建博客碰到的问题和解决办法">
@@ -346,6 +346,10 @@
           
         <hr>
 <ul>
+<li><code>2019-05-21</code> <strong>解决代码块行数限制问题：</strong><br>困扰我很久的问题，偶然在Github上发现了解决方案，很简单，去掉<code>highlight.styl</code>中的最大高度设置就可以了<br>具体：<del>max-height: 50em</del><br>我的解决提交：<a href="https://github.com/chenbin-353549444/hexo-theme-yelee/commit/1813bde713c6a8b0f69aab8edc01dad058d2d4b0" target="_blank" rel="noopener">git commit</a></li>
+</ul>
+<hr>
+<ul>
 <li><code>2019-04-22</code> <strong>解决分享相关问题：</strong><br>分享的问题已经有一段时间了，今天才真正解决。<br>首先，https无法使用百度分享，所以用了一段时间的addthis，但是换成自己的<code>addthis_pubid</code>后就失效了，最近才发现这个大坑，官网复制的pubid是大写的RA，改成小写后就起作用了<br>其次，addthis的效果不如百度统计，最近搜了一下https下使用百度分享，发现是有解决方案的，于是终于能解决这个问题了。<br>具体解决方案见：<a href="https://github.com/hrwhisper/baiduShare" target="_blank" rel="noopener">Github工程</a><br>我的解决提交：<a href="https://github.com/chenbin-353549444/hexo-theme-yelee/commit/af3114ffb8f0a5beac97bcf089a3585c2b11ed23" target="_blank" rel="noopener">git commit</a></li>
 </ul>
 <hr>
@@ -403,7 +407,7 @@
         <p><span>本文标题:</span><a href="/2018/11/01/blog-way/">博客成长之路</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
         <p><span>发布时间:</span>2018-11-01, 17:08:43</p>
-        <p><span>最后更新:</span>2019-04-23, 09:20:50</p>
+        <p><span>最后更新:</span>2019-05-21, 09:35:34</p>
         
             <p>
                 <span>更新历史:</span><i class="fa fa-github"></i>
