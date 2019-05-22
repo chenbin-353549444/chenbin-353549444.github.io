@@ -3,11 +3,11 @@
   <title>ChenBin&#39;s Blog</title>
   
   <subtitle>🎉✨🎨🚀🐳</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="www.chenb.top/"/>
+  <link href="https://chenbinhongfund.gitee.io/blog/"/>
   <updated>2019-05-21T08:19:29.809Z</updated>
-  <id>www.chenb.top/</id>
+  <id>https://chenbinhongfund.gitee.io/blog/</id>
   
   <author>
     <name>Chen Bin</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Spring boot 自定义注解+AOP实现互斥锁</title>
-    <link href="www.chenb.top/2019/05/21/spring-boot-aop-lock/"/>
-    <id>www.chenb.top/2019/05/21/spring-boot-aop-lock/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/</id>
     <published>2019-05-21T07:48:36.000Z</published>
     <updated>2019-05-21T08:19:29.809Z</updated>
     
@@ -31,19 +31,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>Java实现数学公式计算</title>
-    <link href="www.chenb.top/2019/05/20/java-rpn/"/>
-    <id>www.chenb.top/2019/05/20/java-rpn/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/</id>
     <published>2019-05-20T09:48:52.000Z</published>
     <updated>2019-05-20T13:39:12.081Z</updated>
     
@@ -55,17 +55,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>Spring Data JPA解决批量修改与唯一索引冲突的问题</title>
-    <link href="www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
-    <id>www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
     <published>2019-04-23T09:17:30.000Z</published>
     <updated>2019-04-23T09:52:32.805Z</updated>
     
@@ -77,19 +77,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Git提交规范，GitHub表情规范指南</title>
-    <link href="www.chenb.top/2019/04/11/git-commit-emoji/"/>
-    <id>www.chenb.top/2019/04/11/git-commit-emoji/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/</id>
     <published>2019-04-11T08:42:33.000Z</published>
     <updated>2019-04-23T05:43:32.333Z</updated>
     
@@ -101,17 +101,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Git" scheme="www.chenb.top/tags/Git/"/>
+      <category term="Git" scheme="https://chenbinhongfund.gitee.io/blog/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>反爬虫：tyc-num.woff字体加密</title>
-    <link href="www.chenb.top/2018/12/06/web-crawler-tyc-num/"/>
-    <id>www.chenb.top/2018/12/06/web-crawler-tyc-num/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/</id>
     <published>2018-12-06T01:48:51.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -123,23 +123,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot升级到2.1</title>
-    <link href="www.chenb.top/2018/11/26/spring-boot-update-version/"/>
-    <id>www.chenb.top/2018/11/26/spring-boot-update-version/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/</id>
     <published>2018-11-26T07:42:04.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -151,17 +151,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>博客成长之路</title>
-    <link href="www.chenb.top/2018/11/01/blog-way/"/>
-    <id>www.chenb.top/2018/11/01/blog-way/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/</id>
     <published>2018-11-01T09:08:43.000Z</published>
     <updated>2019-05-21T01:35:34.212Z</updated>
     
@@ -173,19 +173,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Blog" scheme="www.chenb.top/tags/Blog/"/>
+      <category term="Blog" scheme="https://chenbinhongfund.gitee.io/blog/tags/Blog/"/>
     
   </entry>
   
   <entry>
     <title>Java内存分页工具</title>
-    <link href="www.chenb.top/2018/08/17/spring-boot-ram-pager/"/>
-    <id>www.chenb.top/2018/08/17/spring-boot-ram-pager/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/</id>
     <published>2018-08-17T08:55:30.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -197,21 +197,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</title>
-    <link href="www.chenb.top/2018/08/13/java-csv-to-excel/"/>
-    <id>www.chenb.top/2018/08/13/java-csv-to-excel/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/</id>
     <published>2018-08-13T06:19:14.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -223,25 +223,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="JavaCSV" scheme="www.chenb.top/tags/JavaCSV/"/>
+      <category term="JavaCSV" scheme="https://chenbinhongfund.gitee.io/blog/tags/JavaCSV/"/>
     
-      <category term="Apache" scheme="www.chenb.top/tags/Apache/"/>
+      <category term="Apache" scheme="https://chenbinhongfund.gitee.io/blog/tags/Apache/"/>
     
-      <category term="POI" scheme="www.chenb.top/tags/POI/"/>
+      <category term="POI" scheme="https://chenbinhongfund.gitee.io/blog/tags/POI/"/>
     
-      <category term="Excel" scheme="www.chenb.top/tags/Excel/"/>
+      <category term="Excel" scheme="https://chenbinhongfund.gitee.io/blog/tags/Excel/"/>
     
   </entry>
   
   <entry>
     <title>MySQL简单存储过程修复用户表</title>
-    <link href="www.chenb.top/2018/08/09/mysql-code/"/>
-    <id>www.chenb.top/2018/08/09/mysql-code/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/</id>
     <published>2018-08-09T06:34:08.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -253,19 +253,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="代码块" scheme="www.chenb.top/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
+      <category term="代码块" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>Windows共享文件夹设置</title>
-    <link href="www.chenb.top/2018/07/25/windows-share-folders/"/>
-    <id>www.chenb.top/2018/07/25/windows-share-folders/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/</id>
     <published>2018-07-25T06:44:31.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -277,17 +277,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Windows" scheme="www.chenb.top/tags/Windows/"/>
+      <category term="Windows" scheme="https://chenbinhongfund.gitee.io/blog/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins Docker实现自动复制MySQL数据库</title>
-    <link href="www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/"/>
-    <id>www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/</id>
     <published>2018-07-23T06:37:33.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -299,21 +299,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
   </entry>
   
   <entry>
     <title>Java爬虫获取企业工商信息</title>
-    <link href="www.chenb.top/2018/07/09/jsoup-company-info/"/>
-    <id>www.chenb.top/2018/07/09/jsoup-company-info/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/</id>
     <published>2018-07-09T07:35:40.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -325,23 +325,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot MySQL连接超时</title>
-    <link href="www.chenb.top/2018/07/09/spring-boot-mysql-timeout/"/>
-    <id>www.chenb.top/2018/07/09/spring-boot-mysql-timeout/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/</id>
     <published>2018-07-09T06:15:14.000Z</published>
     <updated>2018-07-12T13:00:05.252Z</updated>
     
@@ -353,21 +353,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Tomcat" scheme="www.chenb.top/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="https://chenbinhongfund.gitee.io/blog/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot开启Gzip压缩</title>
-    <link href="www.chenb.top/2018/06/13/spring-boot-gzip/"/>
-    <id>www.chenb.top/2018/06/13/spring-boot-gzip/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/</id>
     <published>2018-06-13T14:30:12.000Z</published>
     <updated>2019-05-20T09:36:32.246Z</updated>
     
@@ -379,21 +379,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
-      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
+      <category term="Gzip" scheme="https://chenbinhongfund.gitee.io/blog/tags/Gzip/"/>
     
   </entry>
   
   <entry>
     <title>发布自己的npm包，hexo文章排序插件</title>
-    <link href="www.chenb.top/2018/06/11/npm-publish/"/>
-    <id>www.chenb.top/2018/06/11/npm-publish/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/</id>
     <published>2018-06-11T12:36:46.000Z</published>
     <updated>2018-06-11T14:33:52.740Z</updated>
     
@@ -405,21 +405,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
     
-      <category term="Npm" scheme="www.chenb.top/tags/Npm/"/>
+      <category term="Npm" scheme="https://chenbinhongfund.gitee.io/blog/tags/Npm/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot同时支持http和https访问</title>
-    <link href="www.chenb.top/2018/05/17/spring-boot-https/"/>
-    <id>www.chenb.top/2018/05/17/spring-boot-https/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/</id>
     <published>2018-05-17T06:22:03.000Z</published>
     <updated>2019-04-23T01:20:50.165Z</updated>
     
@@ -431,19 +431,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
   </entry>
   
   <entry>
     <title>使用Jenkins和Docker持续集成java项目</title>
-    <link href="www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/"/>
-    <id>www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/</id>
     <published>2018-05-14T09:20:50.000Z</published>
     <updated>2018-05-25T15:19:51.107Z</updated>
     
@@ -455,29 +455,29 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
+      <category term="Maven" scheme="https://chenbinhongfund.gitee.io/blog/tags/Maven/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins服务器容器化</title>
-    <link href="www.chenb.top/2018/04/07/jenkins-docker/"/>
-    <id>www.chenb.top/2018/04/07/jenkins-docker/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/</id>
     <published>2018-04-07T12:18:15.000Z</published>
     <updated>2018-05-17T13:07:10.798Z</updated>
     
@@ -489,23 +489,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
   <entry>
     <title>MySQL存储过程</title>
-    <link href="www.chenb.top/2018/03/30/mysql-procedure/"/>
-    <id>www.chenb.top/2018/03/30/mysql-procedure/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/03/30/mysql-procedure/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/03/30/mysql-procedure/</id>
     <published>2018-03-30T08:00:23.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -517,12 +517,12 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="代码块" scheme="www.chenb.top/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
+      <category term="代码块" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
   </entry>
   
