@@ -1551,14 +1551,11 @@ body .ui-tooltip {
 }
 .article-entry h2 {
   margin: 0.5em auto;
-  color: #66be66;
+  color: #c44536;
   padding-bottom: 5px;
   border-bottom: 1px solid #ddd;
   text-align: center;
   font-size: 1.5rem;
-}
-.article-entry h2:hover {
-  color: #88acdb;
 }
 .article-entry h2::before,
 .article-entry h2::after {
@@ -1567,15 +1564,9 @@ body .ui-tooltip {
 }
 .article-entry h3 {
   margin: 0.5em auto;
-  color: #708090;
-  background: rgba(233,233,233,0.6);
-  border: 1px solid #ddd;
-  padding: 0.2em 0.6em;
-  -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
-  box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
-}
-.article-entry h3:hover a {
-  text-decoration: underline;
+  color: #3c6997;
+  border-top: 1px solid #ddd;
+  padding-top: 0.5em;
 }
 .article-entry h3::before {
   font-family: FontAwesome;
