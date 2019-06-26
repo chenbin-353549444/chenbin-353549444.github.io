@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>Node语音识别</title>
+      <link href="/blog/2019/06/26/node-ffmpeg/"/>
+      <url>/blog/2019/06/26/node-ffmpeg/</url>
+      <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/images/view.jpg" alt=""></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
+      
+      <categories>
+          
+          <category> 技术总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Node </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>Spring boot 自定义注解+AOP实现互斥锁</title>
       <link href="/blog/2019/05/21/spring-boot-aop-lock/"/>
       <url>/blog/2019/05/21/spring-boot-aop-lock/</url>
