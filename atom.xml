@@ -3,11 +3,11 @@
   <title>ChenBin&#39;s Blog</title>
   
   <subtitle>🎉✨🎨🚀🐳</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="www.chenb.top/"/>
-  <updated>2019-06-26T08:30:04.660Z</updated>
-  <id>www.chenb.top/</id>
+  <link href="https://chenbinhongfund.gitee.io/blog/"/>
+  <updated>2019-08-08T07:40:25.960Z</updated>
+  <id>https://chenbinhongfund.gitee.io/blog/</id>
   
   <author>
     <name>Chen Bin</name>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Node语音识别</title>
-    <link href="www.chenb.top/2019/06/26/node-ffmpeg/"/>
-    <id>www.chenb.top/2019/06/26/node-ffmpeg/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/</id>
     <published>2019-06-26T05:47:02.000Z</published>
-    <updated>2019-06-26T08:30:04.660Z</updated>
+    <updated>2019-08-08T07:40:25.960Z</updated>
     
     <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/images/view.jpg" alt=""></p><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p>server.js<br><figure class="highlight javascript"><figcaption><span>1.8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="built_in">require</span>(<span class="string">'fluent-ffmpeg'</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> app = express();</span><br><span class="line"><span class="keyword">let</span> AipSpeech = <span class="built_in">require</span>(<span class="string">"baidu-aip-sdk"</span>).speech;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度语音应用后台中的`API Key`和`Secret Key`</span></span><br><span class="line"><span class="keyword">let</span> client = <span class="keyword">new</span> AipSpeech(<span class="number">0</span>, <span class="string">'API Key'</span>, <span class="string">'Secret Key'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">let</span> multer  = <span class="built_in">require</span>(<span class="string">'multer'</span>);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/public'</span>, express.static(<span class="string">'public'</span>));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(multer(&#123; <span class="attr">dest</span>: <span class="string">'/tmp/'</span>&#125;).array(<span class="string">'buf'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.sendFile( __dirname + <span class="string">"/"</span> + <span class="string">"index.htm"</span> );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/pcm'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req.files[<span class="number">0</span>]);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    fs.readFile( req.files[<span class="number">0</span>].path, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(data);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/m4a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> command = ffmpeg(req.files[<span class="number">0</span>].path)</span><br><span class="line">        .noVideo()</span><br><span class="line">        .inputFormat(<span class="string">'m4a'</span>)</span><br><span class="line">        .audioCodec(<span class="string">'pcm_s16le'</span>)</span><br><span class="line">        .audioBitrate(<span class="number">16</span>)</span><br><span class="line">        .audioFrequency(<span class="number">16000</span>)</span><br><span class="line">        .audioChannels(<span class="number">1</span>)</span><br><span class="line">        .format(<span class="string">'s16le'</span>)</span><br><span class="line">        .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'An error occurred: '</span> + err.message);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="keyword">let</span> ffstream = command.pipe();</span><br><span class="line">    ffstream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">        voiceBase64 = Buffer.concat([voiceBase64, <span class="keyword">new</span> Buffer(chunk)]);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'ffmpeg just wrote '</span> + chunk.length + <span class="string">' bytes'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ffstream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data '</span> + voiceBase64.length + <span class="string">' bytes'</span>);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>, host, port)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
     
@@ -31,17 +31,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot 自定义注解+AOP实现互斥锁</title>
-    <link href="www.chenb.top/2019/05/21/spring-boot-aop-lock/"/>
-    <id>www.chenb.top/2019/05/21/spring-boot-aop-lock/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/</id>
     <published>2019-05-21T07:48:36.000Z</published>
     <updated>2019-05-21T08:19:29.809Z</updated>
     
@@ -53,19 +53,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>Java实现数学公式计算</title>
-    <link href="www.chenb.top/2019/05/20/java-rpn/"/>
-    <id>www.chenb.top/2019/05/20/java-rpn/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/</id>
     <published>2019-05-20T09:48:52.000Z</published>
     <updated>2019-05-20T13:39:12.081Z</updated>
     
@@ -77,17 +77,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>Spring Data JPA解决批量修改与唯一索引冲突的问题</title>
-    <link href="www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
-    <id>www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
     <published>2019-04-23T09:17:30.000Z</published>
     <updated>2019-04-23T09:52:32.805Z</updated>
     
@@ -99,19 +99,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Git提交规范，GitHub表情规范指南</title>
-    <link href="www.chenb.top/2019/04/11/git-commit-emoji/"/>
-    <id>www.chenb.top/2019/04/11/git-commit-emoji/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/</id>
     <published>2019-04-11T08:42:33.000Z</published>
     <updated>2019-04-23T05:43:32.333Z</updated>
     
@@ -123,17 +123,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Git" scheme="www.chenb.top/tags/Git/"/>
+      <category term="Git" scheme="https://chenbinhongfund.gitee.io/blog/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>反爬虫：tyc-num.woff字体加密</title>
-    <link href="www.chenb.top/2018/12/06/web-crawler-tyc-num/"/>
-    <id>www.chenb.top/2018/12/06/web-crawler-tyc-num/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/</id>
     <published>2018-12-06T01:48:51.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -145,23 +145,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot升级到2.1</title>
-    <link href="www.chenb.top/2018/11/26/spring-boot-update-version/"/>
-    <id>www.chenb.top/2018/11/26/spring-boot-update-version/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/</id>
     <published>2018-11-26T07:42:04.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -173,17 +173,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>博客成长之路</title>
-    <link href="www.chenb.top/2018/11/01/blog-way/"/>
-    <id>www.chenb.top/2018/11/01/blog-way/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/</id>
     <published>2018-11-01T09:08:43.000Z</published>
     <updated>2019-05-21T01:35:34.212Z</updated>
     
@@ -195,19 +195,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Blog" scheme="www.chenb.top/tags/Blog/"/>
+      <category term="Blog" scheme="https://chenbinhongfund.gitee.io/blog/tags/Blog/"/>
     
   </entry>
   
   <entry>
     <title>Java内存分页工具</title>
-    <link href="www.chenb.top/2018/08/17/spring-boot-ram-pager/"/>
-    <id>www.chenb.top/2018/08/17/spring-boot-ram-pager/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/</id>
     <published>2018-08-17T08:55:30.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -219,21 +219,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</title>
-    <link href="www.chenb.top/2018/08/13/java-csv-to-excel/"/>
-    <id>www.chenb.top/2018/08/13/java-csv-to-excel/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/</id>
     <published>2018-08-13T06:19:14.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -245,25 +245,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="JavaCSV" scheme="www.chenb.top/tags/JavaCSV/"/>
+      <category term="JavaCSV" scheme="https://chenbinhongfund.gitee.io/blog/tags/JavaCSV/"/>
     
-      <category term="Apache" scheme="www.chenb.top/tags/Apache/"/>
+      <category term="Apache" scheme="https://chenbinhongfund.gitee.io/blog/tags/Apache/"/>
     
-      <category term="POI" scheme="www.chenb.top/tags/POI/"/>
+      <category term="POI" scheme="https://chenbinhongfund.gitee.io/blog/tags/POI/"/>
     
-      <category term="Excel" scheme="www.chenb.top/tags/Excel/"/>
+      <category term="Excel" scheme="https://chenbinhongfund.gitee.io/blog/tags/Excel/"/>
     
   </entry>
   
   <entry>
     <title>MySQL简单存储过程修复用户表</title>
-    <link href="www.chenb.top/2018/08/09/mysql-code/"/>
-    <id>www.chenb.top/2018/08/09/mysql-code/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/</id>
     <published>2018-08-09T06:34:08.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -275,19 +275,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="代码块" scheme="www.chenb.top/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
+      <category term="代码块" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>Windows共享文件夹设置</title>
-    <link href="www.chenb.top/2018/07/25/windows-share-folders/"/>
-    <id>www.chenb.top/2018/07/25/windows-share-folders/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/</id>
     <published>2018-07-25T06:44:31.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -299,17 +299,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Windows" scheme="www.chenb.top/tags/Windows/"/>
+      <category term="Windows" scheme="https://chenbinhongfund.gitee.io/blog/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins Docker实现自动复制MySQL数据库</title>
-    <link href="www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/"/>
-    <id>www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/</id>
     <published>2018-07-23T06:37:33.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -321,21 +321,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
   </entry>
   
   <entry>
     <title>Java爬虫获取企业工商信息</title>
-    <link href="www.chenb.top/2018/07/09/jsoup-company-info/"/>
-    <id>www.chenb.top/2018/07/09/jsoup-company-info/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/</id>
     <published>2018-07-09T07:35:40.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -347,23 +347,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot MySQL连接超时</title>
-    <link href="www.chenb.top/2018/07/09/spring-boot-mysql-timeout/"/>
-    <id>www.chenb.top/2018/07/09/spring-boot-mysql-timeout/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/</id>
     <published>2018-07-09T06:15:14.000Z</published>
     <updated>2018-07-12T13:00:05.252Z</updated>
     
@@ -375,21 +375,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Tomcat" scheme="www.chenb.top/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="https://chenbinhongfund.gitee.io/blog/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot开启Gzip压缩</title>
-    <link href="www.chenb.top/2018/06/13/spring-boot-gzip/"/>
-    <id>www.chenb.top/2018/06/13/spring-boot-gzip/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/</id>
     <published>2018-06-13T14:30:12.000Z</published>
     <updated>2019-05-20T09:36:32.246Z</updated>
     
@@ -401,21 +401,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="Gzip" scheme="https://chenbinhongfund.gitee.io/blog/tags/Gzip/"/>
     
-      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
   </entry>
   
   <entry>
     <title>发布自己的npm包，hexo文章排序插件</title>
-    <link href="www.chenb.top/2018/06/11/npm-publish/"/>
-    <id>www.chenb.top/2018/06/11/npm-publish/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/</id>
     <published>2018-06-11T12:36:46.000Z</published>
     <updated>2018-06-11T14:33:52.740Z</updated>
     
@@ -427,21 +427,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
     
-      <category term="Npm" scheme="www.chenb.top/tags/Npm/"/>
+      <category term="Npm" scheme="https://chenbinhongfund.gitee.io/blog/tags/Npm/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot同时支持http和https访问</title>
-    <link href="www.chenb.top/2018/05/17/spring-boot-https/"/>
-    <id>www.chenb.top/2018/05/17/spring-boot-https/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/</id>
     <published>2018-05-17T06:22:03.000Z</published>
     <updated>2019-06-05T03:13:39.990Z</updated>
     
@@ -453,19 +453,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
   </entry>
   
   <entry>
     <title>使用Jenkins和Docker持续集成java项目</title>
-    <link href="www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/"/>
-    <id>www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/</id>
     <published>2018-05-14T09:20:50.000Z</published>
     <updated>2018-05-25T15:19:51.107Z</updated>
     
@@ -477,29 +477,29 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
+      <category term="Maven" scheme="https://chenbinhongfund.gitee.io/blog/tags/Maven/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins服务器容器化</title>
-    <link href="www.chenb.top/2018/04/07/jenkins-docker/"/>
-    <id>www.chenb.top/2018/04/07/jenkins-docker/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/</id>
     <published>2018-04-07T12:18:15.000Z</published>
     <updated>2018-05-17T13:07:10.798Z</updated>
     
@@ -511,16 +511,16 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
