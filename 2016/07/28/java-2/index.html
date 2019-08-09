@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
 <meta property="og:description" content="static关键字（静态和成员）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://chenbinhongfund.gitee.io/images/javase_8.jpg">
-<meta property="og:image" content="https://chenbinhongfund.gitee.io/images/javase_9.jpg">
+<meta property="og:image" content="https://chenbinhongfund.gitee.io/blog/images/javase_8.jpg">
+<meta property="og:image" content="https://chenbinhongfund.gitee.io/blog/images/javase_9.jpg">
 <meta property="og:updated_time" content="2016-07-28T13:20:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java SE笔记： static关键字（静态和成员）">
 <meta name="twitter:description" content="static关键字（静态和成员）">
-<meta name="twitter:image" content="https://chenbinhongfund.gitee.io/images/javase_8.jpg">
+<meta name="twitter:image" content="https://chenbinhongfund.gitee.io/blog/images/javase_8.jpg">
 
 <link rel="apple-touch-icon" href= "/blog//apple-touch-icon.png">
 
@@ -98,7 +98,7 @@
         var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?a637ced513007ab6ba19c15cce76962a";
+            hm.src = "//hm.baidu.com/hm.js?3db932337b9dc15ac140138df3166f71";
             var s = document.getElementsByTagName("script")[0]; 
             s.parentNode.insertBefore(hm, s);
         })();
@@ -383,8 +383,8 @@ $(document).ready(function ($) {
 </blockquote>
 </li>
 </ul>
-<h3 id="静态变量和成员变量"><a href="#静态变量和成员变量" class="headerlink" title="静态变量和成员变量"></a>静态变量和成员变量</h3><p>解释静态变量诞生的：<br>如下程序在堆栈中的结构如图，那么每个animal对象中都有一个属性“陆生”，那么将会造成内存空间的浪费，所以可以定义静态变量！<br><img src="/images/javase_8.jpg" alt=""></p>
-<p>如下图，已定义static变量，该变量存放在方法区，属于类级别，所以用类名点访问！<br><img src="/images/javase_9.jpg" alt=""></p>
+<h3 id="静态变量和成员变量"><a href="#静态变量和成员变量" class="headerlink" title="静态变量和成员变量"></a>静态变量和成员变量</h3><p>解释静态变量诞生的：<br>如下程序在堆栈中的结构如图，那么每个animal对象中都有一个属性“陆生”，那么将会造成内存空间的浪费，所以可以定义静态变量！<br><img src="/blog/images/javase_8.jpg" alt=""></p>
+<p>如下图，已定义static变量，该变量存放在方法区，属于类级别，所以用类名点访问！<br><img src="/blog/images/javase_9.jpg" alt=""></p>
 <p>什么时候变量声明成静态变量？<br>如果这个属性所有的对象都有，并且这个属性的值是相同的，则该属性声明成静态的属性。</p>
 <p>成员变量：创建java对象的时候初始化。一般用getter和setter方法访问和修改！<br>静态变量：在类加载阶段赋值，并且只赋值一次。一般用类名点访问。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticTest04</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Animal a1 = <span class="keyword">new</span> Animal(<span class="string">"AAA"</span>,<span class="number">10</span>);</span><br><span class="line">        Animal a2 = <span class="keyword">new</span> Animal(<span class="string">"BBB"</span>,<span class="number">11</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//如何访问(类名.)</span></span><br><span class="line">        System.out.println(Animal.type);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//也可以使用 引用.   此时实质上并没有用到该引用</span></span><br><span class="line">        System.out.println(a1.type);</span><br><span class="line">        </span><br><span class="line">        Animal a3 = <span class="keyword">null</span>;</span><br><span class="line">        System.out.println(a3.type); <span class="comment">//静态变量底层访问的时候一定使用的  类名. 和对象无关，不会出现空指针异常。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//抽象现实世界中的“陆生”动物</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span>&#123;   <span class="comment">//Field</span></span><br><span class="line">    <span class="comment">//成员变量(一个对象一份.)</span></span><br><span class="line">    <span class="comment">//成员变量在创建对象的时候初始化，并且存储在堆中的每一个对象中。</span></span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//静态变量，被存储在方法区.</span></span><br><span class="line">    <span class="comment">//所有的java对象共享这一份。</span></span><br><span class="line">    <span class="comment">//所以静态变量是类级别的，使用“类名.”的方式访问.</span></span><br><span class="line">    <span class="keyword">static</span> String type = <span class="string">"陆生"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//Constructor</span></span><br><span class="line">    Animal(String name,<span class="keyword">int</span> age)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -496,7 +496,7 @@ $(document).ready(function ($) {
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： static关键字（静态和成员）　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： static关键字（静态和成员）　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/blog/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
