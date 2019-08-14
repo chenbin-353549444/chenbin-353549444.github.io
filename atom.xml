@@ -3,11 +3,11 @@
   <title>ChenBin&#39;s Blog</title>
   
   <subtitle>🎉✨🎨🚀🐳</subtitle>
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="https://chenbinhongfund.gitee.io/blog/"/>
-  <updated>2019-08-14T07:43:44.762Z</updated>
-  <id>https://chenbinhongfund.gitee.io/blog/</id>
+  <link href="www.chenb.top/"/>
+  <updated>2019-08-14T08:46:03.898Z</updated>
+  <id>www.chenb.top/</id>
   
   <author>
     <name>Chen Bin</name>
@@ -18,12 +18,12 @@
   
   <entry>
     <title>Node语音识别</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/</id>
+    <link href="www.chenb.top/2019/06/26/node-ffmpeg/"/>
+    <id>www.chenb.top/2019/06/26/node-ffmpeg/</id>
     <published>2019-06-26T05:47:02.000Z</published>
-    <updated>2019-08-14T07:43:44.762Z</updated>
+    <updated>2019-08-14T08:46:03.898Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/blog/images/view.jpg" alt=""></p><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p>server.js<br><figure class="highlight javascript"><figcaption><span>1.8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="built_in">require</span>(<span class="string">'fluent-ffmpeg'</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> app = express();</span><br><span class="line"><span class="keyword">let</span> AipSpeech = <span class="built_in">require</span>(<span class="string">"baidu-aip-sdk"</span>).speech;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度语音应用后台中的`API Key`和`Secret Key`</span></span><br><span class="line"><span class="keyword">let</span> client = <span class="keyword">new</span> AipSpeech(<span class="number">0</span>, <span class="string">'API Key'</span>, <span class="string">'Secret Key'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">let</span> multer  = <span class="built_in">require</span>(<span class="string">'multer'</span>);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/public'</span>, express.static(<span class="string">'public'</span>));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(multer(&#123; <span class="attr">dest</span>: <span class="string">'/tmp/'</span>&#125;).array(<span class="string">'buf'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.sendFile( __dirname + <span class="string">"/"</span> + <span class="string">"index.htm"</span> );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/pcm'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req.files[<span class="number">0</span>]);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    fs.readFile( req.files[<span class="number">0</span>].path, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(data);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/m4a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> command = ffmpeg(req.files[<span class="number">0</span>].path)</span><br><span class="line">        .noVideo()</span><br><span class="line">        .inputFormat(<span class="string">'m4a'</span>)</span><br><span class="line">        .audioCodec(<span class="string">'pcm_s16le'</span>)</span><br><span class="line">        .audioBitrate(<span class="number">16</span>)</span><br><span class="line">        .audioFrequency(<span class="number">16000</span>)</span><br><span class="line">        .audioChannels(<span class="number">1</span>)</span><br><span class="line">        .format(<span class="string">'s16le'</span>)</span><br><span class="line">        .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'An error occurred: '</span> + err.message);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="keyword">let</span> ffstream = command.pipe();</span><br><span class="line">    ffstream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">        voiceBase64 = Buffer.concat([voiceBase64, <span class="keyword">new</span> Buffer(chunk)]);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'ffmpeg just wrote '</span> + chunk.length + <span class="string">' bytes'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ffstream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data '</span> + voiceBase64.length + <span class="string">' bytes'</span>);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>, host, port)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/images/view.jpg" alt=""></p><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p>server.js<br><figure class="highlight javascript"><figcaption><span>1.8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="built_in">require</span>(<span class="string">'fluent-ffmpeg'</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> app = express();</span><br><span class="line"><span class="keyword">let</span> AipSpeech = <span class="built_in">require</span>(<span class="string">"baidu-aip-sdk"</span>).speech;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度语音应用后台中的`API Key`和`Secret Key`</span></span><br><span class="line"><span class="keyword">let</span> client = <span class="keyword">new</span> AipSpeech(<span class="number">0</span>, <span class="string">'API Key'</span>, <span class="string">'Secret Key'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">let</span> multer  = <span class="built_in">require</span>(<span class="string">'multer'</span>);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/public'</span>, express.static(<span class="string">'public'</span>));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(multer(&#123; <span class="attr">dest</span>: <span class="string">'/tmp/'</span>&#125;).array(<span class="string">'buf'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.sendFile( __dirname + <span class="string">"/"</span> + <span class="string">"index.htm"</span> );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/pcm'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req.files[<span class="number">0</span>]);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    fs.readFile( req.files[<span class="number">0</span>].path, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(data);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/m4a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> command = ffmpeg(req.files[<span class="number">0</span>].path)</span><br><span class="line">        .noVideo()</span><br><span class="line">        .inputFormat(<span class="string">'m4a'</span>)</span><br><span class="line">        .audioCodec(<span class="string">'pcm_s16le'</span>)</span><br><span class="line">        .audioBitrate(<span class="number">16</span>)</span><br><span class="line">        .audioFrequency(<span class="number">16000</span>)</span><br><span class="line">        .audioChannels(<span class="number">1</span>)</span><br><span class="line">        .format(<span class="string">'s16le'</span>)</span><br><span class="line">        .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'An error occurred: '</span> + err.message);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="keyword">let</span> ffstream = command.pipe();</span><br><span class="line">    ffstream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">        voiceBase64 = Buffer.concat([voiceBase64, <span class="keyword">new</span> Buffer(chunk)]);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'ffmpeg just wrote '</span> + chunk.length + <span class="string">' bytes'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ffstream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data '</span> + voiceBase64.length + <span class="string">' bytes'</span>);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>, host, port)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
     
     <summary type="html">
     
@@ -31,17 +31,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
+      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot 自定义注解+AOP实现互斥锁</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/</id>
+    <link href="www.chenb.top/2019/05/21/spring-boot-aop-lock/"/>
+    <id>www.chenb.top/2019/05/21/spring-boot-aop-lock/</id>
     <published>2019-05-21T07:48:36.000Z</published>
     <updated>2019-05-21T08:19:29.809Z</updated>
     
@@ -53,19 +53,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>Java实现数学公式计算</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/</id>
+    <link href="www.chenb.top/2019/05/20/java-rpn/"/>
+    <id>www.chenb.top/2019/05/20/java-rpn/</id>
     <published>2019-05-20T09:48:52.000Z</published>
     <updated>2019-05-20T13:39:12.081Z</updated>
     
@@ -77,17 +77,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>Spring Data JPA解决批量修改与唯一索引冲突的问题</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
+    <link href="www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
+    <id>www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
     <published>2019-04-23T09:17:30.000Z</published>
     <updated>2019-04-23T09:52:32.805Z</updated>
     
@@ -99,19 +99,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
+      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
     
-      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Git提交规范，GitHub表情规范指南</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/</id>
+    <link href="www.chenb.top/2019/04/11/git-commit-emoji/"/>
+    <id>www.chenb.top/2019/04/11/git-commit-emoji/</id>
     <published>2019-04-11T08:42:33.000Z</published>
     <updated>2019-04-23T05:43:32.333Z</updated>
     
@@ -123,17 +123,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Git" scheme="https://chenbinhongfund.gitee.io/blog/tags/Git/"/>
+      <category term="Git" scheme="www.chenb.top/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>反爬虫：tyc-num.woff字体加密</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/</id>
+    <link href="www.chenb.top/2018/12/06/web-crawler-tyc-num/"/>
+    <id>www.chenb.top/2018/12/06/web-crawler-tyc-num/</id>
     <published>2018-12-06T01:48:51.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -145,23 +145,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
+      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot升级到2.1</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/</id>
+    <link href="www.chenb.top/2018/11/26/spring-boot-update-version/"/>
+    <id>www.chenb.top/2018/11/26/spring-boot-update-version/</id>
     <published>2018-11-26T07:42:04.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -173,17 +173,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>博客成长之路</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/</id>
+    <link href="www.chenb.top/2018/11/01/blog-way/"/>
+    <id>www.chenb.top/2018/11/01/blog-way/</id>
     <published>2018-11-01T09:08:43.000Z</published>
     <updated>2019-05-21T01:35:34.212Z</updated>
     
@@ -195,19 +195,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
+      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
     
-      <category term="Blog" scheme="https://chenbinhongfund.gitee.io/blog/tags/Blog/"/>
+      <category term="Blog" scheme="www.chenb.top/tags/Blog/"/>
     
   </entry>
   
   <entry>
     <title>Java内存分页工具</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/</id>
+    <link href="www.chenb.top/2018/08/17/spring-boot-ram-pager/"/>
+    <id>www.chenb.top/2018/08/17/spring-boot-ram-pager/</id>
     <published>2018-08-17T08:55:30.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -219,21 +219,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/</id>
+    <link href="www.chenb.top/2018/08/13/java-csv-to-excel/"/>
+    <id>www.chenb.top/2018/08/13/java-csv-to-excel/</id>
     <published>2018-08-13T06:19:14.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -245,25 +245,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
-      <category term="JavaCSV" scheme="https://chenbinhongfund.gitee.io/blog/tags/JavaCSV/"/>
+      <category term="JavaCSV" scheme="www.chenb.top/tags/JavaCSV/"/>
     
-      <category term="Apache" scheme="https://chenbinhongfund.gitee.io/blog/tags/Apache/"/>
+      <category term="Apache" scheme="www.chenb.top/tags/Apache/"/>
     
-      <category term="POI" scheme="https://chenbinhongfund.gitee.io/blog/tags/POI/"/>
+      <category term="POI" scheme="www.chenb.top/tags/POI/"/>
     
-      <category term="Excel" scheme="https://chenbinhongfund.gitee.io/blog/tags/Excel/"/>
+      <category term="Excel" scheme="www.chenb.top/tags/Excel/"/>
     
   </entry>
   
   <entry>
     <title>MySQL简单存储过程修复用户表</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/</id>
+    <link href="www.chenb.top/2018/08/09/mysql-code/"/>
+    <id>www.chenb.top/2018/08/09/mysql-code/</id>
     <published>2018-08-09T06:34:08.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -275,19 +275,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="代码块" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
+      <category term="代码块" scheme="www.chenb.top/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     
-      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
+      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>Windows共享文件夹设置</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/</id>
+    <link href="www.chenb.top/2018/07/25/windows-share-folders/"/>
+    <id>www.chenb.top/2018/07/25/windows-share-folders/</id>
     <published>2018-07-25T06:44:31.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -299,17 +299,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Windows" scheme="https://chenbinhongfund.gitee.io/blog/tags/Windows/"/>
+      <category term="Windows" scheme="www.chenb.top/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins Docker实现自动复制MySQL数据库</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/</id>
+    <link href="www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/"/>
+    <id>www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/</id>
     <published>2018-07-23T06:37:33.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -321,21 +321,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
+      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
     
-      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
     
   </entry>
   
   <entry>
     <title>Java爬虫获取企业工商信息</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/</id>
+    <link href="www.chenb.top/2018/07/09/jsoup-company-info/"/>
+    <id>www.chenb.top/2018/07/09/jsoup-company-info/</id>
     <published>2018-07-09T07:35:40.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -347,25 +347,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
+      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot MySQL连接超时</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/</id>
+    <link href="www.chenb.top/2018/07/09/spring-boot-mysql-timeout/"/>
+    <id>www.chenb.top/2018/07/09/spring-boot-mysql-timeout/</id>
     <published>2018-07-09T06:15:14.000Z</published>
-    <updated>2019-08-14T08:16:53.139Z</updated>
+    <updated>2019-08-14T08:47:03.590Z</updated>
     
     <content type="html"><![CDATA[<h2 id="错误场景"><a href="#错误场景" class="headerlink" title="错误场景"></a>错误场景</h2><blockquote><p>风控项目每个月都要执行定时任务计算大量数据，最近发现定时任务执行失败了，查了一下日志是数据库连接超时导致的，查阅资料后解决该问题</p></blockquote><ul><li>Spring boot版本：<code>1.5.8.RELEASE</code></li></ul><h3 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">The last packet successfully received from the server was 1,607,221,718 milliseconds ago.  </span><br><span class="line">    The last packet sent successfully to the server was 1,607,221,719 milliseconds ago. </span><br><span class="line">    is longer than the server configured value of &apos;wait_timeout&apos;. </span><br><span class="line">    You should consider either expiring and/or testing connection validity before use in your application, </span><br><span class="line">    increasing the server configured values for client timeouts, </span><br><span class="line">    or using the Connector/J connection property &apos;autoReconnect=true&apos; to avoid this problem.</span><br></pre></td></tr></table></figure><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><blockquote><p><strong>注意：</strong> 错误提示中说的<code>autoReconnect=true</code>配置只在低版本（MySQL1.5以下）数据库中适用</p></blockquote><p>使用Spring boot数据源的连接池配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#验证连接的有效性</span><br><span class="line">#获取连接时候验证，会影响性能</span><br><span class="line">#空闲连接回收的时间间隔，与test-while-idle一起使用，设置5分钟</span><br><span class="line">#连接池空闲连接的有效时间 ，设置30分钟</span><br><span class="line">spring.datasource.prod.test-while-idle=true</span><br><span class="line">#spring.datasource.prod.test-on-borrow=true</span><br><span class="line">spring.datasource.prod.validation-query=SELECT 1 FROM DUAL</span><br><span class="line">spring.datasource.prod.time-between-eviction-runs-millis=300000</span><br><span class="line">spring.datasource.prod.min-evictable-idle-time-millis=1800000</span><br><span class="line"></span><br><span class="line">spring.datasource.credit.test-while-idle=true</span><br><span class="line">#spring.datasource.credit.test-on-borrow=true</span><br><span class="line">spring.datasource.credit.validation-query=SELECT 1 FROM DUAL</span><br><span class="line">spring.datasource.credit.time-between-eviction-runs-millis=300000</span><br><span class="line">spring.datasource.credit.min-evictable-idle-time-millis=1800000</span><br></pre></td></tr></table></figure></p><p>参照<a href="https://docs.spring.io/spring-boot/docs/1.5.8.RELEASE/reference/htmlsingle/#howto-two-datasources" target="_blank" rel="noopener">官网多数据源配置</a></p><h3 id="Tomcat连接池详细配置"><a href="#Tomcat连接池详细配置" class="headerlink" title="Tomcat连接池详细配置"></a>Tomcat连接池详细配置</h3><table><thead><tr><th style="text-align:left">配置</th><th style="text-align:left">说明</th></tr></thead><tbody><tr><td style="text-align:left">spring.dao.exceptiontranslation.enabled</td><td style="text-align:left">是否开启PersistenceExceptionTranslationPostProcessor，默认为true</td></tr><tr><td style="text-align:left">spring.datasource.abandon-when-percentage-full</td><td style="text-align:left">设定超时被废弃的连接占到多少比例时要被关闭或上报</td></tr><tr><td style="text-align:left">spring.datasource.allow-pool-suspension</td><td style="text-align:left">使用Hikari pool时，是否允许连接池暂停，默认为: false</td></tr><tr><td style="text-align:left">spring.datasource.alternate-username-allowed</td><td style="text-align:left">是否允许替代的用户名.</td></tr><tr><td style="text-align:left">spring.datasource.auto-commit</td><td style="text-align:left">指定updates是否自动提交.</td></tr><tr><td style="text-align:left">spring.datasource.catalog</td><td style="text-align:left">指定默认的catalog.</td></tr><tr><td style="text-align:left">spring.datasource.commit-on-return</td><td style="text-align:left">设置当连接被归还时，是否要提交所有还未完成的事务</td></tr><tr><td style="text-align:left">spring.datasource.connection-init-sql</td><td style="text-align:left">指定连接被创建，再被添加到连接池之前执行的sql.</td></tr><tr><td style="text-align:left">spring.datasource.connection-init-sqls</td><td style="text-align:left">使用DBCP connection pool时，指定初始化时要执行的sql</td></tr><tr><td style="text-align:left">spring.datasource.connection-properties.[key]</td><td style="text-align:left">在使用DBCP connection pool时指定要配置的属性</td></tr><tr><td style="text-align:left">spring.datasource.connection-test-query</td><td style="text-align:left">指定校验连接合法性执行的sql语句</td></tr><tr><td style="text-align:left">spring.datasource.connection-timeout</td><td style="text-align:left">指定连接的超时时间，毫秒单位.</td></tr><tr><td style="text-align:left">spring.datasource.continue-on-error</td><td style="text-align:left">在初始化数据库时，遇到错误是否继续，默认false</td></tr><tr><td style="text-align:left">spring.datasource.data</td><td style="text-align:left">指定Data (DML)脚本</td></tr><tr><td style="text-align:left">spring.datasource.data-source-class-name</td><td style="text-align:left">指定数据源的全限定名.</td></tr><tr><td style="text-align:left">spring.datasource.data-source-jndi</td><td style="text-align:left">指定jndi的地址</td></tr><tr><td style="text-align:left">spring.datasource.data-source-properties.[key]</td><td style="text-align:left">使用Hikari connection pool时，指定要设置的属性</td></tr><tr><td style="text-align:left">spring.datasource.db-properties</td><td style="text-align:left">使用Tomcat connection pool，指定要设置的属性</td></tr><tr><td style="text-align:left">spring.datasource.default-auto-commit</td><td style="text-align:left">是否自动提交.</td></tr><tr><td style="text-align:left">spring.datasource.default-catalog</td><td style="text-align:left">指定连接默认的catalog.</td></tr><tr><td style="text-align:left">spring.datasource.default-read-only</td><td style="text-align:left">是否设置默认连接只读.</td></tr><tr><td style="text-align:left">spring.datasource.default-transaction-isolation</td><td style="text-align:left">指定连接的事务的默认隔离级别.</td></tr><tr><td style="text-align:left">spring.datasource.driver-class-name</td><td style="text-align:left">指定driver的类名，默认从jdbc url中自动探测.</td></tr><tr><td style="text-align:left">spring.datasource.fair-queue</td><td style="text-align:left">是否采用FIFO返回连接.</td></tr><tr><td style="text-align:left">spring.datasource.health-check-properties.[key]</td><td style="text-align:left">使用Hikari connection pool时，在心跳检查时传递的属性</td></tr><tr><td style="text-align:left">spring.datasource.idle-timeout</td><td style="text-align:left">指定连接多久没被使用时，被设置为空闲，默认为10ms</td></tr><tr><td style="text-align:left">spring.datasource.ignore-exception-on-pre-load</td><td style="text-align:left">当初始化连接池时，是否忽略异常.</td></tr><tr><td style="text-align:left">spring.datasource.init-sql</td><td style="text-align:left">当连接创建时，执行的sql</td></tr><tr><td style="text-align:left">spring.datasource.initial-size</td><td style="text-align:left">指定启动连接池时，初始建立的连接数量</td></tr><tr><td style="text-align:left">spring.datasource.initialization-fail-fast</td><td style="text-align:left">当创建连接池时，没法创建指定最小连接数量是否抛异常</td></tr><tr><td style="text-align:left">spring.datasource.initialize</td><td style="text-align:left">指定初始化数据源，是否用data.sql来初始化，默认: true</td></tr><tr><td style="text-align:left">spring.datasource.isolate-internal-queries</td><td style="text-align:left">指定内部查询是否要被隔离，默认为false</td></tr><tr><td style="text-align:left">spring.datasource.jdbc-interceptors</td><td style="text-align:left">使用Tomcat connection pool时，指定jdbc拦截器，分号分隔</td></tr><tr><td style="text-align:left">spring.datasource.jdbc-url</td><td style="text-align:left">指定JDBC URL.</td></tr><tr><td style="text-align:left">spring.datasource.jmx-enabled</td><td style="text-align:left">是否开启JMX，默认为: false</td></tr><tr><td style="text-align:left">spring.datasource.jndi-name</td><td style="text-align:left">指定jndi的名称.</td></tr><tr><td style="text-align:left">spring.datasource.leak-detection-threshold</td><td style="text-align:left">使用Hikari connection pool时，多少毫秒检测一次连接泄露.</td></tr><tr><td style="text-align:left">spring.datasource.log-abandoned</td><td style="text-align:left">使用DBCP connection pool，是否追踪废弃statement或连接，默认为: false</td></tr><tr><td style="text-align:left">spring.datasource.log-validation-errors</td><td style="text-align:left">当使用Tomcat connection pool是否打印校验错误.</td></tr><tr><td style="text-align:left">spring.datasource.login-timeout</td><td style="text-align:left">指定连接数据库的超时时间.</td></tr><tr><td style="text-align:left">spring.datasource.max-active</td><td style="text-align:left">指定连接池中最大的活跃连接数.</td></tr><tr><td style="text-align:left">spring.datasource.max-age</td><td style="text-align:left">指定连接池中连接的最大年龄</td></tr><tr><td style="text-align:left">spring.datasource.max-idle</td><td style="text-align:left">指定连接池最大的空闲连接数量.</td></tr><tr><td style="text-align:left">spring.datasource.max-lifetime</td><td style="text-align:left">指定连接池中连接的最大生存时间，毫秒单位.</td></tr><tr><td style="text-align:left">spring.datasource.max-open-prepared-statements</td><td style="text-align:left">指定最大的打开的prepared statements数量.</td></tr><tr><td style="text-align:left">spring.datasource.max-wait</td><td style="text-align:left">指定连接池等待连接返回的最大等待时间，毫秒单位.</td></tr><tr><td style="text-align:left">spring.datasource.maximum-pool-size</td><td style="text-align:left">指定连接池最大的连接数，包括使用中的和空闲的连接.</td></tr><tr><td style="text-align:left">spring.datasource.min-evictable-idle-time-millis</td><td style="text-align:left">指定一个空闲连接最少空闲多久后可被清除.</td></tr><tr><td style="text-align:left">spring.datasource.min-idle</td><td style="text-align:left">指定必须保持连接的最小值(For DBCP and Tomcat connection pools)</td></tr><tr><td style="text-align:left">spring.datasource.minimum-idle</td><td style="text-align:left">指定连接维护的最小空闲连接数，当使用HikariCP时指定.</td></tr><tr><td style="text-align:left">spring.datasource.name</td><td style="text-align:left">指定数据源名.</td></tr><tr><td style="text-align:left">spring.datasource.num-tests-per-eviction-run</td><td style="text-align:left">指定运行每个idle object evictor线程时的对象数量</td></tr><tr><td style="text-align:left">spring.datasource.password</td><td style="text-align:left">指定数据库密码.</td></tr><tr><td style="text-align:left">spring.datasource.platform</td><td style="text-align:left">指定schema要使用的Platform(schema-${platform}.sql)，默认为: all</td></tr><tr><td style="text-align:left">spring.datasource.pool-name</td><td style="text-align:left">指定连接池名字.</td></tr><tr><td style="text-align:left">spring.datasource.pool-prepared-statements</td><td style="text-align:left">指定是否池化statements.</td></tr><tr><td style="text-align:left">spring.datasource.propagate-interrupt-state</td><td style="text-align:left">在等待连接时，如果线程被中断，是否传播中断状态.</td></tr><tr><td style="text-align:left">spring.datasource.read-only</td><td style="text-align:left">当使用Hikari connection pool时，是否标记数据源只读</td></tr><tr><td style="text-align:left">spring.datasource.register-mbeans</td><td style="text-align:left">指定Hikari connection pool是否注册JMX MBeans.</td></tr><tr><td style="text-align:left">spring.datasource.remove-abandoned</td><td style="text-align:left">指定当连接超过废弃超时时间时，是否立刻删除该连接.</td></tr><tr><td style="text-align:left">spring.datasource.remove-abandoned-timeout</td><td style="text-align:left">指定连接应该被废弃的时间.</td></tr><tr><td style="text-align:left">spring.datasource.rollback-on-return</td><td style="text-align:left">在归还连接时，是否回滚等待中的事务.</td></tr><tr><td style="text-align:left">spring.datasource.schema</td><td style="text-align:left">指定Schema (DDL)脚本.</td></tr><tr><td style="text-align:left">spring.datasource.separator</td><td style="text-align:left">指定初始化脚本的语句分隔符，默认: ;</td></tr><tr><td style="text-align:left">spring.datasource.sql-script-encoding</td><td style="text-align:left">指定SQL scripts编码.</td></tr><tr><td style="text-align:left">spring.datasource.suspect-timeout</td><td style="text-align:left">指定打印废弃连接前的超时时间.</td></tr><tr><td style="text-align:left">spring.datasource.test-on-borrow</td><td style="text-align:left">当从连接池借用连接时，是否测试该连接.</td></tr><tr><td style="text-align:left">spring.datasource.test-on-connect</td><td style="text-align:left">创建时，是否测试连接</td></tr><tr><td style="text-align:left">spring.datasource.test-on-return</td><td style="text-align:left">在连接归还到连接池时是否测试该连接.</td></tr><tr><td style="text-align:left">spring.datasource.test-while-idle</td><td style="text-align:left">当连接空闲时，是否执行连接测试.</td></tr><tr><td style="text-align:left">spring.datasource.time-between-eviction-runs-millis</td><td style="text-align:left">指定空闲连接检查、废弃连接清理、空闲连接池大小调整之间的操作时间间隔</td></tr><tr><td style="text-align:left">spring.datasource.transaction-isolation</td><td style="text-align:left">指定事务隔离级别，使用Hikari connection pool时指定</td></tr><tr><td style="text-align:left">spring.datasource.url</td><td style="text-align:left">指定JDBC URL.</td></tr><tr><td style="text-align:left">spring.datasource.use-disposable-connection-facade</td><td style="text-align:left">是否对连接进行包装，防止连接关闭之后被使用.</td></tr><tr><td style="text-align:left">spring.datasource.use-equals</td><td style="text-align:left">比较方法名时是否使用String.equals()替换==.</td></tr><tr><td style="text-align:left">spring.datasource.use-lock</td><td style="text-align:left">是否对连接操作加锁</td></tr><tr><td style="text-align:left">spring.datasource.username</td><td style="text-align:left">指定数据库名.</td></tr><tr><td style="text-align:left">spring.datasource.validation-interval</td><td style="text-align:left">指定多少ms执行一次连接校验.</td></tr><tr><td style="text-align:left">spring.datasource.validation-query</td><td style="text-align:left">指定获取连接时连接校验的sql查询语句.</td></tr><tr><td style="text-align:left">spring.datasource.validation-query-timeout</td><td style="text-align:left">指定连接校验查询的超时时间.</td></tr><tr><td style="text-align:left">spring.datasource.validation-timeout</td><td style="text-align:left">设定连接校验的超时时间，当使用Hikari connection pool时指定</td></tr><tr><td style="text-align:left">spring.datasource.validator-class-name</td><td style="text-align:left">用来测试查询的validator全限定名.</td></tr><tr><td style="text-align:left">spring.datasource.xa.data-source-class-name</td><td style="text-align:left">指定数据源的全限定名.</td></tr><tr><td style="text-align:left">spring.datasource.xa.properties</td><td style="text-align:left">指定传递给XA data source的属性</td></tr></tbody></table><blockquote><p>参照:<br><a href="https://tomcat.apache.org/tomcat-8.0-doc/jdbc-pool.html#Common_Attributes" target="_blank" rel="noopener">Tomcat官网配置</a><br><a href="https://segmentfault.com/a/1190000004316491" target="_blank" rel="noopener">转载博文</a></p></blockquote>]]></content>
     
@@ -375,25 +375,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
+      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Tomcat" scheme="https://chenbinhongfund.gitee.io/blog/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="www.chenb.top/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot开启Gzip压缩</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/</id>
+    <link href="www.chenb.top/2018/06/13/spring-boot-gzip/"/>
+    <id>www.chenb.top/2018/06/13/spring-boot-gzip/</id>
     <published>2018-06-13T14:30:12.000Z</published>
-    <updated>2019-08-14T07:43:44.761Z</updated>
+    <updated>2019-08-14T08:46:03.897Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h2><blockquote><p>在优化接口时间的过程中，发现很多接口的<code>Content Download</code>时间较长，除了网络问题，就是接口请求的数据太大了，有的达到了几百kb。<br>控制返回参数收效甚微，这时开启gzip就非常有用了，可以压缩接口请求的数据，一般的<code>json</code>文本压缩比率很大，开启之后接口时间大幅下降！</p></blockquote><ul><li>Spring boot版本：<code>1.5.8.RELEASE</code></li></ul><h3 id="启用步骤"><a href="#启用步骤" class="headerlink" title="启用步骤"></a>启用步骤</h3><p>Spring boot项目配置比较简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.enabled=true</span><br></pre></td></tr></table></figure></p><p>默认只压缩超过2048字节的数据，修改<code>server.compression.min-response-size</code>的值可以设置该大小<br>默认情况下，只有在响应内容类型为以下内容时才会压缩响应：</p><ul><li><code>text/html</code></li><li><code>text/xml</code></li><li><code>text/plain</code></li><li><code>text/css</code><br>我们的接口返回的是json数据，所以修改下面的配置：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.mime-types=application/json</span><br></pre></td></tr></table></figure></li></ul><p>这样Gzip就开启了！</p><blockquote><p><strong>注意：</strong> 老版本的<code>Spring boot</code>的启用配置和新版本的不同，我发现项目中原本是启用的，之后升级<code>Spring boot</code>版本时没有更新配置导致了未启用。所以<code>在更新框架版本时，要及时注意配置的变动，以防一些功能失效！</code><br>老版本的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.tomcat.compression=on</span><br><span class="line">server.tomcat.compressableMimeTypes=application/json</span><br></pre></td></tr></table></figure></p></blockquote><h3 id="如何查看Gzip是否开启成功"><a href="#如何查看Gzip是否开启成功" class="headerlink" title="如何查看Gzip是否开启成功"></a>如何查看Gzip是否开启成功</h3><p>Google浏览器打开F12，切换到NetWork下，右键表头选择Response Headers下的<code>Content-Encoding</code>，如果开启了Gzip，对应接口中的<code>Content-Encoding</code>中会有显示。</p><blockquote><p><strong>注意：</strong> 在同时开启https和http的工程中，Gzip配置只对主端口生效！</p></blockquote><h3 id="启用后的效果"><a href="#启用后的效果" class="headerlink" title="启用后的效果"></a>启用后的效果</h3><p>开启前：数据Size为511KB，右侧时间蓝色部分（Content Download）较长<br><img src="/blog/images/gzip_1.png" title="开启前！"><br>开启前：数据Size为21.3KB，Content-Encoding中显示gzip，右侧时间蓝色部分消失<br><img src="/blog/images/gzip_2.png" title="开启后！"><br>对比效果非常明显，接口时间由<code>1.03s</code>降到<code>164ms</code>，完美！</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h2><blockquote><p>在优化接口时间的过程中，发现很多接口的<code>Content Download</code>时间较长，除了网络问题，就是接口请求的数据太大了，有的达到了几百kb。<br>控制返回参数收效甚微，这时开启gzip就非常有用了，可以压缩接口请求的数据，一般的<code>json</code>文本压缩比率很大，开启之后接口时间大幅下降！</p></blockquote><ul><li>Spring boot版本：<code>1.5.8.RELEASE</code></li></ul><h3 id="启用步骤"><a href="#启用步骤" class="headerlink" title="启用步骤"></a>启用步骤</h3><p>Spring boot项目配置比较简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.enabled=true</span><br></pre></td></tr></table></figure></p><p>默认只压缩超过2048字节的数据，修改<code>server.compression.min-response-size</code>的值可以设置该大小<br>默认情况下，只有在响应内容类型为以下内容时才会压缩响应：</p><ul><li><code>text/html</code></li><li><code>text/xml</code></li><li><code>text/plain</code></li><li><code>text/css</code><br>我们的接口返回的是json数据，所以修改下面的配置：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.mime-types=application/json</span><br></pre></td></tr></table></figure></li></ul><p>这样Gzip就开启了！</p><blockquote><p><strong>注意：</strong> 老版本的<code>Spring boot</code>的启用配置和新版本的不同，我发现项目中原本是启用的，之后升级<code>Spring boot</code>版本时没有更新配置导致了未启用。所以<code>在更新框架版本时，要及时注意配置的变动，以防一些功能失效！</code><br>老版本的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.tomcat.compression=on</span><br><span class="line">server.tomcat.compressableMimeTypes=application/json</span><br></pre></td></tr></table></figure></p></blockquote><h3 id="如何查看Gzip是否开启成功"><a href="#如何查看Gzip是否开启成功" class="headerlink" title="如何查看Gzip是否开启成功"></a>如何查看Gzip是否开启成功</h3><p>Google浏览器打开F12，切换到NetWork下，右键表头选择Response Headers下的<code>Content-Encoding</code>，如果开启了Gzip，对应接口中的<code>Content-Encoding</code>中会有显示。</p><blockquote><p><strong>注意：</strong> 在同时开启https和http的工程中，Gzip配置只对主端口生效！</p></blockquote><h3 id="启用后的效果"><a href="#启用后的效果" class="headerlink" title="启用后的效果"></a>启用后的效果</h3><p>开启前：数据Size为511KB，右侧时间蓝色部分（Content Download）较长<br><img src="/images/gzip_1.png" title="开启前！"><br>开启前：数据Size为21.3KB，Content-Encoding中显示gzip，右侧时间蓝色部分消失<br><img src="/images/gzip_2.png" title="开启后！"><br>对比效果非常明显，接口时间由<code>1.03s</code>降到<code>164ms</code>，完美！</p>]]></content>
     
     <summary type="html">
     
@@ -401,21 +401,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
+      <category term="https" scheme="www.chenb.top/tags/https/"/>
     
-      <category term="Gzip" scheme="https://chenbinhongfund.gitee.io/blog/tags/Gzip/"/>
+      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
     
   </entry>
   
   <entry>
     <title>发布自己的npm包，hexo文章排序插件</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/</id>
+    <link href="www.chenb.top/2018/06/11/npm-publish/"/>
+    <id>www.chenb.top/2018/06/11/npm-publish/</id>
     <published>2018-06-11T12:36:46.000Z</published>
     <updated>2018-06-11T14:33:52.740Z</updated>
     
@@ -427,21 +427,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
+      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
     
-      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
+      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
     
-      <category term="Npm" scheme="https://chenbinhongfund.gitee.io/blog/tags/Npm/"/>
+      <category term="Npm" scheme="www.chenb.top/tags/Npm/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot同时支持http和https访问</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/</id>
+    <link href="www.chenb.top/2018/05/17/spring-boot-https/"/>
+    <id>www.chenb.top/2018/05/17/spring-boot-https/</id>
     <published>2018-05-17T06:22:03.000Z</published>
     <updated>2019-06-05T03:13:39.990Z</updated>
     
@@ -453,19 +453,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
+      <category term="https" scheme="www.chenb.top/tags/https/"/>
     
   </entry>
   
   <entry>
     <title>使用Jenkins和Docker持续集成java项目</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/</id>
+    <link href="www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/"/>
+    <id>www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/</id>
     <published>2018-05-14T09:20:50.000Z</published>
     <updated>2018-05-25T15:19:51.107Z</updated>
     
@@ -477,29 +477,29 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
     
-      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
+      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
     
-      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
     
-      <category term="Maven" scheme="https://chenbinhongfund.gitee.io/blog/tags/Maven/"/>
+      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
     
-      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins服务器容器化</title>
-    <link href="https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/"/>
-    <id>https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/</id>
+    <link href="www.chenb.top/2018/04/07/jenkins-docker/"/>
+    <id>www.chenb.top/2018/04/07/jenkins-docker/</id>
     <published>2018-04-07T12:18:15.000Z</published>
     <updated>2018-05-17T13:07:10.798Z</updated>
     
@@ -511,16 +511,16 @@
     
     </summary>
     
-      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
+      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
     
-      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
+      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
