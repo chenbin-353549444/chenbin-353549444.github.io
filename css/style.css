@@ -119,7 +119,7 @@ button::-moz-focus-inner {
 }
 html {
   font-size: 16px;
-  cursor: url("/img/cursor_1.ico"), auto;
+  cursor: url("/blog//img/cursor_1.ico"), auto;
 }
 body {
   font-family: "Lucida Grande", Verdana, "Helvetica Neue", Arial, "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
@@ -168,10 +168,10 @@ a {
   outline-width: 0;
   color: #258fb8;
   outline: none;
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
 }
 .switch-btn div {
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
 }
 .alignleft {
   float: left;
@@ -207,14 +207,14 @@ a {
   }
 }
 #back-to-top {
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
   position: fixed;
   right: 50px;
   top: -900px;
   z-index: 9;
   width: 70px;
   height: 900px;
-  background: url("/img/scroll.png");
+  background: url("/blog//img/scroll.png");
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
@@ -706,7 +706,7 @@ a {
   font-weight: 550;
   line-height: 1.75rem;
   font-family: inherit;
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
   text-transform: uppercase;
   float: none;
   min-height: 5.25rem;
@@ -815,115 +815,115 @@ a {
   transform: scale(1.1);
 }
 #header .header-nav .social .新浪微博 {
-  background: url("/img/新浪微博.png") center no-repeat #ecc260;
+  background: url("/blog//img/新浪微博.png") center no-repeat #ecc260;
   -webkit-background-size: 80%;
   -moz-background-size: 80%;
   background-size: 80%;
 }
 #header .header-nav .social .知乎 {
-  background: url("/img/知乎.png") center no-repeat #0078d8;
+  background: url("/blog//img/知乎.png") center no-repeat #0078d8;
   -webkit-background-size: 90%;
   -moz-background-size: 90%;
   background-size: 90%;
 }
 #header .header-nav .social .豆瓣 {
-  background: url("/img/豆瓣.png") center no-repeat #06c611;
+  background: url("/blog//img/豆瓣.png") center no-repeat #06c611;
   -webkit-background-size: 88%;
   -moz-background-size: 88%;
   background-size: 88%;
 }
 #header .header-nav .social .V2EX {
-  background: url("/img/V2EX.png") center no-repeat #e4cdb4;
+  background: url("/blog//img/V2EX.png") center no-repeat #e4cdb4;
   -webkit-background-size: 78%;
   -moz-background-size: 78%;
   background-size: 78%;
 }
 #header .header-nav .social .TiddlyWiki {
-  background: url("/img/TiddlyWiki.png") center no-repeat #6283dd;
+  background: url("/blog//img/TiddlyWiki.png") center no-repeat #6283dd;
   -webkit-background-size: 82%;
   -moz-background-size: 82%;
   background-size: 82%;
 }
 #header .header-nav .social .简书 {
-  background: url("/img/简书.png") center no-repeat #e99888;
+  background: url("/blog//img/简书.png") center no-repeat #e99888;
   -webkit-background-size: 82%;
   -moz-background-size: 82%;
   background-size: 82%;
 }
 #header .header-nav .social .SegmentFault {
-  background: url("/img/SegmentFault.png") center no-repeat #018f56;
+  background: url("/blog//img/SegmentFault.png") center no-repeat #018f56;
   -webkit-background-size: 80%;
   -moz-background-size: 80%;
   background-size: 80%;
 }
 #header .header-nav .social .网易云音乐 {
-  background: url("/img/网易云音乐.png") center no-repeat #e51e02;
+  background: url("/blog//img/网易云音乐.png") center no-repeat #e51e02;
   -webkit-background-size: 80%;
   -moz-background-size: 80%;
   background-size: 80%;
 }
 #header .header-nav .social .虾米音乐 {
-  background: url("/img/虾米音乐.png") center no-repeat #ff6a00;
+  background: url("/blog//img/虾米音乐.png") center no-repeat #ff6a00;
   -webkit-background-size: 82%;
   -moz-background-size: 82%;
   background-size: 82%;
 }
 #header .header-nav .social .CSDN {
-  background: url("/img/CSDN.png") center no-repeat #f00;
+  background: url("/blog//img/CSDN.png") center no-repeat #f00;
   -webkit-background-size: 82%;
   -moz-background-size: 82%;
   background-size: 82%;
 }
 #header .header-nav .social .博客园 {
-  background: url("/img/博客园.png") center no-repeat #217ed4;
+  background: url("/blog//img/博客园.png") center no-repeat #217ed4;
   -webkit-background-size: 95%;
   -moz-background-size: 95%;
   background-size: 95%;
 }
 #header .header-nav .social .Plunker {
-  background: url("/img/Plunker.png") center no-repeat #000;
+  background: url("/blog//img/Plunker.png") center no-repeat #000;
   -webkit-background-size: 90%;
   -moz-background-size: 90%;
   background-size: 90%;
 }
 #header .header-nav .social .LOFTER {
-  background: url("/img/LOFTER.png") center no-repeat #316061;
+  background: url("/blog//img/LOFTER.png") center no-repeat #316061;
   -webkit-background-size: 75%;
   -moz-background-size: 75%;
   background-size: 75%;
 }
 #header .header-nav .social .Coding {
-  background: url("/img/Coding.png") center no-repeat #fff;
+  background: url("/blog//img/Coding.png") center no-repeat #fff;
   -webkit-background-size: 88%;
   -moz-background-size: 88%;
   background-size: 88%;
 }
 #header .header-nav .social .bilibili {
-  background: url("/img/bilibili.png") center no-repeat #f589a0;
+  background: url("/blog//img/bilibili.png") center no-repeat #f589a0;
   -webkit-background-size: 100%;
   -moz-background-size: 100%;
   background-size: 100%;
 }
 #header .header-nav .social .AcFun {
-  background: url("/img/AcFun.png") center no-repeat #fbc054;
+  background: url("/blog//img/AcFun.png") center no-repeat #fbc054;
   -webkit-background-size: 90%;
   -moz-background-size: 90%;
   background-size: 90%;
 }
 #header .header-nav .social .niconico {
-  background: url("/img/niconico.png") center no-repeat #fff;
+  background: url("/blog//img/niconico.png") center no-repeat #fff;
   -webkit-background-size: 70%;
   -moz-background-size: 70%;
   background-size: 70%;
 }
 #header .header-nav .social .Quora {
-  background: url("/img/Quora.png") center no-repeat #b92b27;
+  background: url("/blog//img/Quora.png") center no-repeat #b92b27;
   -webkit-background-size: 103%;
   -moz-background-size: 103%;
   background-size: 103%;
 }
 #header .header-nav .social .GitHub {
-  background: url("/img/github-octocat.svg") no-repeat #fff;
+  background: url("/blog//img/github-octocat.svg") no-repeat #fff;
   -webkit-background-size: 90%;
   -moz-background-size: 90%;
   background-size: 90%;
@@ -1074,7 +1074,7 @@ a {
   padding: 1px;
   border: none;
   border-radius: 5px;
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
   outline: none;
   font-family: inherit;
   font-size: 0.9em;
@@ -1095,7 +1095,7 @@ a {
 #post-nav-button a {
   border-bottom-color: transparent;
   background: none;
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
 }
 #post-nav-button a .fa-times {
   display: none;
@@ -1844,7 +1844,7 @@ li:hover {
 }
 .copyright .copy-path:hover {
   color: #808080;
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
 }
 .copyright .raw {
   margin-left: 1em;
@@ -2547,7 +2547,7 @@ pre .javascript .function {
   -ms-transition: all 0.15s ease-out 0.1s;
   transition: all 0.15s ease-out 0.1s;
   opacity: 0.2;
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
   display: block;
 }
 .instagram .album div.img-box .img-bg:hover {
@@ -2606,7 +2606,7 @@ pre .javascript .function {
 }
 .switch-btn .tips-box .tips-inner li {
   padding: 4px 0;
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
   font-size: 0.8125rem;
   line-height: 1.15;
   color: #ddd;
@@ -2627,7 +2627,7 @@ pre .javascript .function {
   -moz-transform: scale(0.6);
   -ms-transform: scale(0.6);
   transform: scale(0.6);
-  cursor: url("/img/cursor.ico"), auto;
+  cursor: url("/blog//img/cursor.ico"), auto;
 }
 .switch-btn .icon-ctn {
   width: 34px;
