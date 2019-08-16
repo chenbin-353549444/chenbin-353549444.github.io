@@ -3,11 +3,11 @@
   <title>ChenBin&#39;s Blog</title>
   
   <subtitle>🎉✨🎨🚀🐳</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="www.chenb.top/"/>
-  <updated>2019-08-14T08:46:03.898Z</updated>
-  <id>www.chenb.top/</id>
+  <link href="https://chenbinhongfund.gitee.io/blog/"/>
+  <updated>2019-08-14T08:48:33.526Z</updated>
+  <id>https://chenbinhongfund.gitee.io/blog/</id>
   
   <author>
     <name>Chen Bin</name>
@@ -18,12 +18,12 @@
   
   <entry>
     <title>Node语音识别</title>
-    <link href="www.chenb.top/2019/06/26/node-ffmpeg/"/>
-    <id>www.chenb.top/2019/06/26/node-ffmpeg/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/</id>
     <published>2019-06-26T05:47:02.000Z</published>
-    <updated>2019-08-14T08:46:03.898Z</updated>
+    <updated>2019-08-14T08:48:33.526Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/images/view.jpg" alt=""></p><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p>server.js<br><figure class="highlight javascript"><figcaption><span>1.8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="built_in">require</span>(<span class="string">'fluent-ffmpeg'</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> app = express();</span><br><span class="line"><span class="keyword">let</span> AipSpeech = <span class="built_in">require</span>(<span class="string">"baidu-aip-sdk"</span>).speech;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度语音应用后台中的`API Key`和`Secret Key`</span></span><br><span class="line"><span class="keyword">let</span> client = <span class="keyword">new</span> AipSpeech(<span class="number">0</span>, <span class="string">'API Key'</span>, <span class="string">'Secret Key'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">let</span> multer  = <span class="built_in">require</span>(<span class="string">'multer'</span>);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/public'</span>, express.static(<span class="string">'public'</span>));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(multer(&#123; <span class="attr">dest</span>: <span class="string">'/tmp/'</span>&#125;).array(<span class="string">'buf'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.sendFile( __dirname + <span class="string">"/"</span> + <span class="string">"index.htm"</span> );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/pcm'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req.files[<span class="number">0</span>]);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    fs.readFile( req.files[<span class="number">0</span>].path, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(data);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/m4a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> command = ffmpeg(req.files[<span class="number">0</span>].path)</span><br><span class="line">        .noVideo()</span><br><span class="line">        .inputFormat(<span class="string">'m4a'</span>)</span><br><span class="line">        .audioCodec(<span class="string">'pcm_s16le'</span>)</span><br><span class="line">        .audioBitrate(<span class="number">16</span>)</span><br><span class="line">        .audioFrequency(<span class="number">16000</span>)</span><br><span class="line">        .audioChannels(<span class="number">1</span>)</span><br><span class="line">        .format(<span class="string">'s16le'</span>)</span><br><span class="line">        .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'An error occurred: '</span> + err.message);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="keyword">let</span> ffstream = command.pipe();</span><br><span class="line">    ffstream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">        voiceBase64 = Buffer.concat([voiceBase64, <span class="keyword">new</span> Buffer(chunk)]);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'ffmpeg just wrote '</span> + chunk.length + <span class="string">' bytes'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ffstream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data '</span> + voiceBase64.length + <span class="string">' bytes'</span>);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>, host, port)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/blog/images/view.jpg" alt></p><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p>server.js<br><figure class="highlight javascript"><figcaption><span>1.8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="built_in">require</span>(<span class="string">'fluent-ffmpeg'</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> app = express();</span><br><span class="line"><span class="keyword">let</span> AipSpeech = <span class="built_in">require</span>(<span class="string">"baidu-aip-sdk"</span>).speech;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度语音应用后台中的`API Key`和`Secret Key`</span></span><br><span class="line"><span class="keyword">let</span> client = <span class="keyword">new</span> AipSpeech(<span class="number">0</span>, <span class="string">'API Key'</span>, <span class="string">'Secret Key'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">let</span> multer  = <span class="built_in">require</span>(<span class="string">'multer'</span>);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/public'</span>, express.static(<span class="string">'public'</span>));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(multer(&#123; <span class="attr">dest</span>: <span class="string">'/tmp/'</span>&#125;).array(<span class="string">'buf'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.sendFile( __dirname + <span class="string">"/"</span> + <span class="string">"index.htm"</span> );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/pcm'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req.files[<span class="number">0</span>]);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    fs.readFile( req.files[<span class="number">0</span>].path, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(data);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/m4a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> command = ffmpeg(req.files[<span class="number">0</span>].path)</span><br><span class="line">        .noVideo()</span><br><span class="line">        .inputFormat(<span class="string">'m4a'</span>)</span><br><span class="line">        .audioCodec(<span class="string">'pcm_s16le'</span>)</span><br><span class="line">        .audioBitrate(<span class="number">16</span>)</span><br><span class="line">        .audioFrequency(<span class="number">16000</span>)</span><br><span class="line">        .audioChannels(<span class="number">1</span>)</span><br><span class="line">        .format(<span class="string">'s16le'</span>)</span><br><span class="line">        .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'An error occurred: '</span> + err.message);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="keyword">let</span> ffstream = command.pipe();</span><br><span class="line">    ffstream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">        voiceBase64 = Buffer.concat([voiceBase64, <span class="keyword">new</span> Buffer(chunk)]);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'ffmpeg just wrote '</span> + chunk.length + <span class="string">' bytes'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ffstream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data '</span> + voiceBase64.length + <span class="string">' bytes'</span>);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>, host, port)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
     
     <summary type="html">
     
@@ -31,17 +31,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot 自定义注解+AOP实现互斥锁</title>
-    <link href="www.chenb.top/2019/05/21/spring-boot-aop-lock/"/>
-    <id>www.chenb.top/2019/05/21/spring-boot-aop-lock/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/</id>
     <published>2019-05-21T07:48:36.000Z</published>
     <updated>2019-05-21T08:19:29.809Z</updated>
     
@@ -53,21 +53,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>Java实现数学公式计算</title>
-    <link href="www.chenb.top/2019/05/20/java-rpn/"/>
-    <id>www.chenb.top/2019/05/20/java-rpn/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/</id>
     <published>2019-05-20T09:48:52.000Z</published>
-    <updated>2019-05-20T13:39:12.081Z</updated>
+    <updated>2019-08-15T01:59:18.555Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>最近国家税务政策变动，财务报表需要更新公式和格式了，这类更新经常会发生，为了以后维护方便，想到了解析字符串格式的数学公式。查阅了一下资料，可以用逆波兰表达式实现。</p><h3 id="中缀表达式转后缀表达式"><a href="#中缀表达式转后缀表达式" class="headerlink" title="中缀表达式转后缀表达式"></a>中缀表达式转后缀表达式</h3><p>中缀表达式：平常见到的表达式，如<code>3+(5*(6-1/2))</code><br>后缀表达式：即逆波兰表达式，指的是不包含括号，运算符放在两个运算对象的后面，所有的计算按运算符出现的顺序，严格从左向右进行（不再考虑运算符的优先规则），既然没了运算符的优先规则，那么计算机解析起来自然容易的多。上面的中缀表达式对应的后缀表达式<code>[3, 5, 6, 1, 2, /, -, *, +]</code><br>解析公式需要先将通俗的中缀表达式转化成后缀表达式，具体算法如下：</p><ul><li>首先设置运算符的优先级（这样设置也是为了简化程序）： <ul><li><code>null</code> 栈顶若为空，假设优先级为0</li><li><code>左括号</code> 优先级设为1</li><li><code>+-</code> 优先级设为2</li><li><code>*/</code> 优先级设为3</li></ul></li><li>从左向右遍历中缀表达式<ul><li>遇到数字直接输出</li><li>遇到符号 <ul><li>遇到左括号，直接压栈</li><li>遇到右括号，弹栈输出直到弹出左括号（左括号不输出）</li><li>遇到运算符，比较栈顶符号，若该运算符优先级大于栈顶，直接压栈；若小于栈顶，弹栈输出直到大于栈顶，然后将改运算符压栈。</li></ul></li></ul></li><li>最后将符合栈弹栈并输出</li></ul><h3 id="后缀表达式计算结果"><a href="#后缀表达式计算结果" class="headerlink" title="后缀表达式计算结果"></a>后缀表达式计算结果</h3><ul><li>从左往右遍历</li><li>遇到数字直接放入容器</li><li>遇到运算符，将最后两个数字取出，进行该运算，将结果再放入容器</li><li>遍历结束后，容器中的数字即为运算结果</li></ul><h3 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h3><p>以上算法不难实现，下面是我修改后的工具类，可以计算浮点数的公式，精确到2位有效数字<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.StringUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.hongfund.efi.utils.RegExpUtil.FLOAT_NUMBER;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.math.BigDecimal.ZERO;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.math.RoundingMode.HALF_UP;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数学公式计算</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chenbin</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpnUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; test = Arrays.asList(<span class="string">"3 + ( 5 * ( 6 - 1 / 2 ) )"</span>.split(<span class="string">" "</span>));</span><br><span class="line">        System.out.println(getRpn(test));</span><br><span class="line">        System.out.println(calculate(test));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算指定公式的数值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">calculate</span><span class="params">(List&lt;String&gt; formulaList)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; rpn = getRpn(formulaList);</span><br><span class="line">        <span class="keyword">return</span> calculateRpn(rpn);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 中序转后序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">getRpn</span><span class="params">(List&lt;String&gt; formulaList)</span> </span>&#123;</span><br><span class="line">        Stack&lt;String&gt; operators=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String formula : formulaList) &#123;</span><br><span class="line">            <span class="keyword">if</span> (formula.matches(FLOAT_NUMBER)) &#123;</span><br><span class="line">                result.add(formula);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (formula.equals(<span class="string">"("</span>)) &#123;</span><br><span class="line">                operators.push(formula);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (formula.equals(<span class="string">")"</span>)) &#123;</span><br><span class="line">                <span class="keyword">while</span> (!operators.peek().equals(<span class="string">"("</span>)) &#123;</span><br><span class="line">                    result.add(operators.pop());</span><br><span class="line">                &#125;</span><br><span class="line">                operators.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (operators.size() != <span class="number">0</span> &amp;&amp; getLevel(operators.peek()) &gt;= getLevel(formula)) &#123;</span><br><span class="line">                    result.add(operators.pop());</span><br><span class="line">                &#125;</span><br><span class="line">                operators.push(formula);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (operators.size() != <span class="number">0</span>) &#123;</span><br><span class="line">            result.add(operators.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 逆序计算结果</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">calculateRpn</span><span class="params">(List&lt;String&gt; formulaList)</span> </span>&#123;</span><br><span class="line">        Stack&lt;BigDecimal&gt; s=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String formula : formulaList) &#123;</span><br><span class="line">            <span class="keyword">if</span> (formula.matches(FLOAT_NUMBER)) &#123;</span><br><span class="line">                s.push(BigDecimalUtils.getDecimalValue(formula));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                BigDecimal b = s.pop();</span><br><span class="line">                BigDecimal a = s.pop();</span><br><span class="line">                BigDecimal temp = ZERO;</span><br><span class="line">                <span class="keyword">switch</span> (formula) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"+"</span> : temp = a.add(b);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"-"</span> : temp = a.subtract(b);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"*"</span> : temp = a.multiply(b);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"/"</span> : temp = a.divide(b, <span class="number">2</span>, HALF_UP);<span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">"max"</span> : temp = a.max(b);<span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                s.push(temp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> FormatUtils.DECIMAL_FORMAT_2.format(s.pop());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 运算符优先级</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getLevel</span><span class="params">(String operator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(operator)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">switch</span> (operator) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"("</span> : <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"+"</span> :</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"-"</span> : <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"*"</span> :</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"/"</span> :</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"max"</span> : <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">default</span> : <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h3 id="判断浮点数的正则"><a href="#判断浮点数的正则" class="headerlink" title="判断浮点数的正则"></a>判断浮点数的正则</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 正则表达式工具类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RegExpUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 匹配浮点数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FLOAT_NUMBER = <span class="string">"^(-?\\d+)(\\.\\d+)?$"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -77,17 +77,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>Spring Data JPA解决批量修改与唯一索引冲突的问题</title>
-    <link href="www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
-    <id>www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
     <published>2019-04-23T09:17:30.000Z</published>
     <updated>2019-04-23T09:52:32.805Z</updated>
     
@@ -99,19 +99,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Git提交规范，GitHub表情规范指南</title>
-    <link href="www.chenb.top/2019/04/11/git-commit-emoji/"/>
-    <id>www.chenb.top/2019/04/11/git-commit-emoji/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/</id>
     <published>2019-04-11T08:42:33.000Z</published>
     <updated>2019-04-23T05:43:32.333Z</updated>
     
@@ -123,17 +123,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Git" scheme="www.chenb.top/tags/Git/"/>
+      <category term="Git" scheme="https://chenbinhongfund.gitee.io/blog/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>反爬虫：tyc-num.woff字体加密</title>
-    <link href="www.chenb.top/2018/12/06/web-crawler-tyc-num/"/>
-    <id>www.chenb.top/2018/12/06/web-crawler-tyc-num/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/</id>
     <published>2018-12-06T01:48:51.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -145,23 +145,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot升级到2.1</title>
-    <link href="www.chenb.top/2018/11/26/spring-boot-update-version/"/>
-    <id>www.chenb.top/2018/11/26/spring-boot-update-version/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/</id>
     <published>2018-11-26T07:42:04.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -173,17 +173,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>博客成长之路</title>
-    <link href="www.chenb.top/2018/11/01/blog-way/"/>
-    <id>www.chenb.top/2018/11/01/blog-way/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/</id>
     <published>2018-11-01T09:08:43.000Z</published>
     <updated>2019-05-21T01:35:34.212Z</updated>
     
@@ -195,19 +195,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Blog" scheme="www.chenb.top/tags/Blog/"/>
+      <category term="Blog" scheme="https://chenbinhongfund.gitee.io/blog/tags/Blog/"/>
     
   </entry>
   
   <entry>
     <title>Java内存分页工具</title>
-    <link href="www.chenb.top/2018/08/17/spring-boot-ram-pager/"/>
-    <id>www.chenb.top/2018/08/17/spring-boot-ram-pager/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/</id>
     <published>2018-08-17T08:55:30.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -219,21 +219,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</title>
-    <link href="www.chenb.top/2018/08/13/java-csv-to-excel/"/>
-    <id>www.chenb.top/2018/08/13/java-csv-to-excel/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/</id>
     <published>2018-08-13T06:19:14.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -245,25 +245,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="JavaCSV" scheme="www.chenb.top/tags/JavaCSV/"/>
+      <category term="JavaCSV" scheme="https://chenbinhongfund.gitee.io/blog/tags/JavaCSV/"/>
     
-      <category term="Apache" scheme="www.chenb.top/tags/Apache/"/>
+      <category term="Apache" scheme="https://chenbinhongfund.gitee.io/blog/tags/Apache/"/>
     
-      <category term="POI" scheme="www.chenb.top/tags/POI/"/>
+      <category term="POI" scheme="https://chenbinhongfund.gitee.io/blog/tags/POI/"/>
     
-      <category term="Excel" scheme="www.chenb.top/tags/Excel/"/>
+      <category term="Excel" scheme="https://chenbinhongfund.gitee.io/blog/tags/Excel/"/>
     
   </entry>
   
   <entry>
     <title>MySQL简单存储过程修复用户表</title>
-    <link href="www.chenb.top/2018/08/09/mysql-code/"/>
-    <id>www.chenb.top/2018/08/09/mysql-code/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/</id>
     <published>2018-08-09T06:34:08.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -275,19 +275,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="代码块" scheme="www.chenb.top/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
+      <category term="代码块" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>Windows共享文件夹设置</title>
-    <link href="www.chenb.top/2018/07/25/windows-share-folders/"/>
-    <id>www.chenb.top/2018/07/25/windows-share-folders/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/</id>
     <published>2018-07-25T06:44:31.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -299,17 +299,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Windows" scheme="www.chenb.top/tags/Windows/"/>
+      <category term="Windows" scheme="https://chenbinhongfund.gitee.io/blog/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins Docker实现自动复制MySQL数据库</title>
-    <link href="www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/"/>
-    <id>www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/</id>
     <published>2018-07-23T06:37:33.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -321,21 +321,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
   </entry>
   
   <entry>
     <title>Java爬虫获取企业工商信息</title>
-    <link href="www.chenb.top/2018/07/09/jsoup-company-info/"/>
-    <id>www.chenb.top/2018/07/09/jsoup-company-info/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/</id>
     <published>2018-07-09T07:35:40.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -347,23 +347,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot MySQL连接超时</title>
-    <link href="www.chenb.top/2018/07/09/spring-boot-mysql-timeout/"/>
-    <id>www.chenb.top/2018/07/09/spring-boot-mysql-timeout/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/</id>
     <published>2018-07-09T06:15:14.000Z</published>
     <updated>2019-08-14T08:47:03.590Z</updated>
     
@@ -375,25 +375,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Tomcat" scheme="www.chenb.top/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="https://chenbinhongfund.gitee.io/blog/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot开启Gzip压缩</title>
-    <link href="www.chenb.top/2018/06/13/spring-boot-gzip/"/>
-    <id>www.chenb.top/2018/06/13/spring-boot-gzip/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/</id>
     <published>2018-06-13T14:30:12.000Z</published>
-    <updated>2019-08-14T08:46:03.897Z</updated>
+    <updated>2019-08-14T08:48:33.526Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h2><blockquote><p>在优化接口时间的过程中，发现很多接口的<code>Content Download</code>时间较长，除了网络问题，就是接口请求的数据太大了，有的达到了几百kb。<br>控制返回参数收效甚微，这时开启gzip就非常有用了，可以压缩接口请求的数据，一般的<code>json</code>文本压缩比率很大，开启之后接口时间大幅下降！</p></blockquote><ul><li>Spring boot版本：<code>1.5.8.RELEASE</code></li></ul><h3 id="启用步骤"><a href="#启用步骤" class="headerlink" title="启用步骤"></a>启用步骤</h3><p>Spring boot项目配置比较简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.enabled=true</span><br></pre></td></tr></table></figure></p><p>默认只压缩超过2048字节的数据，修改<code>server.compression.min-response-size</code>的值可以设置该大小<br>默认情况下，只有在响应内容类型为以下内容时才会压缩响应：</p><ul><li><code>text/html</code></li><li><code>text/xml</code></li><li><code>text/plain</code></li><li><code>text/css</code><br>我们的接口返回的是json数据，所以修改下面的配置：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.mime-types=application/json</span><br></pre></td></tr></table></figure></li></ul><p>这样Gzip就开启了！</p><blockquote><p><strong>注意：</strong> 老版本的<code>Spring boot</code>的启用配置和新版本的不同，我发现项目中原本是启用的，之后升级<code>Spring boot</code>版本时没有更新配置导致了未启用。所以<code>在更新框架版本时，要及时注意配置的变动，以防一些功能失效！</code><br>老版本的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.tomcat.compression=on</span><br><span class="line">server.tomcat.compressableMimeTypes=application/json</span><br></pre></td></tr></table></figure></p></blockquote><h3 id="如何查看Gzip是否开启成功"><a href="#如何查看Gzip是否开启成功" class="headerlink" title="如何查看Gzip是否开启成功"></a>如何查看Gzip是否开启成功</h3><p>Google浏览器打开F12，切换到NetWork下，右键表头选择Response Headers下的<code>Content-Encoding</code>，如果开启了Gzip，对应接口中的<code>Content-Encoding</code>中会有显示。</p><blockquote><p><strong>注意：</strong> 在同时开启https和http的工程中，Gzip配置只对主端口生效！</p></blockquote><h3 id="启用后的效果"><a href="#启用后的效果" class="headerlink" title="启用后的效果"></a>启用后的效果</h3><p>开启前：数据Size为511KB，右侧时间蓝色部分（Content Download）较长<br><img src="/images/gzip_1.png" title="开启前！"><br>开启前：数据Size为21.3KB，Content-Encoding中显示gzip，右侧时间蓝色部分消失<br><img src="/images/gzip_2.png" title="开启后！"><br>对比效果非常明显，接口时间由<code>1.03s</code>降到<code>164ms</code>，完美！</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h2><blockquote><p>在优化接口时间的过程中，发现很多接口的<code>Content Download</code>时间较长，除了网络问题，就是接口请求的数据太大了，有的达到了几百kb。<br>控制返回参数收效甚微，这时开启gzip就非常有用了，可以压缩接口请求的数据，一般的<code>json</code>文本压缩比率很大，开启之后接口时间大幅下降！</p></blockquote><ul><li>Spring boot版本：<code>1.5.8.RELEASE</code></li></ul><h3 id="启用步骤"><a href="#启用步骤" class="headerlink" title="启用步骤"></a>启用步骤</h3><p>Spring boot项目配置比较简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.enabled=true</span><br></pre></td></tr></table></figure></p><p>默认只压缩超过2048字节的数据，修改<code>server.compression.min-response-size</code>的值可以设置该大小<br>默认情况下，只有在响应内容类型为以下内容时才会压缩响应：</p><ul><li><code>text/html</code></li><li><code>text/xml</code></li><li><code>text/plain</code></li><li><code>text/css</code><br>我们的接口返回的是json数据，所以修改下面的配置：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.mime-types=application/json</span><br></pre></td></tr></table></figure></li></ul><p>这样Gzip就开启了！</p><blockquote><p><strong>注意：</strong> 老版本的<code>Spring boot</code>的启用配置和新版本的不同，我发现项目中原本是启用的，之后升级<code>Spring boot</code>版本时没有更新配置导致了未启用。所以<code>在更新框架版本时，要及时注意配置的变动，以防一些功能失效！</code><br>老版本的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.tomcat.compression=on</span><br><span class="line">server.tomcat.compressableMimeTypes=application/json</span><br></pre></td></tr></table></figure></p></blockquote><h3 id="如何查看Gzip是否开启成功"><a href="#如何查看Gzip是否开启成功" class="headerlink" title="如何查看Gzip是否开启成功"></a>如何查看Gzip是否开启成功</h3><p>Google浏览器打开F12，切换到NetWork下，右键表头选择Response Headers下的<code>Content-Encoding</code>，如果开启了Gzip，对应接口中的<code>Content-Encoding</code>中会有显示。</p><blockquote><p><strong>注意：</strong> 在同时开启https和http的工程中，Gzip配置只对主端口生效！</p></blockquote><h3 id="启用后的效果"><a href="#启用后的效果" class="headerlink" title="启用后的效果"></a>启用后的效果</h3><p>开启前：数据Size为511KB，右侧时间蓝色部分（Content Download）较长<br><img src="/blog/images/gzip_1.png" title="开启前！"><br>开启前：数据Size为21.3KB，Content-Encoding中显示gzip，右侧时间蓝色部分消失<br><img src="/blog/images/gzip_2.png" title="开启后！"><br>对比效果非常明显，接口时间由<code>1.03s</code>降到<code>164ms</code>，完美！</p>]]></content>
     
     <summary type="html">
     
@@ -401,21 +401,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
-      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
+      <category term="Gzip" scheme="https://chenbinhongfund.gitee.io/blog/tags/Gzip/"/>
     
   </entry>
   
   <entry>
     <title>发布自己的npm包，hexo文章排序插件</title>
-    <link href="www.chenb.top/2018/06/11/npm-publish/"/>
-    <id>www.chenb.top/2018/06/11/npm-publish/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/</id>
     <published>2018-06-11T12:36:46.000Z</published>
     <updated>2018-06-11T14:33:52.740Z</updated>
     
@@ -427,21 +427,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
     
-      <category term="Npm" scheme="www.chenb.top/tags/Npm/"/>
+      <category term="Npm" scheme="https://chenbinhongfund.gitee.io/blog/tags/Npm/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot同时支持http和https访问</title>
-    <link href="www.chenb.top/2018/05/17/spring-boot-https/"/>
-    <id>www.chenb.top/2018/05/17/spring-boot-https/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/</id>
     <published>2018-05-17T06:22:03.000Z</published>
     <updated>2019-06-05T03:13:39.990Z</updated>
     
@@ -453,19 +453,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
   </entry>
   
   <entry>
     <title>使用Jenkins和Docker持续集成java项目</title>
-    <link href="www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/"/>
-    <id>www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/</id>
     <published>2018-05-14T09:20:50.000Z</published>
     <updated>2018-05-25T15:19:51.107Z</updated>
     
@@ -477,33 +477,33 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
+      <category term="Maven" scheme="https://chenbinhongfund.gitee.io/blog/tags/Maven/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins服务器容器化</title>
-    <link href="www.chenb.top/2018/04/07/jenkins-docker/"/>
-    <id>www.chenb.top/2018/04/07/jenkins-docker/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/04/07/jenkins-docker/</id>
     <published>2018-04-07T12:18:15.000Z</published>
     <updated>2018-05-17T13:07:10.798Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Jenkins-Docker"><a href="#Jenkins-Docker" class="headerlink" title="Jenkins-Docker"></a><strong>Jenkins-Docker</strong></h1><blockquote><ul><li>Jenkins-Docker是一个使用Dockerfile创建可执行docker命令的Jenkins镜像的项目。之前有使用Jenkins持续集成的经历，最近开始接触Docker，那么就没有理由继续之前痛苦的Jenkins安装过程。但是使用官方镜像无法在Docker容器内使用Docker命令，所以就有了这个项目。</li><li>本项目是早期写的，在存储、权限等方面还有些缺陷，可参考新的持续集成例子：<a href="/2018/05/14/spring-boot-admin-jenkins-docker">spring-boot-admin-jenkins-docker</a></li></ul></blockquote><p>项目地址： <a href="https://github.com/chenbin-353549444/Jenkins-Docker" target="_blank" rel="noopener">https://github.com/chenbin-353549444/Jenkins-Docker</a><br><a href=""><img src="https://img.shields.io/badge/docker-17.06.1--ce-blue.svg" alt="Travis"></a></p><h2 id="详细说明"><a href="#详细说明" class="headerlink" title="详细说明"></a>详细说明</h2><h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> jenkins:alpine</span><br><span class="line"><span class="comment"># 下载安装Docker CLI</span></span><br><span class="line"><span class="keyword">USER</span> root</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; tar zxvf docker-latest.tgz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; cp docker/docker /usr/<span class="built_in">local</span>/bin/ \</span></span><br><span class="line"><span class="bash">    &amp;&amp; rm -rf docker docker-latest.tgz</span></span><br><span class="line"><span class="bash"><span class="comment"># 将 `jenkins` 用户的组 ID 改为宿主 `docker` 组的组ID，从而具有执行 `docker` 命令的权限。</span></span></span><br><span class="line"><span class="bash">ARG DOCKER_GID=993</span></span><br><span class="line"><span class="bash">USER jenkins:<span class="variable">$&#123;DOCKER_GID&#125;</span></span></span><br></pre></td></tr></table></figure><p>在这里，我们下载了静态编译的docker可执行文件，并提取命令行安装到系统目录下。然后调整了jenkins用户的组ID，调整为宿主docker组ID，从而使其具有执行docker命令的权限。</p><h3 id="生成镜像"><a href="#生成镜像" class="headerlink" title="生成镜像"></a>生成镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t jenkins-docker .</span><br></pre></td></tr></table></figure><p>组ID使用了<code>DOCKER_GID</code>参数来定义，以方便进一步定制。构建时可以通过–build-arg来改变DOCKER_GID的默认值，运行时也可以通过–user jenkins:1234来改变运行用户的身份。</p><blockquote><p>阿里云初始的CentOS系统中直接安装docker时，docker组ID为993</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t jenkins-docker --build-arg DOCKER_GID=1234 .</span><br></pre></td></tr></table></figure><p>这里由于国内云主机curl步骤时间太长，所以把项目关联到<code>DockerHub</code>上生成镜像: <a href="https://hub.docker.com/r/superbin/jenkins-docker/" target="_blank" rel="noopener">https://hub.docker.com/r/superbin/jenkins-docker/</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull superbin/jenkins-docker</span><br></pre></td></tr></table></figure></p><h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --name jenkins \</span><br><span class="line">      -d \</span><br><span class="line">      -p 8080:8080 \</span><br><span class="line">      -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">      -v /var/jenkins_home:/var/jenkins_home \</span><br><span class="line">      -e TZ=Asia/Shanghai \</span><br><span class="line">      superbin/jenkins-docker:20171001</span><br></pre></td></tr></table></figure><p>运行jenkins容器，将宿主的/var/run/docker.sock文件挂载到容器内的同样位置，从而让容器内可以通过unix socket调用宿主的Docker引擎；将jenkins目录挂载到宿主机同样位置，以便查看初始密码和workspace<br>在这里，如果是第一次运行本项目，需要查看宿主机中的/var/jenkins_home目录，如果没有该目录要新建一个，并加上权限<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /var/jenkins_home</span><br><span class="line">$ chmod 777 /var/jenkins_home</span><br></pre></td></tr></table></figure></p><p>如果要删除jenkins数据重新安装，需要删除宿主机的/var/jenkins_home目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf /var/jenkins_home</span><br></pre></td></tr></table></figure></p><blockquote><ul><li>这里使用了挂载目录，并给出最高权限，这样做违背了linux的<code>最小权限原则</code>，可以改进为使用Docker命名卷</li><li><code>-e TZ=Asia/Shanghai</code>可以解决容器内时间相差8小时的问题</li></ul></blockquote><p>现在jenkins容器已经运行，并且可以执行docker命令了</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Jenkins-Docker"><a href="#Jenkins-Docker" class="headerlink" title="Jenkins-Docker"></a><strong>Jenkins-Docker</strong></h1><blockquote><ul><li>Jenkins-Docker是一个使用Dockerfile创建可执行docker命令的Jenkins镜像的项目。之前有使用Jenkins持续集成的经历，最近开始接触Docker，那么就没有理由继续之前痛苦的Jenkins安装过程。但是使用官方镜像无法在Docker容器内使用Docker命令，所以就有了这个项目。</li><li>本项目是早期写的，在存储、权限等方面还有些缺陷，可参考新的持续集成例子：<a href="/2018/05/14/spring-boot-admin-jenkins-docker">spring-boot-admin-jenkins-docker</a></li></ul></blockquote><p>项目地址： <a href="https://github.com/chenbin-353549444/Jenkins-Docker" target="_blank" rel="noopener">https://github.com/chenbin-353549444/Jenkins-Docker</a><br><a href><img src="https://img.shields.io/badge/docker-17.06.1--ce-blue.svg" alt="Travis"></a></p><h2 id="详细说明"><a href="#详细说明" class="headerlink" title="详细说明"></a>详细说明</h2><h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> jenkins:alpine</span><br><span class="line"><span class="comment"># 下载安装Docker CLI</span></span><br><span class="line"><span class="keyword">USER</span> root</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; tar zxvf docker-latest.tgz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; cp docker/docker /usr/<span class="built_in">local</span>/bin/ \</span></span><br><span class="line"><span class="bash">    &amp;&amp; rm -rf docker docker-latest.tgz</span></span><br><span class="line"><span class="bash"><span class="comment"># 将 `jenkins` 用户的组 ID 改为宿主 `docker` 组的组ID，从而具有执行 `docker` 命令的权限。</span></span></span><br><span class="line"><span class="bash">ARG DOCKER_GID=993</span></span><br><span class="line"><span class="bash">USER jenkins:<span class="variable">$&#123;DOCKER_GID&#125;</span></span></span><br></pre></td></tr></table></figure><p>在这里，我们下载了静态编译的docker可执行文件，并提取命令行安装到系统目录下。然后调整了jenkins用户的组ID，调整为宿主docker组ID，从而使其具有执行docker命令的权限。</p><h3 id="生成镜像"><a href="#生成镜像" class="headerlink" title="生成镜像"></a>生成镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t jenkins-docker .</span><br></pre></td></tr></table></figure><p>组ID使用了<code>DOCKER_GID</code>参数来定义，以方便进一步定制。构建时可以通过–build-arg来改变DOCKER_GID的默认值，运行时也可以通过–user jenkins:1234来改变运行用户的身份。</p><blockquote><p>阿里云初始的CentOS系统中直接安装docker时，docker组ID为993</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t jenkins-docker --build-arg DOCKER_GID=1234 .</span><br></pre></td></tr></table></figure><p>这里由于国内云主机curl步骤时间太长，所以把项目关联到<code>DockerHub</code>上生成镜像: <a href="https://hub.docker.com/r/superbin/jenkins-docker/" target="_blank" rel="noopener">https://hub.docker.com/r/superbin/jenkins-docker/</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull superbin/jenkins-docker</span><br></pre></td></tr></table></figure></p><h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --name jenkins \</span><br><span class="line">      -d \</span><br><span class="line">      -p 8080:8080 \</span><br><span class="line">      -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">      -v /var/jenkins_home:/var/jenkins_home \</span><br><span class="line">      -e TZ=Asia/Shanghai \</span><br><span class="line">      superbin/jenkins-docker:20171001</span><br></pre></td></tr></table></figure><p>运行jenkins容器，将宿主的/var/run/docker.sock文件挂载到容器内的同样位置，从而让容器内可以通过unix socket调用宿主的Docker引擎；将jenkins目录挂载到宿主机同样位置，以便查看初始密码和workspace<br>在这里，如果是第一次运行本项目，需要查看宿主机中的/var/jenkins_home目录，如果没有该目录要新建一个，并加上权限<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /var/jenkins_home</span><br><span class="line">$ chmod 777 /var/jenkins_home</span><br></pre></td></tr></table></figure></p><p>如果要删除jenkins数据重新安装，需要删除宿主机的/var/jenkins_home目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf /var/jenkins_home</span><br></pre></td></tr></table></figure></p><blockquote><ul><li>这里使用了挂载目录，并给出最高权限，这样做违背了linux的<code>最小权限原则</code>，可以改进为使用Docker命名卷</li><li><code>-e TZ=Asia/Shanghai</code>可以解决容器内时间相差8小时的问题</li></ul></blockquote><p>现在jenkins容器已经运行，并且可以执行docker命令了</p>]]></content>
     
     <summary type="html">
     
@@ -511,16 +511,16 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
