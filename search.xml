@@ -557,13 +557,13 @@
             
             <tag> Spring boot </tag>
             
-            <tag> Maven </tag>
-            
             <tag> Docker </tag>
             
             <tag> Jenkins </tag>
             
             <tag> 持续集成 </tag>
+            
+            <tag> Maven </tag>
             
         </tags>
       
@@ -675,15 +675,15 @@
             
             <tag> Java </tag>
             
-            <tag> Shell </tag>
-            
             <tag> Spring boot </tag>
             
-            <tag> Maven </tag>
+            <tag> Shell </tag>
             
             <tag> Docker </tag>
             
             <tag> Jenkins </tag>
+            
+            <tag> Maven </tag>
             
         </tags>
       
@@ -826,9 +826,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Shell </tag>
-            
             <tag> Spring boot </tag>
+            
+            <tag> Shell </tag>
             
         </tags>
       

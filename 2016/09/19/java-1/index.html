@@ -28,14 +28,14 @@
 <meta name="twitter:title" content="Java SE笔记： 反射构造Class对象">
 <meta name="twitter:description" content="反射构造Class对象">
 
-<link rel="apple-touch-icon" href="/blog//apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 
     <link rel="alternate" href="/atom.xml" title="ChenBin&#39;s Blog" type="application/atom+xml">
 
 
 
-    <link rel="shortcut icon" href="/blog//favicon.png">
+    <link rel="shortcut icon" href="/favicon.png">
 
 
 
@@ -48,7 +48,7 @@
 
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
-    <link href="/blog//css/pace-theme-minimal.css" rel="stylesheet">
+    <link href="/css/pace-theme-minimal.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="/css/style.css">
@@ -85,7 +85,7 @@
 
 
 
-    <script> yiliaConfig.rootUrl = /blog/; </script>
+    <script> yiliaConfig.rootUrl = "\/";</script>
 
 
 
@@ -95,7 +95,7 @@
         var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?8f1611faad753a0c36ea21a8444bd701";
+            hm.src = "//hm.baidu.com/hm.js?a637ced513007ab6ba19c15cce76962a";
             var s = document.getElementsByTagName("script")[0]; 
             s.parentNode.insertBefore(hm, s);
         })();
@@ -134,18 +134,18 @@ $(document).ready(function ($) {
 </script>
 
 </head></html>
-<script type="text/javascript" src="/blog//js/clicklove.js"></script>
+<script type="text/javascript" src="/js/clicklove.js"></script>
 <body>
   <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
     <header id="header" class="inner">
-        <a href="/blog/" class="profilepic">
-            <img src="/blog//img/avatar.png" class="animated zoomIn">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/blog/">Chen Bin</a></h1>
+          <h1 class="header-author"><a href="/">Chen Bin</a></h1>
         </hgroup>
 
         
@@ -285,11 +285,11 @@ $(document).ready(function ($) {
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
-            <a href="/blog/" class="profilepic">
-                <img src="/blog//img/avatar.png" class="animated zoomIn">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/blog/" title="回到主页">Chen Bin</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页">Chen Bin</a></h1>
             </hgroup>
             
             <p class="header-subtitle">🎉✨🎨🚀🐳</p>
@@ -476,7 +476,7 @@ $(document).ready(function ($) {
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： 反射构造Class对象　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/blog/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： 反射构造Class对象　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -489,6 +489,28 @@ $(document).ready(function ($) {
 
 
 
+    
+        <!-- Gitalk 评论 start  -->
+<!-- Link Gitalk 的支持文件  -->
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+    <script type="text/javascript">
+    var gitalk = new Gitalk({
+
+    // gitalk的主要参数
+        clientID: `3f1d755fddc639a1ae4a`,
+        clientSecret: `df185eae6463b9d666073a2f317ca58647ad26f9`,
+        repo: `chenbin-353549444.github.io`,
+        owner: 'chenbin-353549444',
+        admin: ['chenbin-353549444'],
+        id: window.location.pathname,
+
+    });
+    gitalk.render('gitalk-container');
+</script>
+<!-- Gitalk end -->
     
 
 
@@ -554,7 +576,7 @@ $(document).ready(function ($) {
 </footer>
     </div>
     
-<script data-main="/blog/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+<script data-main="/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -566,7 +588,7 @@ $(document).ready(function ($) {
             }
             else {
                 var backgroundnum = 1;
-                var backgroundimg = "url(/blog//background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
                 $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
             }
         })

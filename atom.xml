@@ -514,13 +514,13 @@
     
       <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
     
-      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
-    
       <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
     
       <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
     
       <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
     
   </entry>
   
