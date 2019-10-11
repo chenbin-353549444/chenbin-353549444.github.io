@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
 <meta property="og:description" content="在原有互斥锁基础上改进为细粒度锁">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-11T01:22:56.200Z">
+<meta property="og:updated_time" content="2019-10-11T08:24:55.417Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring boot集成分布式锁Redisson">
 <meta name="twitter:description" content="在原有互斥锁基础上改进为细粒度锁">
@@ -383,6 +383,7 @@ $(document).ready(function ($) {
 <p>注意：最初是在自己服务器上测试的，redis容器没加密码，结果过几天就被挖矿了，于是老老实实加上密码</p>
 </blockquote>
 <p>redis加密码：redis.conf中修改两行<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把host限制注释掉</span></span><br><span class="line"><span class="string">bind</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"><span class="comment"># 打开密码设置</span></span><br><span class="line"><span class="string">requirepass</span> <span class="string">XXXXXXXX</span></span><br></pre></td></tr></table></figure></p>
+<p><strong><code>推荐:</code></strong> Windows上的免费Redis可视化工具  <a href="http://electronjs.org/apps/anotherredisdesktopmanager" target="_blank" rel="noopener">AnotherRedisDesktopManager</a><br><strong><code>收藏:</code></strong> Windows上Redis的安装包  <a href="https://www.nuget.org/packages/Redis-64/3.0.500" target="_blank" rel="noopener">Redis-64</a></p>
 <h3 id="添加Maven依赖"><a href="#添加Maven依赖" class="headerlink" title="添加Maven依赖"></a>添加Maven依赖</h3><p>pom.xml中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.redisson<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redisson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.11.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="添加Redisson配置类"><a href="#添加Redisson配置类" class="headerlink" title="添加Redisson配置类"></a>添加Redisson配置类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chenbin</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedissonConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;redisson.address&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedissonClient <span class="title">getRedisson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Config config = <span class="keyword">new</span> Config();</span><br><span class="line">        config.useSingleServer().setAddress(address);</span><br><span class="line">        config.useSingleServer().setPassword(<span class="string">"XXXXXXXX"</span>);</span><br><span class="line">        <span class="keyword">return</span> Redisson.create(config);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由于每个环境redis地址不同，把地址放到对应的配置文件中了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redisson.address=redis://127.0.0.1:6379</span><br></pre></td></tr></table></figure></p>
@@ -392,6 +393,7 @@ $(document).ready(function ($) {
 <li>为防止本地环境报错，设置为非测试环境过滤</li>
 <li>更新后暂时没问题，还需要测试性能和参数调优后再决定是否上线</li>
 </ul>
+<p><strong><code>参考:</code></strong>  <a href="https://github.com/redisson/redisson/wiki" target="_blank" rel="noopener">Redisson官方文档</a></p>
 
       
     </div>
@@ -403,7 +405,7 @@ $(document).ready(function ($) {
         <p><span>本文标题:</span><a href="/blog/2019/10/10/spring-boot-redisson/">Spring boot集成分布式锁Redisson</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
         <p><span>发布时间:</span>2019-10-10, 13:55:53</p>
-        <p><span>最后更新:</span>2019-10-11, 09:22:56</p>
+        <p><span>最后更新:</span>2019-10-11, 16:24:55</p>
         
             <p>
                 <span>更新历史:</span><i class="fa fa-github"></i>
