@@ -3,11 +3,11 @@
   <title>ChenBin&#39;s Blog</title>
   
   <subtitle>🎉✨🎨🚀🐳</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="www.chenb.top/"/>
-  <updated>2019-10-10T09:39:25.282Z</updated>
-  <id>www.chenb.top/</id>
+  <link href="https://chenbinhongfund.gitee.io/blog/"/>
+  <updated>2019-10-11T01:22:56.200Z</updated>
+  <id>https://chenbinhongfund.gitee.io/blog/</id>
   
   <author>
     <name>Chen Bin</name>
@@ -18,12 +18,12 @@
   
   <entry>
     <title>Spring boot集成分布式锁Redisson</title>
-    <link href="www.chenb.top/2019/10/10/spring-boot-redisson/"/>
-    <id>www.chenb.top/2019/10/10/spring-boot-redisson/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/10/10/spring-boot-redisson/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/10/10/spring-boot-redisson/</id>
     <published>2019-10-10T05:55:53.000Z</published>
-    <updated>2019-10-10T09:39:25.282Z</updated>
+    <updated>2019-10-11T01:22:56.200Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>引入锁机制后基本满足了软件的并发需求，但是也有一些问题：</p><ol><li>系统变慢了，当用户进行一些慢速的修改操作时（导入，批量等），其他用户进行同类操作需要等待解锁，为了解决这个问题，需要结合业务实际情况细化锁的粒度</li><li>不同的服务之间不能共享锁，导致分布式的环境小概率出现并发问题</li></ol><p>之前的互斥锁：<a href="/2019/05/21/spring-boot-aop-lock">自定义注解+AOP实现互斥锁</a><br>以上情况随着业务量的增加会越来越明显，简单的互斥锁预计只能撑到年底，所以需要引入Redisson</p><h3 id="改进互斥锁方案"><a href="#改进互斥锁方案" class="headerlink" title="改进互斥锁方案"></a>改进互斥锁方案</h3><p>最初的想法是改进原先的互斥锁，细化锁的粒度，简单的说就是各人取个人的锁。那么需要自己写存入锁和取出锁的规则，还要考虑很多并发的情况，属于造轮子。<br>后来CTO建议我用Redisson，了解后发现完美解决了问题，于是放弃了这个方案。</p><h3 id="关于Redis"><a href="#关于Redis" class="headerlink" title="关于Redis"></a>关于Redis</h3><p>由于Redisson是基于Redis的，所以要先部署Redis，和其他应用一样，直接开一个Docker容器就行了，参考<a href="https://hub.docker.com/_/redis" target="_blank" rel="noopener">DockerHub Redis</a></p><blockquote><p>注意：最初是在自己服务器上测试的，redis容器没加密码，结果过几天就被挖矿了，于是老老实实加上密码</p></blockquote><p>redis加密码：redis.conf中修改两行<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把host限制注释掉</span></span><br><span class="line"><span class="string">bind</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"><span class="comment"># 打开密码设置</span></span><br><span class="line"><span class="string">requirepass</span> <span class="string">XXXXXXXX</span></span><br></pre></td></tr></table></figure></p><h3 id="添加Maven依赖"><a href="#添加Maven依赖" class="headerlink" title="添加Maven依赖"></a>添加Maven依赖</h3><p>pom.xml中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.redisson<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redisson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>3.11.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="添加Redisson配置类"><a href="#添加Redisson配置类" class="headerlink" title="添加Redisson配置类"></a>添加Redisson配置类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chenbin</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedissonConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;redisson.address&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedissonClient <span class="title">getRedisson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Config config = <span class="keyword">new</span> Config();</span><br><span class="line">        config.useSingleServer().setAddress(address);</span><br><span class="line">        config.useSingleServer().setPassword(<span class="string">"XXXXXXXX"</span>);</span><br><span class="line">        <span class="keyword">return</span> Redisson.create(config);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>由于每个环境redis地址不同，把地址放到对应的配置文件中了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redisson.address=redis://127.0.0.1:6379</span><br></pre></td></tr></table></figure></p><h3 id="新版的切面代码"><a href="#新版的切面代码" class="headerlink" title="新版的切面代码"></a>新版的切面代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 同步锁 AOP</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chenbin</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Profile</span>(NOT_DEVELOPMENT)</span><br><span class="line"><span class="meta">@Scope</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Order</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.profiles.active&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String active;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedissonClient redissonClient;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Service层切点     用于记录错误日志</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@annotation(com.hongfund.efi.service.lock.ServiceLock)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lockAspect</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"lockAspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        String accountBookId = request.getHeader(<span class="string">"accountBookId"</span>);</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(accountBookId)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ServiceException(<span class="string">"账套校验失败!"</span>, ErrorCode.BAD_REQUEST);</span><br><span class="line">        &#125;</span><br><span class="line">        RLock lock = redissonClient.getLock(active + <span class="string">"_"</span> + accountBookId);</span><br><span class="line">        <span class="keyword">boolean</span> res = lock.tryLock(<span class="number">10</span>, TimeUnit.SECONDS);</span><br><span class="line">        Object obj;</span><br><span class="line">        <span class="keyword">if</span> (res) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                obj = joinPoint.proceed();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> obj;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ServiceException(<span class="string">"其他用户正在操作，请等待!"</span>, ErrorCode.BAD_REQUEST);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>这里根据业务情况把锁细化到账套级别</li><li>为防止本地环境报错，设置为非测试环境过滤</li><li>更新后暂时没问题，还需要测试性能和参数调优后再决定是否上线</li></ul>]]></content>
+    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>引入锁机制后基本满足了软件的并发需求，但是也有一些问题：</p><ol><li>系统变慢了，当用户进行一些慢速的修改操作时（导入，批量等），其他用户进行同类操作需要等待解锁，为了解决这个问题，需要结合业务实际情况细化锁的粒度</li><li>不同的服务之间不能共享锁，导致分布式的环境小概率出现并发问题</li></ol><p>之前的互斥锁：<a href="/blog/2019/05/21/spring-boot-aop-lock">自定义注解+AOP实现互斥锁</a><br>以上情况随着业务量的增加会越来越明显，简单的互斥锁预计只能撑到年底，所以需要引入Redisson</p><h3 id="改进互斥锁方案"><a href="#改进互斥锁方案" class="headerlink" title="改进互斥锁方案"></a>改进互斥锁方案</h3><p>最初的想法是改进原先的互斥锁，细化锁的粒度，简单的说就是各人取个人的锁。那么需要自己写存入锁和取出锁的规则，还要考虑很多并发的情况，属于造轮子。<br>后来CTO建议我用Redisson，了解后发现完美解决了问题，于是放弃了这个方案。</p><h3 id="关于Redis"><a href="#关于Redis" class="headerlink" title="关于Redis"></a>关于Redis</h3><p>由于Redisson是基于Redis的，所以要先部署Redis，和其他应用一样，直接开一个Docker容器就行了，参考<a href="https://hub.docker.com/_/redis" target="_blank" rel="noopener">DockerHub Redis</a></p><blockquote><p>注意：最初是在自己服务器上测试的，redis容器没加密码，结果过几天就被挖矿了，于是老老实实加上密码</p></blockquote><p>redis加密码：redis.conf中修改两行<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把host限制注释掉</span></span><br><span class="line"><span class="string">bind</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"><span class="comment"># 打开密码设置</span></span><br><span class="line"><span class="string">requirepass</span> <span class="string">XXXXXXXX</span></span><br></pre></td></tr></table></figure></p><h3 id="添加Maven依赖"><a href="#添加Maven依赖" class="headerlink" title="添加Maven依赖"></a>添加Maven依赖</h3><p>pom.xml中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.redisson<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redisson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>3.11.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="添加Redisson配置类"><a href="#添加Redisson配置类" class="headerlink" title="添加Redisson配置类"></a>添加Redisson配置类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chenbin</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedissonConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;redisson.address&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedissonClient <span class="title">getRedisson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Config config = <span class="keyword">new</span> Config();</span><br><span class="line">        config.useSingleServer().setAddress(address);</span><br><span class="line">        config.useSingleServer().setPassword(<span class="string">"XXXXXXXX"</span>);</span><br><span class="line">        <span class="keyword">return</span> Redisson.create(config);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>由于每个环境redis地址不同，把地址放到对应的配置文件中了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redisson.address=redis://127.0.0.1:6379</span><br></pre></td></tr></table></figure></p><h3 id="新版的切面代码"><a href="#新版的切面代码" class="headerlink" title="新版的切面代码"></a>新版的切面代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 同步锁 AOP</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chenbin</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Profile</span>(NOT_DEVELOPMENT)</span><br><span class="line"><span class="meta">@Scope</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Order</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.profiles.active&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String active;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedissonClient redissonClient;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Service层切点     用于记录错误日志</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@annotation(com.hongfund.efi.service.lock.ServiceLock)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lockAspect</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"lockAspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        String accountBookId = request.getHeader(<span class="string">"accountBookId"</span>);</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(accountBookId)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ServiceException(<span class="string">"账套校验失败!"</span>, ErrorCode.BAD_REQUEST);</span><br><span class="line">        &#125;</span><br><span class="line">        RLock lock = redissonClient.getLock(active + <span class="string">"_"</span> + accountBookId);</span><br><span class="line">        <span class="keyword">boolean</span> res = lock.tryLock(<span class="number">10</span>, TimeUnit.SECONDS);</span><br><span class="line">        Object obj;</span><br><span class="line">        <span class="keyword">if</span> (res) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                obj = joinPoint.proceed();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> obj;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ServiceException(<span class="string">"其他用户正在操作，请等待!"</span>, ErrorCode.BAD_REQUEST);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>这里根据业务情况把锁细化到账套级别</li><li>为防止本地环境报错，设置为非测试环境过滤</li><li>更新后暂时没问题，还需要测试性能和参数调优后再决定是否上线</li></ul>]]></content>
     
     <summary type="html">
     
@@ -31,27 +31,27 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Redis" scheme="www.chenb.top/tags/Redis/"/>
+      <category term="Redis" scheme="https://chenbinhongfund.gitee.io/blog/tags/Redis/"/>
     
-      <category term="Redisson" scheme="www.chenb.top/tags/Redisson/"/>
+      <category term="Redisson" scheme="https://chenbinhongfund.gitee.io/blog/tags/Redisson/"/>
     
   </entry>
   
   <entry>
     <title>Node语音识别</title>
-    <link href="www.chenb.top/2019/06/26/node-ffmpeg/"/>
-    <id>www.chenb.top/2019/06/26/node-ffmpeg/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/06/26/node-ffmpeg/</id>
     <published>2019-06-26T05:47:02.000Z</published>
-    <updated>2019-10-10T09:36:53.589Z</updated>
+    <updated>2019-10-11T01:22:56.198Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/images/view.jpg" alt></p><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p>server.js<br><figure class="highlight javascript"><figcaption><span>1.8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="built_in">require</span>(<span class="string">'fluent-ffmpeg'</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> app = express();</span><br><span class="line"><span class="keyword">let</span> AipSpeech = <span class="built_in">require</span>(<span class="string">"baidu-aip-sdk"</span>).speech;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度语音应用后台中的`API Key`和`Secret Key`</span></span><br><span class="line"><span class="keyword">let</span> client = <span class="keyword">new</span> AipSpeech(<span class="number">0</span>, <span class="string">'API Key'</span>, <span class="string">'Secret Key'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">let</span> multer  = <span class="built_in">require</span>(<span class="string">'multer'</span>);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/public'</span>, express.static(<span class="string">'public'</span>));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(multer(&#123; <span class="attr">dest</span>: <span class="string">'/tmp/'</span>&#125;).array(<span class="string">'buf'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.sendFile( __dirname + <span class="string">"/"</span> + <span class="string">"index.htm"</span> );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/pcm'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req.files[<span class="number">0</span>]);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    fs.readFile( req.files[<span class="number">0</span>].path, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(data);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/m4a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> command = ffmpeg(req.files[<span class="number">0</span>].path)</span><br><span class="line">        .noVideo()</span><br><span class="line">        .inputFormat(<span class="string">'m4a'</span>)</span><br><span class="line">        .audioCodec(<span class="string">'pcm_s16le'</span>)</span><br><span class="line">        .audioBitrate(<span class="number">16</span>)</span><br><span class="line">        .audioFrequency(<span class="number">16000</span>)</span><br><span class="line">        .audioChannels(<span class="number">1</span>)</span><br><span class="line">        .format(<span class="string">'s16le'</span>)</span><br><span class="line">        .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'An error occurred: '</span> + err.message);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="keyword">let</span> ffstream = command.pipe();</span><br><span class="line">    ffstream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">        voiceBase64 = Buffer.concat([voiceBase64, <span class="keyword">new</span> Buffer(chunk)]);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'ffmpeg just wrote '</span> + chunk.length + <span class="string">' bytes'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ffstream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data '</span> + voiceBase64.length + <span class="string">' bytes'</span>);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>, host, port)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="语音识别（支持pcm和m4a）"><a href="#语音识别（支持pcm和m4a）" class="headerlink" title="语音识别（支持pcm和m4a）"></a>语音识别（支持pcm和m4a）</h2><p>测试： <a href="http://web.chenb.top" target="_blank" rel="noopener">http://web.chenb.top</a><br>Github项目： <a href="https://github.com/chenbin-353549444/node-ffmpeg" target="_blank" rel="noopener">https://github.com/chenbin-353549444/node-ffmpeg</a></p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>使用百度的语音识别接口，用FFMPEG转音频文件</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>修改server.js的<code>API Key</code>和<code>Secret Key</code><br>在安装好Docker的机器上运行<code>sh run.sh</code>，如果有Jenkins可以直接新建管道构建<br>完成后访问测试页面(<a href="http://127.0.0.1:80/index.htm" target="_blank" rel="noopener">http://127.0.0.1:80/index.htm</a>)<br><img src="/blog/images/view.jpg" alt></p><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><p>server.js<br><figure class="highlight javascript"><figcaption><span>1.8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="built_in">require</span>(<span class="string">'fluent-ffmpeg'</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">let</span> app = express();</span><br><span class="line"><span class="keyword">let</span> AipSpeech = <span class="built_in">require</span>(<span class="string">"baidu-aip-sdk"</span>).speech;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度语音应用后台中的`API Key`和`Secret Key`</span></span><br><span class="line"><span class="keyword">let</span> client = <span class="keyword">new</span> AipSpeech(<span class="number">0</span>, <span class="string">'API Key'</span>, <span class="string">'Secret Key'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">let</span> multer  = <span class="built_in">require</span>(<span class="string">'multer'</span>);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/public'</span>, express.static(<span class="string">'public'</span>));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(multer(&#123; <span class="attr">dest</span>: <span class="string">'/tmp/'</span>&#125;).array(<span class="string">'buf'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.sendFile( __dirname + <span class="string">"/"</span> + <span class="string">"index.htm"</span> );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/pcm'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req.files[<span class="number">0</span>]);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    fs.readFile( req.files[<span class="number">0</span>].path, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(data);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/m4a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html;charset=utf-8'</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(req);  <span class="comment">// 上传的文件信息</span></span><br><span class="line">    <span class="keyword">let</span> voiceBase64 = <span class="keyword">new</span> Buffer(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> command = ffmpeg(req.files[<span class="number">0</span>].path)</span><br><span class="line">        .noVideo()</span><br><span class="line">        .inputFormat(<span class="string">'m4a'</span>)</span><br><span class="line">        .audioCodec(<span class="string">'pcm_s16le'</span>)</span><br><span class="line">        .audioBitrate(<span class="number">16</span>)</span><br><span class="line">        .audioFrequency(<span class="number">16000</span>)</span><br><span class="line">        .audioChannels(<span class="number">1</span>)</span><br><span class="line">        .format(<span class="string">'s16le'</span>)</span><br><span class="line">        .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'An error occurred: '</span> + err.message);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="keyword">let</span> ffstream = command.pipe();</span><br><span class="line">    ffstream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">        voiceBase64 = Buffer.concat([voiceBase64, <span class="keyword">new</span> Buffer(chunk)]);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'ffmpeg just wrote '</span> + chunk.length + <span class="string">' bytes'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ffstream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data '</span> + voiceBase64.length + <span class="string">' bytes'</span>);</span><br><span class="line">        client.recognize(voiceBase64, <span class="string">'pcm'</span>, <span class="number">16000</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(result));</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            res.end(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> server = app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>, host, port)</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>百度接口文档:(<a href="http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3" target="_blank" rel="noopener">http://ai.baidu.com/docs#/ASR-Online-Node-SDK/8b3186c3</a>)<br>node-fluent-ffmpeg:(<a href="https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command" target="_blank" rel="noopener">https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#creating-an-ffmpeg-command</a>)<br>FFMPEG:(<a href="http://www.ffmpeg.org" target="_blank" rel="noopener">http://www.ffmpeg.org</a>)</p>]]></content>
     
     <summary type="html">
     
@@ -59,17 +59,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot 自定义注解+AOP实现互斥锁</title>
-    <link href="www.chenb.top/2019/05/21/spring-boot-aop-lock/"/>
-    <id>www.chenb.top/2019/05/21/spring-boot-aop-lock/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/21/spring-boot-aop-lock/</id>
     <published>2019-05-21T07:48:36.000Z</published>
     <updated>2019-05-21T08:19:29.809Z</updated>
     
@@ -81,19 +81,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>Java实现数学公式计算</title>
-    <link href="www.chenb.top/2019/05/20/java-rpn/"/>
-    <id>www.chenb.top/2019/05/20/java-rpn/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/05/20/java-rpn/</id>
     <published>2019-05-20T09:48:52.000Z</published>
     <updated>2019-08-15T01:59:18.555Z</updated>
     
@@ -105,17 +105,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>Spring Data JPA解决批量修改与唯一索引冲突的问题</title>
-    <link href="www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
-    <id>www.chenb.top/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/</id>
     <published>2019-04-23T09:17:30.000Z</published>
     <updated>2019-04-23T09:52:32.805Z</updated>
     
@@ -127,19 +127,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Git提交规范，GitHub表情规范指南</title>
-    <link href="www.chenb.top/2019/04/11/git-commit-emoji/"/>
-    <id>www.chenb.top/2019/04/11/git-commit-emoji/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2019/04/11/git-commit-emoji/</id>
     <published>2019-04-11T08:42:33.000Z</published>
     <updated>2019-04-23T05:43:32.333Z</updated>
     
@@ -151,17 +151,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Git" scheme="www.chenb.top/tags/Git/"/>
+      <category term="Git" scheme="https://chenbinhongfund.gitee.io/blog/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>反爬虫：tyc-num.woff字体加密</title>
-    <link href="www.chenb.top/2018/12/06/web-crawler-tyc-num/"/>
-    <id>www.chenb.top/2018/12/06/web-crawler-tyc-num/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/12/06/web-crawler-tyc-num/</id>
     <published>2018-12-06T01:48:51.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -173,23 +173,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot升级到2.1</title>
-    <link href="www.chenb.top/2018/11/26/spring-boot-update-version/"/>
-    <id>www.chenb.top/2018/11/26/spring-boot-update-version/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/26/spring-boot-update-version/</id>
     <published>2018-11-26T07:42:04.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -201,17 +201,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
   <entry>
     <title>博客成长之路</title>
-    <link href="www.chenb.top/2018/11/01/blog-way/"/>
-    <id>www.chenb.top/2018/11/01/blog-way/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/11/01/blog-way/</id>
     <published>2018-11-01T09:08:43.000Z</published>
     <updated>2019-05-21T01:35:34.212Z</updated>
     
@@ -223,19 +223,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Blog" scheme="www.chenb.top/tags/Blog/"/>
+      <category term="Blog" scheme="https://chenbinhongfund.gitee.io/blog/tags/Blog/"/>
     
   </entry>
   
   <entry>
     <title>Java内存分页工具</title>
-    <link href="www.chenb.top/2018/08/17/spring-boot-ram-pager/"/>
-    <id>www.chenb.top/2018/08/17/spring-boot-ram-pager/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/17/spring-boot-ram-pager/</id>
     <published>2018-08-17T08:55:30.000Z</published>
     <updated>2019-01-16T12:20:44.839Z</updated>
     
@@ -247,21 +247,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Spring Data JPA" scheme="www.chenb.top/tags/Spring-Data-JPA/"/>
+      <category term="Spring Data JPA" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-Data-JPA/"/>
     
   </entry>
   
   <entry>
     <title>Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</title>
-    <link href="www.chenb.top/2018/08/13/java-csv-to-excel/"/>
-    <id>www.chenb.top/2018/08/13/java-csv-to-excel/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/13/java-csv-to-excel/</id>
     <published>2018-08-13T06:19:14.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -273,25 +273,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="JavaCSV" scheme="www.chenb.top/tags/JavaCSV/"/>
+      <category term="JavaCSV" scheme="https://chenbinhongfund.gitee.io/blog/tags/JavaCSV/"/>
     
-      <category term="Apache" scheme="www.chenb.top/tags/Apache/"/>
+      <category term="Apache" scheme="https://chenbinhongfund.gitee.io/blog/tags/Apache/"/>
     
-      <category term="POI" scheme="www.chenb.top/tags/POI/"/>
+      <category term="POI" scheme="https://chenbinhongfund.gitee.io/blog/tags/POI/"/>
     
-      <category term="Excel" scheme="www.chenb.top/tags/Excel/"/>
+      <category term="Excel" scheme="https://chenbinhongfund.gitee.io/blog/tags/Excel/"/>
     
   </entry>
   
   <entry>
     <title>MySQL简单存储过程修复用户表</title>
-    <link href="www.chenb.top/2018/08/09/mysql-code/"/>
-    <id>www.chenb.top/2018/08/09/mysql-code/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/08/09/mysql-code/</id>
     <published>2018-08-09T06:34:08.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -303,19 +303,19 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="代码块" scheme="www.chenb.top/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
+      <category term="代码块" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>Windows共享文件夹设置</title>
-    <link href="www.chenb.top/2018/07/25/windows-share-folders/"/>
-    <id>www.chenb.top/2018/07/25/windows-share-folders/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/25/windows-share-folders/</id>
     <published>2018-07-25T06:44:31.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -327,17 +327,17 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Windows" scheme="www.chenb.top/tags/Windows/"/>
+      <category term="Windows" scheme="https://chenbinhongfund.gitee.io/blog/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>Jenkins Docker实现自动复制MySQL数据库</title>
-    <link href="www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/"/>
-    <id>www.chenb.top/2018/07/23/jenkins-docker-mysql-copy/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/23/jenkins-docker-mysql-copy/</id>
     <published>2018-07-23T06:37:33.000Z</published>
     <updated>2018-07-30T12:51:22.935Z</updated>
     
@@ -349,21 +349,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
   </entry>
   
   <entry>
     <title>Java爬虫获取企业工商信息</title>
-    <link href="www.chenb.top/2018/07/09/jsoup-company-info/"/>
-    <id>www.chenb.top/2018/07/09/jsoup-company-info/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/jsoup-company-info/</id>
     <published>2018-07-09T07:35:40.000Z</published>
     <updated>2019-01-16T12:20:44.824Z</updated>
     
@@ -375,23 +375,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Jsoup" scheme="www.chenb.top/tags/Jsoup/"/>
+      <category term="Jsoup" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jsoup/"/>
     
-      <category term="Crawler" scheme="www.chenb.top/tags/Crawler/"/>
+      <category term="Crawler" scheme="https://chenbinhongfund.gitee.io/blog/tags/Crawler/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot MySQL连接超时</title>
-    <link href="www.chenb.top/2018/07/09/spring-boot-mysql-timeout/"/>
-    <id>www.chenb.top/2018/07/09/spring-boot-mysql-timeout/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/07/09/spring-boot-mysql-timeout/</id>
     <published>2018-07-09T06:15:14.000Z</published>
     <updated>2019-08-14T08:47:03.590Z</updated>
     
@@ -403,25 +403,25 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="MySQL" scheme="www.chenb.top/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://chenbinhongfund.gitee.io/blog/tags/MySQL/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="Tomcat" scheme="www.chenb.top/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="https://chenbinhongfund.gitee.io/blog/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot开启Gzip压缩</title>
-    <link href="www.chenb.top/2018/06/13/spring-boot-gzip/"/>
-    <id>www.chenb.top/2018/06/13/spring-boot-gzip/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/13/spring-boot-gzip/</id>
     <published>2018-06-13T14:30:12.000Z</published>
-    <updated>2019-10-10T09:36:53.588Z</updated>
+    <updated>2019-10-11T01:22:56.197Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h2><blockquote><p>在优化接口时间的过程中，发现很多接口的<code>Content Download</code>时间较长，除了网络问题，就是接口请求的数据太大了，有的达到了几百kb。<br>控制返回参数收效甚微，这时开启gzip就非常有用了，可以压缩接口请求的数据，一般的<code>json</code>文本压缩比率很大，开启之后接口时间大幅下降！</p></blockquote><ul><li>Spring boot版本：<code>1.5.8.RELEASE</code></li></ul><h3 id="启用步骤"><a href="#启用步骤" class="headerlink" title="启用步骤"></a>启用步骤</h3><p>Spring boot项目配置比较简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.enabled=true</span><br></pre></td></tr></table></figure></p><p>默认只压缩超过2048字节的数据，修改<code>server.compression.min-response-size</code>的值可以设置该大小<br>默认情况下，只有在响应内容类型为以下内容时才会压缩响应：</p><ul><li><code>text/html</code></li><li><code>text/xml</code></li><li><code>text/plain</code></li><li><code>text/css</code><br>我们的接口返回的是json数据，所以修改下面的配置：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.mime-types=application/json</span><br></pre></td></tr></table></figure></li></ul><p>这样Gzip就开启了！</p><blockquote><p><strong>注意：</strong> 老版本的<code>Spring boot</code>的启用配置和新版本的不同，我发现项目中原本是启用的，之后升级<code>Spring boot</code>版本时没有更新配置导致了未启用。所以<code>在更新框架版本时，要及时注意配置的变动，以防一些功能失效！</code><br>老版本的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.tomcat.compression=on</span><br><span class="line">server.tomcat.compressableMimeTypes=application/json</span><br></pre></td></tr></table></figure></p></blockquote><h3 id="如何查看Gzip是否开启成功"><a href="#如何查看Gzip是否开启成功" class="headerlink" title="如何查看Gzip是否开启成功"></a>如何查看Gzip是否开启成功</h3><p>Google浏览器打开F12，切换到NetWork下，右键表头选择Response Headers下的<code>Content-Encoding</code>，如果开启了Gzip，对应接口中的<code>Content-Encoding</code>中会有显示。</p><blockquote><p><strong>注意：</strong> 在同时开启https和http的工程中，Gzip配置只对主端口生效！</p></blockquote><h3 id="启用后的效果"><a href="#启用后的效果" class="headerlink" title="启用后的效果"></a>启用后的效果</h3><p>开启前：数据Size为511KB，右侧时间蓝色部分（Content Download）较长<br><img src="/images/gzip_1.png" title="开启前！"><br>开启前：数据Size为21.3KB，Content-Encoding中显示gzip，右侧时间蓝色部分消失<br><img src="/images/gzip_2.png" title="开启后！"><br>对比效果非常明显，接口时间由<code>1.03s</code>降到<code>164ms</code>，完美！</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h2><blockquote><p>在优化接口时间的过程中，发现很多接口的<code>Content Download</code>时间较长，除了网络问题，就是接口请求的数据太大了，有的达到了几百kb。<br>控制返回参数收效甚微，这时开启gzip就非常有用了，可以压缩接口请求的数据，一般的<code>json</code>文本压缩比率很大，开启之后接口时间大幅下降！</p></blockquote><ul><li>Spring boot版本：<code>1.5.8.RELEASE</code></li></ul><h3 id="启用步骤"><a href="#启用步骤" class="headerlink" title="启用步骤"></a>启用步骤</h3><p>Spring boot项目配置比较简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.enabled=true</span><br></pre></td></tr></table></figure></p><p>默认只压缩超过2048字节的数据，修改<code>server.compression.min-response-size</code>的值可以设置该大小<br>默认情况下，只有在响应内容类型为以下内容时才会压缩响应：</p><ul><li><code>text/html</code></li><li><code>text/xml</code></li><li><code>text/plain</code></li><li><code>text/css</code><br>我们的接口返回的是json数据，所以修改下面的配置：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.mime-types=application/json</span><br></pre></td></tr></table></figure></li></ul><p>这样Gzip就开启了！</p><blockquote><p><strong>注意：</strong> 老版本的<code>Spring boot</code>的启用配置和新版本的不同，我发现项目中原本是启用的，之后升级<code>Spring boot</code>版本时没有更新配置导致了未启用。所以<code>在更新框架版本时，要及时注意配置的变动，以防一些功能失效！</code><br>老版本的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.tomcat.compression=on</span><br><span class="line">server.tomcat.compressableMimeTypes=application/json</span><br></pre></td></tr></table></figure></p></blockquote><h3 id="如何查看Gzip是否开启成功"><a href="#如何查看Gzip是否开启成功" class="headerlink" title="如何查看Gzip是否开启成功"></a>如何查看Gzip是否开启成功</h3><p>Google浏览器打开F12，切换到NetWork下，右键表头选择Response Headers下的<code>Content-Encoding</code>，如果开启了Gzip，对应接口中的<code>Content-Encoding</code>中会有显示。</p><blockquote><p><strong>注意：</strong> 在同时开启https和http的工程中，Gzip配置只对主端口生效！</p></blockquote><h3 id="启用后的效果"><a href="#启用后的效果" class="headerlink" title="启用后的效果"></a>启用后的效果</h3><p>开启前：数据Size为511KB，右侧时间蓝色部分（Content Download）较长<br><img src="/blog/images/gzip_1.png" title="开启前！"><br>开启前：数据Size为21.3KB，Content-Encoding中显示gzip，右侧时间蓝色部分消失<br><img src="/blog/images/gzip_2.png" title="开启后！"><br>对比效果非常明显，接口时间由<code>1.03s</code>降到<code>164ms</code>，完美！</p>]]></content>
     
     <summary type="html">
     
@@ -429,21 +429,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="Gzip" scheme="https://chenbinhongfund.gitee.io/blog/tags/Gzip/"/>
     
-      <category term="Gzip" scheme="www.chenb.top/tags/Gzip/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
   </entry>
   
   <entry>
     <title>发布自己的npm包，hexo文章排序插件</title>
-    <link href="www.chenb.top/2018/06/11/npm-publish/"/>
-    <id>www.chenb.top/2018/06/11/npm-publish/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/06/11/npm-publish/</id>
     <published>2018-06-11T12:36:46.000Z</published>
     <updated>2018-06-11T14:33:52.740Z</updated>
     
@@ -455,21 +455,21 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hexo" scheme="www.chenb.top/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://chenbinhongfund.gitee.io/blog/tags/Hexo/"/>
     
-      <category term="Node" scheme="www.chenb.top/tags/Node/"/>
+      <category term="Node" scheme="https://chenbinhongfund.gitee.io/blog/tags/Node/"/>
     
-      <category term="Npm" scheme="www.chenb.top/tags/Npm/"/>
+      <category term="Npm" scheme="https://chenbinhongfund.gitee.io/blog/tags/Npm/"/>
     
   </entry>
   
   <entry>
     <title>Spring boot同时支持http和https访问</title>
-    <link href="www.chenb.top/2018/05/17/spring-boot-https/"/>
-    <id>www.chenb.top/2018/05/17/spring-boot-https/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/17/spring-boot-https/</id>
     <published>2018-05-17T06:22:03.000Z</published>
     <updated>2019-06-05T03:13:39.990Z</updated>
     
@@ -481,23 +481,23 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
-      <category term="https" scheme="www.chenb.top/tags/https/"/>
+      <category term="https" scheme="https://chenbinhongfund.gitee.io/blog/tags/https/"/>
     
   </entry>
   
   <entry>
     <title>使用Jenkins和Docker持续集成java项目</title>
-    <link href="www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/"/>
-    <id>www.chenb.top/2018/05/14/spring-boot-admin-jenkins-docker/</id>
+    <link href="https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/"/>
+    <id>https://chenbinhongfund.gitee.io/blog/2018/05/14/spring-boot-admin-jenkins-docker/</id>
     <published>2018-05-14T09:20:50.000Z</published>
-    <updated>2019-10-10T09:36:53.587Z</updated>
+    <updated>2019-10-11T01:22:56.195Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="使用Jenkins和Docker持续集成java项目"><a href="#使用Jenkins和Docker持续集成java项目" class="headerlink" title="使用Jenkins和Docker持续集成java项目"></a><strong>使用Jenkins和Docker持续集成java项目</strong></h1><ul><li>项目地址：<a href="https://github.com/chenbin-353549444/spring-boot-admin-jenkins-docker" target="_blank" rel="noopener">https://github.com/chenbin-353549444/spring-boot-admin-jenkins-docker</a></li><li>简介：使用<code>Jenkins</code>和<code>Docker</code>持续集成java项目，本例是Spring boot admin项目，较为简单，可做为参考。</li><li>意义：<code>Jenkinsfile</code>和<code>Dockerfile</code>将服务器设置和运维代码化、可视化、流程化、标准化，降低与其他人的沟通成本</li></ul><h3 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h3><p>参照官网安装：<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos/</a></p><blockquote><ul><li>注意替换国内源加速，<code>https://download.docker.com/linux/</code>替换为<code>https://mirrors.aliyun.com/docker-ce/linux/</code></li></ul></blockquote><p>配置阿里云镜像加速<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line">$ sudo vi /etc/systemd/system/multi-user.target.wants/docker.service</span><br><span class="line">$ <span class="comment">#在文件中找到 ExecStart= 这一行，并且在其行尾添加上所需的配置。</span></span><br><span class="line">$ <span class="comment">#ExecStart=/usr/bin/dockerd --registry-mirror=https://c2iitbpy.mirror.aliyuncs.com</span></span><br><span class="line">$ <span class="comment">#加速器地址在阿里云管理控制台-容器服务-镜像-镜像仓库控制台-Docker Hub镜像站点中可以找到</span></span><br><span class="line">$ <span class="comment">#保存退出后，重新加载配置并启动服务：</span></span><br><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl restart docker</span><br><span class="line">$ <span class="comment">#确认配置是否生效</span></span><br><span class="line">$ sudo ps -ef | grep dockerd</span><br></pre></td></tr></table></figure></p><h3 id="安装Jenkins"><a href="#安装Jenkins" class="headerlink" title="安装Jenkins"></a>安装Jenkins</h3><p>运行Jenkins容器的命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line">  --name jenkins \</span><br><span class="line">  -d \</span><br><span class="line">  -u root \</span><br><span class="line">  -p 8080:8080 \</span><br><span class="line">  -v jenkins-data:/var/jenkins_home \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -v <span class="string">"<span class="variable">$HOME</span>"</span>:/home \</span><br><span class="line">  jenkinsci/blueocean</span><br></pre></td></tr></table></figure></p><blockquote><ul><li>使用命名卷管理Jenkins目录，保持宿主机清洁。如要删除数据重新安装，需要删除命名卷</li><li><code>-e TZ=Asia/Shanghai</code>设置时区</li><li>将宿主的/var/run/docker.sock文件挂载到容器内的同样位置，从而让容器内可以通过unix socket调用宿主的Docker引擎</li><li>首次运行选择默认插件即可，初始密码在日志中可以找到</li><li>邮件和SSH等详细设置参照官网：<a href="https://jenkins.io/" target="_blank" rel="noopener">https://jenkins.io/</a></li></ul></blockquote><h3 id="Spring-boot-admin"><a href="#Spring-boot-admin" class="headerlink" title="Spring boot admin"></a>Spring boot admin</h3><p>使用<code>start.spring.io</code>创建最简单的spring boot admin项目，依赖选择ops下的<code>spring boot admin(server)</code><br>运行后在localhost:8080可以看到admin的界面</p><h3 id="Jenkinsfile"><a href="#Jenkinsfile" class="headerlink" title="Jenkinsfile"></a>Jenkinsfile</h3><p>根目录下创建Jenkinsfile文件：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#!groovy</span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent none</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(<span class="string">'Build'</span>) &#123;</span><br><span class="line">            agent &#123;</span><br><span class="line">                docker &#123;</span><br><span class="line">                    image <span class="string">'maven:3.5.0-jdk-8-alpine'</span></span><br><span class="line">                    args <span class="string">'-v mavenRepository:/root/.m2'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">'mvn -B -DskipTests clean package --settings settings.xml'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(<span class="string">'Test'</span>) &#123;</span><br><span class="line">            agent &#123;</span><br><span class="line">                docker &#123;</span><br><span class="line">                    image <span class="string">'maven:3.5.0-jdk-8-alpine'</span></span><br><span class="line">                    args <span class="string">'-v mavenRepository:/root/.m2'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">'mvn test --settings settings.xml'</span></span><br><span class="line">            &#125;</span><br><span class="line">            post &#123;</span><br><span class="line">                always &#123;</span><br><span class="line">                    junit <span class="string">'target/surefire-reports/*.xml'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(<span class="string">'Deliver'</span>) &#123;</span><br><span class="line">            agent any</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">'sh run.sh'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    post &#123;</span><br><span class="line">        always &#123;</span><br><span class="line">            mail <span class="string">body:</span> <span class="string">"$&#123;env.JOB_NAME&#125; - Build # $&#123;env.BUILD_NUMBER&#125; - $&#123;currentBuild.currentResult&#125;: Check console output at $&#123;env.BUILD_URL&#125; to view the results."</span>,</span><br><span class="line"><span class="symbol">                    subject:</span> <span class="string">"$&#123;env.JOB_NAME&#125; - Build # $&#123;env.BUILD_NUMBER&#125; - $&#123;currentBuild.currentResult&#125;!"</span>,</span><br><span class="line"><span class="symbol">                    to:</span> <span class="string">'353549444@qq.com'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><blockquote><ul><li>使用maven容器代理<code>Build</code>和<code>Test</code>这两个步骤，该容器生命只在stage中有效</li><li>使用命名卷<code>mavenRepository</code>存储maven依赖，同一宿主机可共用</li><li>使用项目中的<code>settings.xml</code>设置maven国内源镜像</li><li><code>Deliver</code>步骤不用代理，把前两步生成的jar部署到容器中</li><li><code>post</code>步骤为发送结果邮件，需设置Jenkins管理邮箱和smtp</li></ul></blockquote><p>settings.xml中添加maven国内源镜像：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="部署脚本run-sh"><a href="#部署脚本run-sh" class="headerlink" title="部署脚本run.sh"></a>部署脚本run.sh</h3><p>写的比较简单：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 停止admin容器</span></span><br><span class="line">(docker stop admin &amp;&amp; <span class="built_in">echo</span> <span class="string">"stop success"</span>) || <span class="built_in">echo</span> <span class="string">"stop error"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除damin容器</span></span><br><span class="line">(docker rm admin &amp;&amp; <span class="built_in">echo</span> <span class="string">"rm success"</span>) || <span class="built_in">echo</span> <span class="string">"rm error"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除原来镜像</span></span><br><span class="line">(docker rmi admin &amp;&amp; <span class="built_in">echo</span> <span class="string">"rmi success"</span>) || <span class="built_in">echo</span> <span class="string">"rmi error"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成新的镜像</span></span><br><span class="line">docker build -t admin .;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行admin容器</span></span><br><span class="line">docker run --name admin \</span><br><span class="line">    -p 8899:8899 \</span><br><span class="line">    -d \</span><br><span class="line">    -e TZ=Asia/Shanghai \</span><br><span class="line">    admin</span><br></pre></td></tr></table></figure></p><p>更复杂的脚本参考：<a href="/2018/03/26/shell-scripts">多环境jar部署脚本示例</a></p><h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine as APP</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="bash">COPY target/admin-1.0.jar app.jar</span></span><br><span class="line"><span class="bash">ENV JAVA_OPTS=<span class="string">"-Xms512m -Xmx2048m"</span></span></span><br><span class="line"><span class="bash">ENTRYPOINT [ <span class="string">"sh"</span>, <span class="string">"-c"</span>, <span class="string">"java <span class="variable">$JAVA_OPTS</span> -Djava.security.egd=file:/dev/./urandom -jar /app.jar"</span> ]</span></span><br></pre></td></tr></table></figure><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>Jenkins持续集成maven项目：<a href="https://jenkins.io/doc/tutorials/build-a-java-app-with-maven" target="_blank" rel="noopener">https://jenkins.io/doc/tutorials/build-a-java-app-with-maven</a><br>CentOS安装Docker：<a href="https://docs.docker.com/install/linux/docker-ce/centos" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos</a></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="使用Jenkins和Docker持续集成java项目"><a href="#使用Jenkins和Docker持续集成java项目" class="headerlink" title="使用Jenkins和Docker持续集成java项目"></a><strong>使用Jenkins和Docker持续集成java项目</strong></h1><ul><li>项目地址：<a href="https://github.com/chenbin-353549444/spring-boot-admin-jenkins-docker" target="_blank" rel="noopener">https://github.com/chenbin-353549444/spring-boot-admin-jenkins-docker</a></li><li>简介：使用<code>Jenkins</code>和<code>Docker</code>持续集成java项目，本例是Spring boot admin项目，较为简单，可做为参考。</li><li>意义：<code>Jenkinsfile</code>和<code>Dockerfile</code>将服务器设置和运维代码化、可视化、流程化、标准化，降低与其他人的沟通成本</li></ul><h3 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h3><p>参照官网安装：<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos/</a></p><blockquote><ul><li>注意替换国内源加速，<code>https://download.docker.com/linux/</code>替换为<code>https://mirrors.aliyun.com/docker-ce/linux/</code></li></ul></blockquote><p>配置阿里云镜像加速<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line">$ sudo vi /etc/systemd/system/multi-user.target.wants/docker.service</span><br><span class="line">$ <span class="comment">#在文件中找到 ExecStart= 这一行，并且在其行尾添加上所需的配置。</span></span><br><span class="line">$ <span class="comment">#ExecStart=/usr/bin/dockerd --registry-mirror=https://c2iitbpy.mirror.aliyuncs.com</span></span><br><span class="line">$ <span class="comment">#加速器地址在阿里云管理控制台-容器服务-镜像-镜像仓库控制台-Docker Hub镜像站点中可以找到</span></span><br><span class="line">$ <span class="comment">#保存退出后，重新加载配置并启动服务：</span></span><br><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl restart docker</span><br><span class="line">$ <span class="comment">#确认配置是否生效</span></span><br><span class="line">$ sudo ps -ef | grep dockerd</span><br></pre></td></tr></table></figure></p><h3 id="安装Jenkins"><a href="#安装Jenkins" class="headerlink" title="安装Jenkins"></a>安装Jenkins</h3><p>运行Jenkins容器的命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line">  --name jenkins \</span><br><span class="line">  -d \</span><br><span class="line">  -u root \</span><br><span class="line">  -p 8080:8080 \</span><br><span class="line">  -v jenkins-data:/var/jenkins_home \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -v <span class="string">"<span class="variable">$HOME</span>"</span>:/home \</span><br><span class="line">  jenkinsci/blueocean</span><br></pre></td></tr></table></figure></p><blockquote><ul><li>使用命名卷管理Jenkins目录，保持宿主机清洁。如要删除数据重新安装，需要删除命名卷</li><li><code>-e TZ=Asia/Shanghai</code>设置时区</li><li>将宿主的/var/run/docker.sock文件挂载到容器内的同样位置，从而让容器内可以通过unix socket调用宿主的Docker引擎</li><li>首次运行选择默认插件即可，初始密码在日志中可以找到</li><li>邮件和SSH等详细设置参照官网：<a href="https://jenkins.io/" target="_blank" rel="noopener">https://jenkins.io/</a></li></ul></blockquote><h3 id="Spring-boot-admin"><a href="#Spring-boot-admin" class="headerlink" title="Spring boot admin"></a>Spring boot admin</h3><p>使用<code>start.spring.io</code>创建最简单的spring boot admin项目，依赖选择ops下的<code>spring boot admin(server)</code><br>运行后在localhost:8080可以看到admin的界面</p><h3 id="Jenkinsfile"><a href="#Jenkinsfile" class="headerlink" title="Jenkinsfile"></a>Jenkinsfile</h3><p>根目录下创建Jenkinsfile文件：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#!groovy</span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent none</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(<span class="string">'Build'</span>) &#123;</span><br><span class="line">            agent &#123;</span><br><span class="line">                docker &#123;</span><br><span class="line">                    image <span class="string">'maven:3.5.0-jdk-8-alpine'</span></span><br><span class="line">                    args <span class="string">'-v mavenRepository:/root/.m2'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">'mvn -B -DskipTests clean package --settings settings.xml'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(<span class="string">'Test'</span>) &#123;</span><br><span class="line">            agent &#123;</span><br><span class="line">                docker &#123;</span><br><span class="line">                    image <span class="string">'maven:3.5.0-jdk-8-alpine'</span></span><br><span class="line">                    args <span class="string">'-v mavenRepository:/root/.m2'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">'mvn test --settings settings.xml'</span></span><br><span class="line">            &#125;</span><br><span class="line">            post &#123;</span><br><span class="line">                always &#123;</span><br><span class="line">                    junit <span class="string">'target/surefire-reports/*.xml'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(<span class="string">'Deliver'</span>) &#123;</span><br><span class="line">            agent any</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">'sh run.sh'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    post &#123;</span><br><span class="line">        always &#123;</span><br><span class="line">            mail <span class="string">body:</span> <span class="string">"$&#123;env.JOB_NAME&#125; - Build # $&#123;env.BUILD_NUMBER&#125; - $&#123;currentBuild.currentResult&#125;: Check console output at $&#123;env.BUILD_URL&#125; to view the results."</span>,</span><br><span class="line"><span class="symbol">                    subject:</span> <span class="string">"$&#123;env.JOB_NAME&#125; - Build # $&#123;env.BUILD_NUMBER&#125; - $&#123;currentBuild.currentResult&#125;!"</span>,</span><br><span class="line"><span class="symbol">                    to:</span> <span class="string">'353549444@qq.com'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><blockquote><ul><li>使用maven容器代理<code>Build</code>和<code>Test</code>这两个步骤，该容器生命只在stage中有效</li><li>使用命名卷<code>mavenRepository</code>存储maven依赖，同一宿主机可共用</li><li>使用项目中的<code>settings.xml</code>设置maven国内源镜像</li><li><code>Deliver</code>步骤不用代理，把前两步生成的jar部署到容器中</li><li><code>post</code>步骤为发送结果邮件，需设置Jenkins管理邮箱和smtp</li></ul></blockquote><p>settings.xml中添加maven国内源镜像：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="部署脚本run-sh"><a href="#部署脚本run-sh" class="headerlink" title="部署脚本run.sh"></a>部署脚本run.sh</h3><p>写的比较简单：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 停止admin容器</span></span><br><span class="line">(docker stop admin &amp;&amp; <span class="built_in">echo</span> <span class="string">"stop success"</span>) || <span class="built_in">echo</span> <span class="string">"stop error"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除damin容器</span></span><br><span class="line">(docker rm admin &amp;&amp; <span class="built_in">echo</span> <span class="string">"rm success"</span>) || <span class="built_in">echo</span> <span class="string">"rm error"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除原来镜像</span></span><br><span class="line">(docker rmi admin &amp;&amp; <span class="built_in">echo</span> <span class="string">"rmi success"</span>) || <span class="built_in">echo</span> <span class="string">"rmi error"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成新的镜像</span></span><br><span class="line">docker build -t admin .;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行admin容器</span></span><br><span class="line">docker run --name admin \</span><br><span class="line">    -p 8899:8899 \</span><br><span class="line">    -d \</span><br><span class="line">    -e TZ=Asia/Shanghai \</span><br><span class="line">    admin</span><br></pre></td></tr></table></figure></p><p>更复杂的脚本参考：<a href="/blog/2018/03/26/shell-scripts">多环境jar部署脚本示例</a></p><h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine as APP</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="bash">COPY target/admin-1.0.jar app.jar</span></span><br><span class="line"><span class="bash">ENV JAVA_OPTS=<span class="string">"-Xms512m -Xmx2048m"</span></span></span><br><span class="line"><span class="bash">ENTRYPOINT [ <span class="string">"sh"</span>, <span class="string">"-c"</span>, <span class="string">"java <span class="variable">$JAVA_OPTS</span> -Djava.security.egd=file:/dev/./urandom -jar /app.jar"</span> ]</span></span><br></pre></td></tr></table></figure><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>Jenkins持续集成maven项目：<a href="https://jenkins.io/doc/tutorials/build-a-java-app-with-maven" target="_blank" rel="noopener">https://jenkins.io/doc/tutorials/build-a-java-app-with-maven</a><br>CentOS安装Docker：<a href="https://docs.docker.com/install/linux/docker-ce/centos" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos</a></p>]]></content>
     
     <summary type="html">
     
@@ -505,22 +505,22 @@
     
     </summary>
     
-      <category term="技术总结" scheme="www.chenb.top/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+      <category term="技术总结" scheme="https://chenbinhongfund.gitee.io/blog/categories/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Java" scheme="www.chenb.top/tags/Java/"/>
+      <category term="Java" scheme="https://chenbinhongfund.gitee.io/blog/tags/Java/"/>
     
-      <category term="Linux" scheme="www.chenb.top/tags/Linux/"/>
+      <category term="Jenkins" scheme="https://chenbinhongfund.gitee.io/blog/tags/Jenkins/"/>
     
-      <category term="Spring boot" scheme="www.chenb.top/tags/Spring-boot/"/>
+      <category term="Docker" scheme="https://chenbinhongfund.gitee.io/blog/tags/Docker/"/>
     
-      <category term="Docker" scheme="www.chenb.top/tags/Docker/"/>
+      <category term="持续集成" scheme="https://chenbinhongfund.gitee.io/blog/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
-      <category term="Jenkins" scheme="www.chenb.top/tags/Jenkins/"/>
+      <category term="Linux" scheme="https://chenbinhongfund.gitee.io/blog/tags/Linux/"/>
     
-      <category term="持续集成" scheme="www.chenb.top/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+      <category term="Maven" scheme="https://chenbinhongfund.gitee.io/blog/tags/Maven/"/>
     
-      <category term="Maven" scheme="www.chenb.top/tags/Maven/"/>
+      <category term="Spring boot" scheme="https://chenbinhongfund.gitee.io/blog/tags/Spring-boot/"/>
     
   </entry>
   
