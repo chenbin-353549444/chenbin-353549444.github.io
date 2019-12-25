@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="类的继承和方法的覆盖">
-<meta name="keywords" content="Java,Java SE笔记">
+<meta name="description" content="Java反射获取和修改成员变量">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java SE笔记： 类的继承和方法的覆盖">
-<meta property="og:url" content="https://chenbinhongfund.gitee.io/blog/2016/08/07/java-2/index.html">
+<meta property="og:title" content="Java反射获取和修改成员变量">
+<meta property="og:url" content="https://chenbinhongfund.gitee.io/blog/2019/12/25/java-reflect/index.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
-<meta property="og:description" content="类的继承和方法的覆盖">
+<meta property="og:description" content="Java反射获取和修改成员变量">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2016-08-07T13:20:00.000Z">
+<meta property="og:updated_time" content="2019-12-25T05:55:41.967Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java SE笔记： 类的继承和方法的覆盖">
-<meta name="twitter:description" content="类的继承和方法的覆盖">
+<meta name="twitter:title" content="Java反射获取和修改成员变量">
+<meta name="twitter:description" content="Java反射获取和修改成员变量">
 
 <link rel="apple-touch-icon" href="/blog//apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Java SE笔记： 类的继承和方法的覆盖 | ChenBin&#39;s Blog</title>
+<title>Java反射获取和修改成员变量 | ChenBin&#39;s Blog</title>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -325,11 +325,11 @@ $(document).ready(function ($) {
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-java-2" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-java-reflect" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/blog/2016/08/07/java-2/" class="article-date">
-      <time datetime="2016-08-07T13:20:00.000Z" itemprop="datePublished">2016-08-07</time>
+      <a href="/blog/2019/12/25/java-reflect/" class="article-date">
+      <time datetime="2019-12-25T05:38:05.000Z" itemprop="datePublished">2019-12-25</time>
 </a>
 
 
@@ -344,7 +344,7 @@ $(document).ready(function ($) {
         
   
     <h1 class="article-title" itemprop="name">
-      Java SE笔记： 类的继承和方法的覆盖
+      Java反射获取和修改成员变量
     </h1>
   
 
@@ -353,13 +353,13 @@ $(document).ready(function ($) {
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/个人笔记/">个人笔记</a>
+    <a class="article-category-link" href="/blog/categories/技术总结/">技术总结</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java-SE笔记/">Java SE笔记</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -369,34 +369,8 @@ $(document).ready(function ($) {
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="关于继承"><a href="#关于继承" class="headerlink" title="关于继承"></a>关于继承</h3><p>引入类继承最基本的作用是：代码重用。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[修饰符列表] class 子类名 extends 父类名&#123;</span><br><span class="line">	类体;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>父类，超类,基类，superclass</li>
-<li>子类，派生类，subclass</li>
-<li>没有显示继承其他类，默认继承SUN提供的java.lang.Object;java语言中，</li>
-<li>类和类之间只支持单继承。            </li>
-<li><code>java语言中子类继承父类，会将父类中所有的数据全部继承，包括私有的也能继承过来。</code></li>
-<li><code>但是在子类中无法直接访问父类中的私有的数据。但是可以间接访问.</code></li>
-<li>注意：构造方法无法被子类继承。</li>
-</ul>
-<h3 id="关于方法的覆盖"><a href="#关于方法的覆盖" class="headerlink" title="关于方法的覆盖"></a>关于方法的覆盖</h3><p>方法覆盖，方法的重写，Overwrite,Override</p>
-<ol>
-<li>什么时候方法要进行重写？的<br> 如果父类中的方法已经无法满足当前子类的业务需求，需要将父类中的方法进行重新写一遍。</li>
-<li>子类如果重写父类中的方法之后，子类对象一定调用的是重写之后的方法。</li>
-<li>发生方法覆盖的条件：<ul>
-<li><code>发生在具有继承关系的两个类之间</code></li>
-<li><code>必须具有相同的方法名，相同的返回值类型，相同的参数列表.</code></li>
-<li><code>重写的方法不能比被重写的方法拥有更小的访问权限。</code></li>
-<li><code>子类方法不能抛出比父类方法更多的异常，但可以抛出父类方法异常的子异常</code></li>
-<li><code>私有的方法不能被覆盖。(多态之后讲)</code>        </li>
-<li><code>构造方法无法被覆盖。因为构造方法无法被继承。</code>        </li>
-<li><code>静态的方法不存在覆盖。(多态之后讲) 静态方法不存在覆盖，因为静态方法执行和对象无关。</code></li>
-<li><code>覆盖指的是成员方法，和成员变量无关。</code></li>
-</ul>
-</li>
-<li>继承最基本的作用：代码重用。 继承最重要的作用：方法可以重写。</li>
-</ol>
-
+        <p>特定的需求需要根据前端传的字段名称设置值，这时候使用反射比较方便</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 反射工具类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectionUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据传入的属性名字符串，获取对应的属性值</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name</span></span><br><span class="line"><span class="comment">     *            属性名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">     *            要获取的实例对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getField</span><span class="params">(String name, Object obj)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = obj.getClass();</span><br><span class="line">        Field field = clazz.getDeclaredField(name);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="keyword">return</span> field.get(obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据传入的属性名字符串，修改对应的属性值</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name</span></span><br><span class="line"><span class="comment">     *            属性名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">     *            要修改的实例对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">     *            修改后的新值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setField</span><span class="params">(String name, Object obj, Object value)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = obj.getClass();</span><br><span class="line">        Field field = clazz.getDeclaredField(name);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(obj, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;</span><br><span class="line">        IncomeTaxDeclarationMain a = <span class="keyword">new</span> IncomeTaxDeclarationMain();</span><br><span class="line">        a.row9 = BigDecimal.TEN;</span><br><span class="line">        IncomeTaxDeclarationMain b = <span class="keyword">new</span> IncomeTaxDeclarationMain();</span><br><span class="line">        setField(<span class="string">"row9"</span>, b, getField(<span class="string">"row9"</span>, a));</span><br><span class="line">        System.out.println(b.row9);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -404,21 +378,21 @@ $(document).ready(function ($) {
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/blog/2016/08/07/java-2/">Java SE笔记： 类的继承和方法的覆盖</a></p>
+        <p><span>本文标题:</span><a href="/blog/2019/12/25/java-reflect/">Java反射获取和修改成员变量</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
-        <p><span>发布时间:</span>2016-08-07, 21:20:00</p>
-        <p><span>最后更新:</span>2016-08-07, 21:20:00</p>
+        <p><span>发布时间:</span>2019-12-25, 13:38:05</p>
+        <p><span>最后更新:</span>2019-12-25, 13:55:41</p>
         
             <p>
                 <span>更新历史:</span><i class="fa fa-github"></i>
-                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2016-08-07.java-2.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
-                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2016-08-07.java-2.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
-                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2016-08-07.java-2.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
+                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2019-12-25.java-reflect.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
+                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2019-12-25.java-reflect.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
+                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2019-12-25.java-reflect.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
             </p>
         
         <p>
-            <span>原始链接:</span><a class="post-url" href="/blog/2016/08/07/java-2/" title="Java SE笔记： 类的继承和方法的覆盖">https://chenbinhongfund.gitee.io/blog/2016/08/07/java-2/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://chenbinhongfund.gitee.io/blog/2016/08/07/java-2/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/blog/2019/12/25/java-reflect/" title="Java反射获取和修改成员变量">https://chenbinhongfund.gitee.io/blog/2019/12/25/java-reflect/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://chenbinhongfund.gitee.io/blog/2019/12/25/java-reflect/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -430,16 +404,10 @@ $(document).ready(function ($) {
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/blog/2016/08/07/java-3/">
-                    Java SE笔记： 上下转型和多态
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/blog/2016/08/07/java-1/">
-                    Java SE笔记： 单例模式
+                <a href="/blog/2019/12/18/docker-one-key/">
+                    一条命令安装docker
                 </a>
             </div>
         
@@ -451,7 +419,7 @@ $(document).ready(function ($) {
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于继承"><span class="toc-number">1.</span> <span class="toc-text">关于继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于方法的覆盖"><span class="toc-number">2.</span> <span class="toc-text">关于方法的覆盖</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -487,7 +455,7 @@ $(document).ready(function ($) {
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： 类的继承和方法的覆盖　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/blog/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Java反射获取和修改成员变量　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/blog/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -507,15 +475,13 @@ $(document).ready(function ($) {
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/blog/2016/08/07/java-3/" title="上一篇: Java SE笔记： 上下转型和多态">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/blog/2016/08/07/java-1/" title="下一篇: Java SE笔记： 单例模式">
+            <a href="/blog/2019/12/18/docker-one-key/" title="下一篇: 一条命令安装docker">
                 <i class="fa fa-angle-right"></i>
             </a>
         
