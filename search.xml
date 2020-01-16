@@ -462,9 +462,9 @@
             
             <tag> MySQL </tag>
             
-            <tag> Jenkins </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Jenkins </tag>
             
         </tags>
       
@@ -551,9 +551,9 @@
             
             <tag> Spring boot </tag>
             
-            <tag> https </tag>
-            
             <tag> Gzip </tag>
+            
+            <tag> https </tag>
             
         </tags>
       
@@ -640,13 +640,13 @@
             
             <tag> Spring boot </tag>
             
-            <tag> Jenkins </tag>
-            
             <tag> Docker </tag>
             
-            <tag> 持续集成 </tag>
-            
             <tag> Maven </tag>
+            
+            <tag> Jenkins </tag>
+            
+            <tag> 持续集成 </tag>
             
         </tags>
       
@@ -673,9 +673,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Jenkins </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Jenkins </tag>
             
             <tag> 持续集成 </tag>
             
@@ -762,11 +762,11 @@
             
             <tag> Shell </tag>
             
-            <tag> Jenkins </tag>
-            
             <tag> Docker </tag>
             
             <tag> Maven </tag>
+            
+            <tag> Jenkins </tag>
             
         </tags>
       

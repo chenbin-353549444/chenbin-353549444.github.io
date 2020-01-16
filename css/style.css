@@ -1063,7 +1063,6 @@ a {
 }
 #post-nav-button a {
   border-bottom-color: transparent;
-  background: none;
   cursor: url("/img/cursor.ico"), auto;
 }
 #post-nav-button a .fa-times {
@@ -2149,13 +2148,57 @@ aside.comment-bar:active {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+.article-entry .highlight:hover .btn-copy {
+  opacity: 0.6;
+}
 .article-entry .highlight {
+  position: relative;
   border-radius: 5px;
   margin-top: 0.5em;
   margin-bottom: 1em;
   overflow: auto;
   -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.05);
   box-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+}
+.article-entry .highlight .btn-copy:hover {
+  background-color: #777;
+}
+.article-entry .highlight .btn-copy:active {
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+.article-entry .highlight .btn-copy {
+  display: inline-block;
+  cursor: url("/img/cursor.ico"), auto;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid #fff;
+  border-radius: 5px;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-appearance: none;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #fff;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  padding: 2px 12px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  opacity: 0;
+  -webkit-box-shadow: 0 0 0.8em rgba(0,0,0,0.6);
+  box-shadow: 0 0 0.8em rgba(0,0,0,0.6);
 }
 .article-entry .highlight pre {
   background: none;
