@@ -2153,7 +2153,7 @@ aside.comment-bar:active {
 }
 .article-entry .highlight {
   position: relative;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-top: 0.5em;
   margin-bottom: 1em;
   overflow: auto;
