@@ -15,21 +15,18 @@
 
 
 
-<meta name="description" content="Markdown基本用法和效果展示">
-<meta name="keywords" content="Blog,Markdown">
+<meta name="description" content="Spring boot从1.5.8升级到2.3.1">
+<meta name="keywords" content="Spring boot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Markdown基本用法">
-<meta property="og:url" content="https://chenbinhongfund.gitee.io/blog/2018/03/26/markdown-preview/index.html">
+<meta property="og:title" content="Spring boot升级到2.3.1笔记">
+<meta property="og:url" content="https://chenbinhongfund.gitee.io/blog/2020/07/06/spring-boot-update-version2/index.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
-<meta property="og:description" content="Markdown基本用法和效果展示">
+<meta property="og:description" content="Spring boot从1.5.8升级到2.3.1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://assets-cdn.github.com/images/icons/emoji/octocat.png">
-<meta property="og:image" content="https://guides.github.com/activities/hello-world/branching.png">
-<meta property="og:updated_time" content="2020-07-02T06:56:56.772Z">
+<meta property="og:updated_time" content="2020-07-15T02:15:45.822Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Markdown基本用法">
-<meta name="twitter:description" content="Markdown基本用法和效果展示">
-<meta name="twitter:image" content="https://assets-cdn.github.com/images/icons/emoji/octocat.png">
+<meta name="twitter:title" content="Spring boot升级到2.3.1笔记">
+<meta name="twitter:description" content="Spring boot从1.5.8升级到2.3.1">
 
 <link rel="apple-touch-icon" href="/blog//apple-touch-icon.png">
 
@@ -61,7 +58,7 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Markdown基本用法 | ChenBin&#39;s Blog</title>
+<title>Spring boot升级到2.3.1笔记 | ChenBin&#39;s Blog</title>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -297,11 +294,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-markdown-preview" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-spring-boot-update-version2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/blog/2018/03/26/markdown-preview/" class="article-date">
-      <time datetime="2018-03-26T14:14:55.000Z" itemprop="datePublished">2018-03-26</time>
+      <a href="/blog/2020/07/06/spring-boot-update-version2/" class="article-date">
+      <time datetime="2020-07-06T08:35:39.000Z" itemprop="datePublished">2020-07-06</time>
 </a>
 
 
@@ -316,7 +313,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Markdown基本用法
+      Spring boot升级到2.3.1笔记
     </h1>
   
 
@@ -331,7 +328,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Markdown/">Markdown</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Spring-boot/">Spring boot</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -341,101 +338,21 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Text can be <strong>bold</strong>, <em>italic</em>, or <del>strikethrough</del>.</p>
-<p><a href="/2018/03/13/markdown-another-page">Link to another page</a>.</p>
-<p>There should be whitespace between paragraphs.</p>
-<p>There should be whitespace between paragraphs. We recommend including a <code>README</code>, or a file with information about your project.</p>
-<h1 id="Header-1"><a href="#Header-1" class="headerlink" title="Header 1"></a><a href="#header-1"></a>Header 1</h1><a id="more"></a>
-<p>This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.</p>
-<h2 id="Header-2"><a href="#Header-2" class="headerlink" title="Header 2"></a><a href="#header-2"></a>Header 2</h2><blockquote>
-<p>This is a blockquote following a header.</p>
-<p>When something is important enough, you do it even if the odds are not in your favor.</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>老版本的Spring boot已经继续用了2年了，最近发现官网的推荐版本已经没有了1.5系列的了，下决心要升级大版本，把之前写的升级方案找出来参考了一下，这次应该还会碰到一些其他问题，特此记录以备不时之需</p>
 </blockquote>
-<h3 id="Header-3"><a href="#Header-3" class="headerlink" title="Header 3"></a><a href="#header-3"></a>Header 3</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Javascript code with syntax highlighting.</span></span><br><span class="line"><span class="keyword">var</span> fun = <span class="function"><span class="keyword">function</span> <span class="title">lang</span>(<span class="params">l</span>) </span>&#123;</span><br><span class="line">  dateformat.i18n = <span class="built_in">require</span>(<span class="string">'./lang/'</span> + l)</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ruby code with syntax highlighting</span></span><br><span class="line">GitHubPages::Dependencies.gems.each <span class="keyword">do</span> <span class="params">|gem, version|</span></span><br><span class="line">  s.add_dependency(gem, <span class="string">"= <span class="subst">#&#123;version&#125;</span>"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="Header-4"><a href="#Header-4" class="headerlink" title="Header 4"></a><a href="#header-4"></a>Header 4</h4><ul>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
+<ul>
+<li>Spring boot版本：<code>1.5.8.RELEASE</code> -&gt; <code>2.3.1.RELEASE</code></li>
+<li>Spring Data JPA版本: <code>1.11.8.RELEASE</code> -&gt; <code>2.3.1.RELEASE</code></li>
 </ul>
-<h5 id="Header-5"><a href="#Header-5" class="headerlink" title="Header 5"></a><a href="#header-5"></a>Header 5</h5><ol>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-</ol>
-<h6 id="Header-6"><a href="#Header-6" class="headerlink" title="Header 6"></a><a href="#header-6"></a>Header 6</h6><table>
-<thead>
-<tr>
-<th style="text-align:left">head1</th>
-<th style="text-align:left">head two</th>
-<th style="text-align:left">three</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">ok</td>
-<td style="text-align:left">good swedish fish</td>
-<td style="text-align:left">nice</td>
-</tr>
-<tr>
-<td style="text-align:left">out of stock</td>
-<td style="text-align:left">good and plenty</td>
-<td style="text-align:left">nice</td>
-</tr>
-<tr>
-<td style="text-align:left">ok</td>
-<td style="text-align:left">good <code>oreos</code></td>
-<td style="text-align:left">hmm</td>
-</tr>
-<tr>
-<td style="text-align:left">ok</td>
-<td style="text-align:left">good <code>zoute</code> drop</td>
-<td style="text-align:left">yumm</td>
-</tr>
-</tbody>
-</table>
-<h3 id="There’s-a-horizontal-rule-below-this"><a href="#There’s-a-horizontal-rule-below-this" class="headerlink" title="There’s a horizontal rule below this."></a>There’s a horizontal rule below this.</h3><hr>
-<h3 id="Here-is-an-unordered-list"><a href="#Here-is-an-unordered-list" class="headerlink" title="Here is an unordered list:"></a>Here is an unordered list:</h3><ul>
-<li>Item foo</li>
-<li>Item bar</li>
-<li>Item baz</li>
-<li>Item zip</li>
-</ul>
-<h3 id="And-an-ordered-list"><a href="#And-an-ordered-list" class="headerlink" title="And an ordered list:"></a>And an ordered list:</h3><ol>
-<li>Item one</li>
-<li>Item two</li>
-<li>Item three</li>
-<li>Item four</li>
-</ol>
-<h3 id="And-a-nested-list"><a href="#And-a-nested-list" class="headerlink" title="And a nested list:"></a>And a nested list:</h3><ul>
-<li>level 1 item<ul>
-<li>level 2 item</li>
-<li>level 2 item<ul>
-<li>level 3 item</li>
-<li>level 3 item</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>level 1 item<ul>
-<li>level 2 item</li>
-<li>level 2 item</li>
-<li>level 2 item</li>
-</ul>
-</li>
-<li>level 1 item<ul>
-<li>level 2 item</li>
-<li>level 2 item</li>
-</ul>
-</li>
-<li>level 1 item</li>
-</ul>
-<h3 id="Small-image"><a href="#Small-image" class="headerlink" title="Small image"></a>Small image</h3><p><img src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" alt></p>
-<h3 id="Large-image"><a href="#Large-image" class="headerlink" title="Large image"></a>Large image</h3><p><img src="https://guides.github.com/activities/hello-world/branching.png" alt></p>
-<h3 id="Definition-lists-can-be-used-with-HTML-syntax"><a href="#Definition-lists-can-be-used-with-HTML-syntax" class="headerlink" title="Definition lists can be used with HTML syntax."></a>Definition lists can be used with HTML syntax.</h3><dl><br><dt>Name</dt><br><dd>Godzilla</dd><br><dt>Born</dt><br><dd>1952</dd><br><dt>Birthplace</dt><br><dd>Japan</dd><br><dt>Color</dt><br><dd>Green</dd><br></dl>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The final element.</span><br></pre></td></tr></table></figure>
+<p>本来想按官网的更稳妥的方案一步一步升级，但是由于我们使用的Spring boot功能比较少，CTO建议直接升级到最新版本<br>先按两年前的方案修改各种配置：<a href="/blog/2018/11/26/spring-boot-update-version">Spring boot升级到2.1</a></p>
+<h3 id="添加升级工具"><a href="#添加升级工具" class="headerlink" title="添加升级工具"></a>添加升级工具</h3><p>升级文档中发现有升级工具，添加到pom中<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 升级工具 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-properties-migrator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="本地h2数据库保留字问题"><a href="#本地h2数据库保留字问题" class="headerlink" title="本地h2数据库保留字问题"></a>本地h2数据库保留字问题</h3><p>查询了一下，h2数据库版本从<code>1.4.196</code>到<code>1.4.200</code>，原先数据库表中有一些名称为<code>row</code>的字段，这些字段都变成保留字了，初始化的sql执行报错<br>原先思路是修改字段名称，这样改动太大了，CTO建议h2单独切换回老版本，测试后没有问题了<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.h2database<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>h2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.196<span class="tag">&lt;/<span class="name">version</span>&gt;</span><span class="comment">&lt;!-- 添加一行指定版本号 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="swagger2版本冲突问题"><a href="#swagger2版本冲突问题" class="headerlink" title="swagger2版本冲突问题"></a>swagger2版本冲突问题</h3><p>启动仍然报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">***************************</span><br><span class="line">APPLICATION FAILED TO START</span><br><span class="line">***************************</span><br><span class="line"></span><br><span class="line">Description:</span><br><span class="line"></span><br><span class="line">Parameter 0 of method linkDiscoverers in org.springframework.hateoas.config.HateoasConfiguration required a single bean, but 3 were found:</span><br><span class="line">	- relProviderPluginRegistry: defined by method &apos;relProviderPluginRegistry&apos; in class path resource [org/springframework/hateoas/config/HateoasConfiguration.class]</span><br><span class="line">	- linkDiscovererRegistry: defined in null</span><br><span class="line">	- entityLinksPluginRegistry: defined by method &apos;entityLinksPluginRegistry&apos; in class path resource [org/springframework/hateoas/config/WebMvcEntityLinksConfiguration.class]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Action:</span><br><span class="line"></span><br><span class="line">Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed</span><br><span class="line"></span><br><span class="line">Disconnected from the target VM, address: &apos;127.0.0.1:61337&apos;, transport: &apos;socket&apos;</span><br><span class="line"></span><br><span class="line">Process finished with exit code 1</span><br></pre></td></tr></table></figure></p>
+<p>网上搜索了一下这个报错，说是和swagger2版本有关，修改pom中的版本号（<code>2.2.2</code>-&gt;<code>2.9.2</code>）之后问题就解决了</p>
+<h3 id="时间格式问题"><a href="#时间格式问题" class="headerlink" title="时间格式问题"></a>时间格式问题</h3><p>测试类报了时间比对错误，去官网升级指南中找到了相关说明：<br>In 2.0, we’ve flipped a Jackson configuration default to write JSR-310 dates as ISO-8601 strings. If you wish to return to the previous behavior, you can add <code>spring.jackson.serialization.write-dates-as-timestamps=true</code> to your configuration.<br>在测试类中添加时间格式设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.jackson.serialization.write-dates-as-timestamps = true</span><br></pre></td></tr></table></figure></p>
+<p>到此为止，新版本的兼容已经OK了，项目能正常运行了，测试类也全部可以通过了。<br>后面仍需要完善一些警告，过时方法等，经过小范围的试用后就可以确定升级方案了。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>Spring boot v1.5 → v2.0 升级指南：<a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Migration-Guide" target="_blank" rel="noopener">Spring Boot 2.0 Migration Guide</a><br>Spring boot 最新文档：<a href="https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/html/" target="_blank" rel="noopener">Spring Boot Reference Documentation</a></p>
 
       
     </div>
@@ -444,21 +361,21 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/blog/2018/03/26/markdown-preview/">Markdown基本用法</a></p>
+        <p><span>本文标题:</span><a href="/blog/2020/07/06/spring-boot-update-version2/">Spring boot升级到2.3.1笔记</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
-        <p><span>发布时间:</span>2018-03-26, 22:14:55</p>
-        <p><span>最后更新:</span>2020-07-02, 14:56:56</p>
+        <p><span>发布时间:</span>2020-07-06, 16:35:39</p>
+        <p><span>最后更新:</span>2020-07-15, 10:15:45</p>
         
             <p>
                 <span>更新历史:</span><i class="fa fa-github"></i>
-                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2018-03-26.markdown-preview.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
-                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2018-03-26.markdown-preview.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
-                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2018-03-26.markdown-preview.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
+                <a href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2020-07-06.spring-boot-update-version2.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
+                <a href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2020-07-06.spring-boot-update-version2.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
+                <a href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2020-07-06.spring-boot-update-version2.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
             </p>
         
         <p>
-            <span>原始链接:</span><a class="post-url" href="/blog/2018/03/26/markdown-preview/" title="Markdown基本用法">https://chenbinhongfund.gitee.io/blog/2018/03/26/markdown-preview/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://chenbinhongfund.gitee.io/blog/2018/03/26/markdown-preview/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/blog/2020/07/06/spring-boot-update-version2/" title="Spring boot升级到2.3.1笔记">https://chenbinhongfund.gitee.io/blog/2020/07/06/spring-boot-update-version2/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://chenbinhongfund.gitee.io/blog/2020/07/06/spring-boot-update-version2/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -470,16 +387,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/blog/2018/03/26/shell-scripts/">
-                    多环境jar部署脚本示例
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/blog/2018/03/26/programming-standard/">
-                    阿里巴巴 Java 开发手册
+                <a href="/blog/2020/06/19/java-orika/">
+                    Java封装orika实现对象拷贝
                 </a>
             </div>
         
@@ -491,7 +402,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Header-1"><span class="toc-number">1.</span> <span class="toc-text">Header 1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Header-2"><span class="toc-number">1.1.</span> <span class="toc-text">Header 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Header-3"><span class="toc-number">1.1.1.</span> <span class="toc-text">Header 3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Header-4"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">Header 4</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Header-5"><span class="toc-number">1.1.1.1.1.</span> <span class="toc-text">Header 5</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Header-6"><span class="toc-number">1.1.1.1.1.1.</span> <span class="toc-text">Header 6</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#There’s-a-horizontal-rule-below-this"><span class="toc-number">1.1.2.</span> <span class="toc-text">There’s a horizontal rule below this.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-an-unordered-list"><span class="toc-number">1.1.3.</span> <span class="toc-text">Here is an unordered list:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#And-an-ordered-list"><span class="toc-number">1.1.4.</span> <span class="toc-text">And an ordered list:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#And-a-nested-list"><span class="toc-number">1.1.5.</span> <span class="toc-text">And a nested list:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Small-image"><span class="toc-number">1.1.6.</span> <span class="toc-text">Small image</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Large-image"><span class="toc-number">1.1.7.</span> <span class="toc-text">Large image</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition-lists-can-be-used-with-HTML-syntax"><span class="toc-number">1.1.8.</span> <span class="toc-text">Definition lists can be used with HTML syntax.</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加升级工具"><span class="toc-number">1.1.</span> <span class="toc-text">添加升级工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地h2数据库保留字问题"><span class="toc-number">1.2.</span> <span class="toc-text">本地h2数据库保留字问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#swagger2版本冲突问题"><span class="toc-number">1.3.</span> <span class="toc-text">swagger2版本冲突问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间格式问题"><span class="toc-number">1.4.</span> <span class="toc-text">时间格式问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">1.5.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -527,7 +438,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Markdown基本用法　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/blog/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Spring boot升级到2.3.1笔记　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/blog/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -547,15 +458,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/blog/2018/03/26/shell-scripts/" title="上一篇: 多环境jar部署脚本示例">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/blog/2018/03/26/programming-standard/" title="下一篇: 阿里巴巴 Java 开发手册">
+            <a href="/blog/2020/06/19/java-orika/" title="下一篇: Java封装orika实现对象拷贝">
                 <i class="fa fa-angle-right"></i>
             </a>
         
