@@ -750,11 +750,11 @@
             
             <tag> Docker </tag>
             
-            <tag> Maven </tag>
-            
             <tag> Jenkins </tag>
             
             <tag> 持续集成 </tag>
+            
+            <tag> Maven </tag>
             
         </tags>
       
@@ -872,9 +872,9 @@
             
             <tag> Docker </tag>
             
-            <tag> Maven </tag>
-            
             <tag> Jenkins </tag>
+            
+            <tag> Maven </tag>
             
         </tags>
       
