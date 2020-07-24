@@ -19,7 +19,7 @@
 <meta name="keywords" content="Java,Java SE笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java SE笔记： 反射构造Class对象">
-<meta property="og:url" content="https://chenbinhongfund.gitee.io/blog/2016/09/19/java-1/index.html">
+<meta property="og:url" content="www.chenb.top/2016/09/19/java-1/index.html">
 <meta property="og:site_name" content="ChenBin&#39;s Blog">
 <meta property="og:description" content="反射构造Class对象">
 <meta property="og:locale" content="zh-Hans">
@@ -28,14 +28,14 @@
 <meta name="twitter:title" content="Java SE笔记： 反射构造Class对象">
 <meta name="twitter:description" content="反射构造Class对象">
 
-<link rel="apple-touch-icon" href="/blog//apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 
     <link rel="alternate" href="/atom.xml" title="ChenBin&#39;s Blog" type="application/atom+xml">
 
 
 
-    <link rel="shortcut icon" href="/blog//favicon.png">
+    <link rel="shortcut icon" href="/favicon.png">
 
 
 
@@ -48,10 +48,10 @@
 
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
-    <link href="/blog//css/pace-theme-minimal.css" rel="stylesheet">
+    <link href="/css/pace-theme-minimal.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="/blog/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
 
 
@@ -85,7 +85,7 @@
 
 
 
-    <script> yiliaConfig.rootUrl = /blog/; </script>
+    <script> yiliaConfig.rootUrl = "\/";</script>
 
 
 
@@ -95,7 +95,7 @@
         var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?8f1611faad753a0c36ea21a8444bd701";
+            hm.src = "//hm.baidu.com/hm.js?a637ced513007ab6ba19c15cce76962a";
             var s = document.getElementsByTagName("script")[0]; 
             s.parentNode.insertBefore(hm, s);
         })();
@@ -103,18 +103,18 @@
 
 
 </head></html>
-<script type="text/javascript" src="/blog//js/clicklove.js"></script>
+<script type="text/javascript" src="/js/clicklove.js"></script>
 <body>
   <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
     <header id="header" class="inner">
-        <a href="/blog/" class="profilepic">
-            <img src="/blog//img/avatar.png" class="animated zoomIn">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/blog/">Chen Bin</a></h1>
+          <h1 class="header-author"><a href="/">Chen Bin</a></h1>
         </hgroup>
 
         
@@ -179,13 +179,13 @@
                     <nav class="header-menu">
                         <ul>
                         
-                            <li><a href="/blog/">主页</a></li>
+                            <li><a href="/">主页</a></li>
                         
-                            <li><a href="/blog/archives/">所有文章</a></li>
+                            <li><a href="/archives/">所有文章</a></li>
                         
-                            <li><a href="/blog/tags/">标签云</a></li>
+                            <li><a href="/tags/">标签云</a></li>
                         
-                            <li><a href="/blog/about/">收藏夹</a></li>
+                            <li><a href="/about/">收藏夹</a></li>
                         
                         </ul>
                     </nav>
@@ -196,11 +196,11 @@
                             
                                 <a class="fa GitHub" href="https://github.com/chenbin-353549444" title="GitHub"></a>
                             
-                                <a class="fa RSS" href="/blog/atom.xml" title="RSS"></a>
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
                             
-                                <a class="fa QQ" href="/blog/qq" title="QQ"></a>
+                                <a class="fa QQ" href="/qq" title="QQ"></a>
                             
-                                <a class="fa 微信" href="/blog/wx" title="微信"></a>
+                                <a class="fa 微信" href="/wx" title="微信"></a>
                             
                         </ul>
                     </nav>
@@ -209,7 +209,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Apache/">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CentOS/">CentOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Crawler/">Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Excel/">Excel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Gzip/">Gzip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Java-SE笔记/">Java SE笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JavaCSV/">JavaCSV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Jsoup/">Jsoup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Markdown/">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Maven/">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MySQL笔记/">MySQL笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Npm/">Npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/POI/">POI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redisson/">Redisson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Spring-Data-JPA/">Spring Data JPA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Spring-boot/">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tomcat/">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Ubuntu/">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows/">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/https/">https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/代码块/">代码块</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/持续集成/">持续集成</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/设计模式/">设计模式</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crawler/">Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel/">Excel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gzip/">Gzip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-SE笔记/">Java SE笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaCSV/">JavaCSV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jsoup/">Jsoup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL笔记/">MySQL笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Npm/">Npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POI/">POI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redisson/">Redisson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Data-JPA/">Spring Data JPA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/https/">https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码块/">代码块</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/持续集成/">持续集成</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
                     </div>
                 </section>
                 
@@ -252,11 +252,11 @@
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
-            <a href="/blog/" class="profilepic">
-                <img src="/blog//img/avatar.png" class="animated zoomIn">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/blog/" title="回到主页">Chen Bin</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页">Chen Bin</a></h1>
             </hgroup>
             
             <p class="header-subtitle">🎉✨🎨🚀🐳</p>
@@ -264,13 +264,13 @@
             <nav class="header-menu">
                 <ul>
                 
-                    <li><a href="/blog/">主页</a></li>
+                    <li><a href="/">主页</a></li>
                 
-                    <li><a href="/blog/archives/">所有文章</a></li>
+                    <li><a href="/archives/">所有文章</a></li>
                 
-                    <li><a href="/blog/tags/">标签云</a></li>
+                    <li><a href="/tags/">标签云</a></li>
                 
-                    <li><a href="/blog/about/">收藏夹</a></li>
+                    <li><a href="/about/">收藏夹</a></li>
                 
                 <div class="clearfix"></div>
                 </ul>
@@ -282,11 +282,11 @@
                             
                                 <a class="fa GitHub" target="_blank" href="https://github.com/chenbin-353549444" title="GitHub"></a>
                             
-                                <a class="fa RSS" target="_blank" href="/blog/atom.xml" title="RSS"></a>
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
                             
-                                <a class="fa QQ" target="_blank" href="/blog/qq" title="QQ"></a>
+                                <a class="fa QQ" target="_blank" href="/qq" title="QQ"></a>
                             
-                                <a class="fa 微信" target="_blank" href="/blog/wx" title="微信"></a>
+                                <a class="fa 微信" target="_blank" href="/wx" title="微信"></a>
                             
                         </ul>
             </nav>
@@ -297,7 +297,7 @@
       <div class="body-wrap"><article id="post-java-1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/blog/2016/09/19/java-1/" class="article-date">
+      <a href="/2016/09/19/java-1/" class="article-date">
       <time datetime="2016-09-19T13:10:00.000Z" itemprop="datePublished">2016-09-19</time>
 </a>
 
@@ -322,13 +322,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/blog/categories/个人笔记/">个人笔记</a>
+    <a class="article-category-link" href="/categories/个人笔记/">个人笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Java-SE笔记/">Java SE笔记</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-SE笔记/">Java SE笔记</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -360,7 +360,7 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/blog/2016/09/19/java-1/">Java SE笔记： 反射构造Class对象</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/19/java-1/">Java SE笔记： 反射构造Class对象</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Chen Bin</a></p>
         <p><span>发布时间:</span>2016-09-19, 21:10:00</p>
         <p><span>最后更新:</span>2016-09-19, 21:10:00</p>
@@ -373,8 +373,8 @@
             </p>
         
         <p>
-            <span>原始链接:</span><a class="post-url" href="/blog/2016/09/19/java-1/" title="Java SE笔记： 反射构造Class对象">https://chenbinhongfund.gitee.io/blog/2016/09/19/java-1/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://chenbinhongfund.gitee.io/blog/2016/09/19/java-1/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/19/java-1/" title="Java SE笔记： 反射构造Class对象">www.chenb.top/2016/09/19/java-1/</a>
+            <span class="copy-path" data-clipboard-text="原文: www.chenb.top/2016/09/19/java-1/　　作者: Chen Bin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -387,14 +387,14 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/blog/2016/09/19/java-2/">
+                <a href="/2016/09/19/java-2/">
                     Java SE笔记： 可变长参数
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/blog/2016/08/24/java-1/">
+                <a href="/2016/08/24/java-1/">
                     Java SE笔记： 装饰者模式
                 </a>
             </div>
@@ -443,7 +443,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： 反射构造Class对象　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/blog/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： 反射构造Class对象　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -457,13 +457,35 @@
 
 
     
+        <!-- Gitalk 评论 start  -->
+<!-- Link Gitalk 的支持文件  -->
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+    <script type="text/javascript">
+    var gitalk = new Gitalk({
+
+    // gitalk的主要参数
+        clientID: `3f1d755fddc639a1ae4a`,
+        clientSecret: `df185eae6463b9d666073a2f317ca58647ad26f9`,
+        repo: `chenbin-353549444.github.io`,
+        owner: 'chenbin-353549444',
+        admin: ['chenbin-353549444'],
+        id: window.location.pathname,
+
+    });
+    gitalk.render('gitalk-container');
+</script>
+<!-- Gitalk end -->
+    
 
 
 
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/blog/2016/09/19/java-2/" title="上一篇: Java SE笔记： 可变长参数">
+            <a href="/2016/09/19/java-2/" title="上一篇: Java SE笔记： 可变长参数">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -471,21 +493,21 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/blog/2016/08/24/java-1/" title="下一篇: Java SE笔记： 装饰者模式">
+            <a href="/2016/08/24/java-1/" title="下一篇: Java SE笔记： 装饰者模式">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2020/07/24/spring-boot-too-many-open-files/">Spring boot Too many open files错误</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/07/06/spring-boot-update-version2/">Spring boot升级到2.3.1笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/06/19/java-orika/">Java封装orika实现对象拷贝</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/01/16/java-input-stream-get-file-type/">Java获取文件真实格式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/01/16/java-html-to-excel/">Java使用Jsoup把html流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/12/25/java-reflect/">Java反射获取和修改成员变量</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/12/18/docker-one-key/">一条命令安装docker</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/12/03/docker-java-mysql-redis/">Docker定制镜像</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/10/10/spring-boot-redisson/">Spring boot集成分布式锁Redisson</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/06/26/node-ffmpeg/">Node语音识别</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/05/21/spring-boot-aop-lock/">Spring boot 自定义注解+AOP实现互斥锁</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/05/20/java-rpn/">Java实现数学公式计算</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/04/23/spring-data-jpa-multi-modify-unique-index/">Spring Data JPA解决批量修改与唯一索引冲突的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/04/11/git-commit-emoji/">Git提交规范，GitHub表情规范指南</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/12/06/web-crawler-tyc-num/">反爬虫：tyc-num.woff字体加密</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/11/26/spring-boot-update-version/">Spring boot升级到2.1</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/11/01/blog-way/">博客成长之路</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/08/17/spring-boot-ram-pager/">Java内存分页工具</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/08/13/java-csv-to-excel/">Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/08/09/mysql-code/">MySQL简单存储过程修复用户表</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/07/25/windows-share-folders/">Windows共享文件夹设置</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/07/23/jenkins-docker-mysql-copy/">Jenkins Docker实现自动复制MySQL数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/07/09/jsoup-company-info/">Java爬虫获取企业工商信息</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/07/09/spring-boot-mysql-timeout/">Spring boot MySQL连接超时</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/06/13/spring-boot-gzip/">Spring boot开启Gzip压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/06/11/npm-publish/">发布自己的npm包，hexo文章排序插件</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/05/17/spring-boot-https/">Spring boot同时支持http和https访问</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/05/14/spring-boot-admin-jenkins-docker/">使用Jenkins和Docker持续集成java项目</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/04/07/jenkins-docker/">Jenkins服务器容器化</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/03/30/mysql-procedure/">MySQL存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/03/26/mysql-command/">MySQL常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/03/26/shell-scripts/">多环境jar部署脚本示例</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/03/26/markdown-preview/">Markdown基本用法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/03/26/programming-standard/">阿里巴巴 Java 开发手册</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/03/26/linux-command/">Linux常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/03/25/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/06/21/linux-run-jar/">Spring boot部署脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/06/05/sublime/">Windows下将Sublime Text添加到鼠标右键的方法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/28/mysql-4/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/28/mysql-3/">MySQL笔记： 存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/28/mysql-2/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/28/mysql-1/">MySQL笔记： 游标</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/06/mysql-4/">MySQL笔记： 触发器</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/06/mysql-3/">MySQL笔记： 临时表</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/06/mysql-2/">MySQL笔记： 视图</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/06/mysql-1/">MySQL笔记： 索引</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/05/mysql-2/">MySQL笔记： 查询练习2</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/04/05/mysql-1/">MySQL笔记： 查询练习1</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-8/">MySQL笔记： 函数和流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-7/">MySQL笔记： 编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-6/">MySQL笔记： 数据类型</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-5/">MySQL笔记： 查询-多表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-4/">MySQL笔记： 查询-单表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-3/">MySQL笔记： 关于约束条件</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-2/">MySQL笔记： 关于存储引擎</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/03/31/mysql-1/">MySQL笔记： 基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/09/19/java-3/">Java SE笔记： 反射和Properties</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/09/19/java-2/">Java SE笔记： 可变长参数</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/09/19/java-1/">Java SE笔记： 反射构造Class对象</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/24/java-1/">Java SE笔记： 装饰者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/23/java-4/">Java SE笔记： IO-输入输出16个流</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/23/java-3/">Java SE笔记： IO-转换流的作用</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/23/java-2/">Java SE笔记： IO-输入输出规范代码</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/23/java-1/">Java SE笔记： IO-输入输出流概念</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/21/java-2/">Java SE笔记： 深入finally语句块</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/21/java-1/">Java SE笔记： 异常机制</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/13/java-2/">Java SE笔记： TreeSet实现Comparable接口的两种方式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/13/java-1/">Java SE笔记： 集合框架，数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/09/java-2/">Java SE笔记： 内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/09/java-1/">Java SE笔记： 正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/08/java-4/">Java SE笔记： 接口</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/08/java-3/">Java SE笔记： 抽象类</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/08/java-2/">Java SE笔记： Final关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/08/java-1/">Java SE笔记： Super关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/07/java-3/">Java SE笔记： 上下转型和多态</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/07/java-2/">Java SE笔记： 类的继承和方法的覆盖</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/07/java-1/">Java SE笔记： 单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/06/java-2/">Java SE笔记： 代码块：排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/06/java-1/">Java SE笔记： 代码块：最大公约数，最小公倍数</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/08/02/java-1/">Java SE笔记： UML， 组合和聚合、关联和依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/31/java-2/">Java SE笔记： this关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/31/java-1/">Java SE笔记： java内存的主要划分</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/30/java-1/">Java SE笔记： 面向对象基础</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/29/java-1/">Java SE笔记： 构造器（构造方法/构造函数）</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/28/java-2/">Java SE笔记： static关键字（静态和成员）</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/28/java-1/">Java SE笔记： Spring构造注入还是设置注入</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/22/java-1/">Java SE笔记： 递归的例子：楼梯算法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/21/java-7/">Java SE笔记： 方法</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/21/java-6/">Java SE笔记： java内存模型</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/21/java-5/">Java SE笔记： 中断流程控制语句</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/21/java-4/">Java SE笔记： for循环</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/21/java-3/">Java SE笔记： while循环和do...while循环</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/21/java-2/">Java SE笔记： switch语句</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/21/java-1/">Java SE笔记： if语句</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-11/">Java SE笔记： 用户输入</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-10/">Java SE笔记： 随机数</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-9/">Java SE笔记： 运算符的优先级</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-8/">Java SE笔记： 表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-7/">Java SE笔记： 条件运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-6/">Java SE笔记： 赋值运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-5/">Java SE笔记： 位运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-4/">Java SE笔记： 逻辑运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-3/">Java SE笔记： 比较运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-2/">Java SE笔记： 算数运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/20/java-1/">Java SE笔记： java格式化输出 printf 例子</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/13/java-1/">Java SE笔记： 原码反码补码</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/12/java-5/">Java SE笔记： 数据类型和常量(字面量)和变量</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/12/java-4/">Java SE笔记： 注释</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/12/java-3/">Java SE笔记： 标识符和关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/12/java-2/">Java SE笔记： 分隔符</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/12/java-1/">Java SE笔记： 进制转换</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/11/java-2/">Java SE笔记： 第一个程序 设置环境变量</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2016/07/11/java-1/">Java SE笔记： Java简介</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/24/spring-boot-too-many-open-files/">Spring boot Too many open files错误</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/spring-boot-update-version2/">Spring boot升级到2.3.1笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/19/java-orika/">Java封装orika实现对象拷贝</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/16/java-input-stream-get-file-type/">Java获取文件真实格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/16/java-html-to-excel/">Java使用Jsoup把html流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/java-reflect/">Java反射获取和修改成员变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/18/docker-one-key/">一条命令安装docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/docker-java-mysql-redis/">Docker定制镜像</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/10/spring-boot-redisson/">Spring boot集成分布式锁Redisson</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/26/node-ffmpeg/">Node语音识别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/21/spring-boot-aop-lock/">Spring boot 自定义注解+AOP实现互斥锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/java-rpn/">Java实现数学公式计算</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/spring-data-jpa-multi-modify-unique-index/">Spring Data JPA解决批量修改与唯一索引冲突的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/git-commit-emoji/">Git提交规范，GitHub表情规范指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/06/web-crawler-tyc-num/">反爬虫：tyc-num.woff字体加密</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/spring-boot-update-version/">Spring boot升级到2.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/01/blog-way/">博客成长之路</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/17/spring-boot-ram-pager/">Java内存分页工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/java-csv-to-excel/">Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/mysql-code/">MySQL简单存储过程修复用户表</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/windows-share-folders/">Windows共享文件夹设置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/jenkins-docker-mysql-copy/">Jenkins Docker实现自动复制MySQL数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/jsoup-company-info/">Java爬虫获取企业工商信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/spring-boot-mysql-timeout/">Spring boot MySQL连接超时</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/spring-boot-gzip/">Spring boot开启Gzip压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/11/npm-publish/">发布自己的npm包，hexo文章排序插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/17/spring-boot-https/">Spring boot同时支持http和https访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/spring-boot-admin-jenkins-docker/">使用Jenkins和Docker持续集成java项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/07/jenkins-docker/">Jenkins服务器容器化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/30/mysql-procedure/">MySQL存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/mysql-command/">MySQL常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/shell-scripts/">多环境jar部署脚本示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/markdown-preview/">Markdown基本用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/programming-standard/">阿里巴巴 Java 开发手册</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/linux-command/">Linux常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/25/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/linux-run-jar/">Spring boot部署脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/05/sublime/">Windows下将Sublime Text添加到鼠标右键的方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-4/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-3/">MySQL笔记： 存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-2/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-1/">MySQL笔记： 游标</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-4/">MySQL笔记： 触发器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-3/">MySQL笔记： 临时表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-2/">MySQL笔记： 视图</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-1/">MySQL笔记： 索引</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/mysql-2/">MySQL笔记： 查询练习2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/mysql-1/">MySQL笔记： 查询练习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-8/">MySQL笔记： 函数和流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-7/">MySQL笔记： 编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-6/">MySQL笔记： 数据类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-5/">MySQL笔记： 查询-多表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-4/">MySQL笔记： 查询-单表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-3/">MySQL笔记： 关于约束条件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-2/">MySQL笔记： 关于存储引擎</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-1/">MySQL笔记： 基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-3/">Java SE笔记： 反射和Properties</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-2/">Java SE笔记： 可变长参数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-1/">Java SE笔记： 反射构造Class对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/24/java-1/">Java SE笔记： 装饰者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-4/">Java SE笔记： IO-输入输出16个流</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-3/">Java SE笔记： IO-转换流的作用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-2/">Java SE笔记： IO-输入输出规范代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-1/">Java SE笔记： IO-输入输出流概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/21/java-2/">Java SE笔记： 深入finally语句块</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/21/java-1/">Java SE笔记： 异常机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/java-2/">Java SE笔记： TreeSet实现Comparable接口的两种方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/java-1/">Java SE笔记： 集合框架，数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/java-2/">Java SE笔记： 内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/java-1/">Java SE笔记： 正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-4/">Java SE笔记： 接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-3/">Java SE笔记： 抽象类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-2/">Java SE笔记： Final关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-1/">Java SE笔记： Super关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-3/">Java SE笔记： 上下转型和多态</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-2/">Java SE笔记： 类的继承和方法的覆盖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-1/">Java SE笔记： 单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/06/java-2/">Java SE笔记： 代码块：排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/06/java-1/">Java SE笔记： 代码块：最大公约数，最小公倍数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/02/java-1/">Java SE笔记： UML， 组合和聚合、关联和依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-2/">Java SE笔记： this关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-1/">Java SE笔记： java内存的主要划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/30/java-1/">Java SE笔记： 面向对象基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/java-1/">Java SE笔记： 构造器（构造方法/构造函数）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/28/java-2/">Java SE笔记： static关键字（静态和成员）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/28/java-1/">Java SE笔记： Spring构造注入还是设置注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/22/java-1/">Java SE笔记： 递归的例子：楼梯算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-7/">Java SE笔记： 方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-6/">Java SE笔记： java内存模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-5/">Java SE笔记： 中断流程控制语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-4/">Java SE笔记： for循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-3/">Java SE笔记： while循环和do...while循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-2/">Java SE笔记： switch语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-1/">Java SE笔记： if语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-11/">Java SE笔记： 用户输入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-10/">Java SE笔记： 随机数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-9/">Java SE笔记： 运算符的优先级</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-8/">Java SE笔记： 表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-7/">Java SE笔记： 条件运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-6/">Java SE笔记： 赋值运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-5/">Java SE笔记： 位运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-4/">Java SE笔记： 逻辑运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-3/">Java SE笔记： 比较运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-2/">Java SE笔记： 算数运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-1/">Java SE笔记： java格式化输出 printf 例子</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/13/java-1/">Java SE笔记： 原码反码补码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-5/">Java SE笔记： 数据类型和常量(字面量)和变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-4/">Java SE笔记： 注释</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-3/">Java SE笔记： 标识符和关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-2/">Java SE笔记： 分隔符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-1/">Java SE笔记： 进制转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/11/java-2/">Java SE笔记： 第一个程序 设置环境变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/11/java-1/">Java SE笔记： Java简介</a></li></ul>
 
 
 
 <!-- 代码块复制功能 -->
-<script type="text/javascript" src="/blog/js/clipboard.min.js"></script>
-<script type="text/javascript" src="/blog/js/clipboard-use.js"></script>
-<link rel="stylesheet" href="/blog/js/jquery.gritter.min.css" />
-<script type="text/javascript" src="/blog/js/jquery.gritter.min.js"></script>
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<link rel="stylesheet" href="/js/jquery.gritter.min.css" />
+<script type="text/javascript" src="/js/jquery.gritter.min.js"></script>
 
 
     <script>
@@ -527,7 +549,7 @@
 </footer>
     </div>
     
-<script data-main="/blog/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+<script data-main="/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
 
     <script>
         $(document).ready(function() {
