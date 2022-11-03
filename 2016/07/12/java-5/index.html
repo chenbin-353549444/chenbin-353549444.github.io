@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chen Bin" />
+
+
+
+<meta name="description" content="数据类型和常量(字面量)和变量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java SE笔记： 数据类型和常量(字面量)和变量">
+<meta property="og:url" content="https://www.chenb.top/2016/07/12/java-5/index.html">
+<meta property="og:site_name" content="ChenBin&#39;s Blog">
+<meta property="og:description" content="数据类型和常量(字面量)和变量">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-07-12T13:50:00.000Z">
+<meta property="article:modified_time" content="2016-07-12T13:50:00.000Z">
+<meta property="article:author" content="Chen Bin">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java SE笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="ChenBin&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+    <link href="/css/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Java SE笔记： 数据类型和常量(字面量)和变量 | ChenBin&#39;s Blog</title>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js", "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a637ced513007ab6ba19c15cce76962a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">收藏夹</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:353549444@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://github.com/chenbin-353549444" title="GitHub"></a>
+                            
+                                <a class="fa Gitee" target="_blank" rel="noopener" href="https://gitee.com/chenbinHongfund" title="Gitee"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/" rel="tag">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crawler/" rel="tag">Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel/" rel="tag">Excel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gzip/" rel="tag">Gzip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-SE%E7%AC%94%E8%AE%B0/" rel="tag">Java SE笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaCSV/" rel="tag">JavaCSV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jsoup/" rel="tag">Jsoup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL%E7%AC%94%E8%AE%B0/" rel="tag">MySQL笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Npm/" rel="tag">Npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POI/" rel="tag">POI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redisson/" rel="tag">Redisson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Data-JPA/" rel="tag">Spring Data JPA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-boot/" rel="tag">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/" rel="tag">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/https/" rel="tag">https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/" rel="tag">代码块</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" rel="tag">持续集成</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.tywuxi.cn">TY&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://mrkaorou.github.io/">Mr.kaorou</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://blog.dengxiaobo.top">Allen.D</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.coding.me/yelee/">yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于后端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">收藏夹</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:353549444@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chenbin-353549444" title="GitHub"></a>
+                            
+                                <a class="fa Gitee" target="_blank" href="https://gitee.com/chenbinHongfund" title="Gitee"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-java-5" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/12/java-5/" class="article-date">
+      <time datetime="2016-07-12T13:50:00.000Z" itemprop="datePublished">2016-07-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java SE笔记： 数据类型和常量(字面量)和变量
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">个人笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-SE%E7%AC%94%E8%AE%B0/" rel="tag">Java SE笔记</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>在java中 的数据类型分为两类数据类型</p>
+<ul>
+<li>基本数据类型(8种)<ul>
+<li>整数：byte short int long</li>
+<li>小数： float double</li>
+<li>布尔： boolean</li>
+<li>字符： char</li>
+</ul>
+</li>
+<li>引用数据类型<ul>
+<li>字符串： String</li>
+</ul>
+</li>
+</ul>
+<h3 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>占用内存</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte(字节)</td>
+<td>8位（bit)</td>
+<td>2^8=256,-128~127          1111 1111~0111 1111                     </td>
+</tr>
+<tr>
+<td>short(短整型)</td>
+<td>16bit</td>
+<td>2^16 = 65536              **~0111 1111 1111 1111</td>
+</tr>
+<tr>
+<td>int(整型)</td>
+<td>32bit</td>
+<td>超出20亿                    **~0111 1111 1111 1111 1111 1111 1111 1111</td>
+</tr>
+<tr>
+<td>long(长整型)</td>
+<td>64bit</td>
+<td>2^64                             *<em>~</em></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意:</strong></p>
+<ul>
+<li>如果一个整数没有加上任何的标识的时候，那么默认是int类型的数据。</li>
+<li>如果需要把该数据表示成一个long类型的数据，那么需要加数据后面加上L表示，L是不区分大小写的，但是建议使用大写。</li>
+</ul>
+<p><strong>疑惑:</strong><br>存储整数可以使用四种数据类型，那么具体怎么选择使用呢？<br>选用数据类型的原则： 在能满足需求的情况下，能小就小。节省内存空间。</p>
+</blockquote>
+<h3 id="小数-浮点数"><a href="#小数-浮点数" class="headerlink" title="小数(浮点数)"></a>小数(浮点数)</h3><p>小数的数据类型：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>占用内存</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float(单精度浮点型)</td>
+<td>32bit  </td>
+</tr>
+<tr>
+<td>double(双精度浮点型)</td>
+<td>64bit</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意：</strong><br>如果一个小数没有加上任何标识的时候，那么该小数默认是double类型的数据，如果需要表示成float类型，那么需要在小数的后面加上f表示。f不区分大小写的。<br><code>float数据类型不精确的问题：因小树部分转换为二进制时采用乘二取余法，所以小树部分不精确！</code></p>
+</blockquote>
+<h3 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h3><p>布尔类型只有两个值:true或者false。<br>boolean:1字节或者4个字节<br>如果使用boolean声明一个基本类型的变量时，那么该变量占4个字节， 如果使用boolean声明一个数组类型 的时候，那么每个数组的元素占 一个字节。</p>
+<h3 id="字符类型："><a href="#字符类型：" class="headerlink" title="字符类型："></a>字符类型：</h3><p>char 2字节（16bit）<br>字符串的数据类型是：String 引用数据类型,不属于基本数据类型。</p>
+<h2 id="常量-字面量"><a href="#常量-字面量" class="headerlink" title="常量(字面量)"></a>常量(字面量)</h2><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量:变量就是在程序运行过程中其值可以发生变化的量,变量就是一个存储数据的容器。</p>
+<h3 id="容器具备什么特点"><a href="#容器具备什么特点" class="headerlink" title="容器具备什么特点:"></a>容器具备什么特点:</h3><ul>
+<li>容量(大小)。</li>
+<li>存储一定格式的数据。</li>
+<li>名字.<h3 id="声明（定义）一个变量的格式："><a href="#声明（定义）一个变量的格式：" class="headerlink" title="声明（定义）一个变量的格式："></a>声明（定义）一个变量的格式：</h3>数据类型 变量名字 = 数据值;<h3 id="变量名的命名规范"><a href="#变量名的命名规范" class="headerlink" title="变量名的命名规范"></a>变量名的命名规范</h3>首单词小写，其他单词首字母大写，其他小写。<h3 id="java表示一个变量的容量多大是使用了数据类型描述的。"><a href="#java表示一个变量的容量多大是使用了数据类型描述的。" class="headerlink" title="java表示一个变量的容量多大是使用了数据类型描述的。"></a>java表示一个变量的容量多大是使用了数据类型描述的。</h3><h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3></li>
+<li>变量是必须先声明再使用。</li>
+<li>在一个作用域中不能声明同名 的变量。<h2 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h2><h3 id="数据类型转换-1"><a href="#数据类型转换-1" class="headerlink" title="数据类型转换:"></a>数据类型转换:</h3></li>
+<li>小数据类型——–&gt;大数据类型 自动类型转换</li>
+<li>大数据类型———&gt;小数据类型 强制类型转换<h3 id="强制类型转换的格式："><a href="#强制类型转换的格式：" class="headerlink" title="强制类型转换的格式："></a>强制类型转换的格式：</h3>小数据类型  变量名 = (小数据类型)大数据类型;<h3 id="数据类型转换要注意的细节"><a href="#数据类型转换要注意的细节" class="headerlink" title="数据类型转换要注意的细节:"></a>数据类型转换要注意的细节:</h3></li>
+<li>凡是byte、short 、 char数据类型数据在运算的时候都会自动转换成int类型的数据再运算。(包括赋值运算！)</li>
+<li>两个不同数据类型的数据在运算的时候，结果取决于大的数据类型。</li>
+<li>char类型的一个字符可以看做无符号的short类型的数！<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    System.out.println(12); //整数常量</span></span><br><span class="line"><span class="comment">    System.out.println(3.14); //小数常量</span></span><br><span class="line"><span class="comment">    System.out.println(false); //布尔常量</span></span><br><span class="line"><span class="comment">    System.out.println(&#x27;1&#x27;); //字符常量</span></span><br><span class="line"><span class="comment">    System.out.println(&quot;hello world&quot;); //字符串常量</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    如果一个数据没有加上任何的标识之前，默认就是十进制的数据。</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    System.out.println(<span class="number">10</span>);<span class="comment">// 十进制</span></span><br><span class="line">    System.out.println(<span class="number">0b10</span>); <span class="comment">//二进制 , 如果一个数据要表示二进制，那么要在该数据的前面加上0b开头。</span></span><br><span class="line">    System.out.println(<span class="number">010</span>); <span class="comment">//八进制数据， 八进制的数据需要以0开头</span></span><br><span class="line">    System.out.println(<span class="number">0x10</span>); <span class="comment">//十六进制数据， 十六进制的数据需要以0x开头</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo5</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//需求1： 定义一个变量存储一个正常人的年龄。 </span></span><br><span class="line">        <span class="keyword">byte</span> age = <span class="number">120</span>;  <span class="comment">//声明了一个byte类型的变量，该变量的名字叫age，把120存储到了age变量中。</span></span><br><span class="line">        <span class="comment">//改变变量的值</span></span><br><span class="line">        age = <span class="number">121</span>;</span><br><span class="line">        <span class="comment">//需求2： 定义一个变量存储老师口袋钱。</span></span><br><span class="line">        <span class="keyword">short</span> money = <span class="number">128</span>;</span><br><span class="line">        <span class="comment">//需求3： 定义一个变量存储老黎的钱。</span></span><br><span class="line">        <span class="keyword">int</span> bossMoney = <span class="number">1000000000</span>;</span><br><span class="line">        <span class="comment">//需求4: 定义一个变量存储周小川老板</span></span><br><span class="line">        <span class="keyword">long</span>  allMoney = <span class="number">10000000000000000L</span>;</span><br><span class="line">        <span class="comment">//存储小数</span></span><br><span class="line">        <span class="keyword">float</span> f = <span class="number">3.14f</span>;</span><br><span class="line">        <span class="keyword">double</span> d = <span class="number">3.1415926537</span>;</span><br><span class="line">        <span class="keyword">boolean</span> b = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">char</span> c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        String str = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">        System.out.println(str); <span class="comment">//需要获取一个变量存储的数据，只需要使用变量名即可。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;    </span><br><span class="line">        <span class="comment">//int age = 12; //声明一个变量</span></span><br><span class="line">        <span class="keyword">int</span> age ,height ;  <span class="comment">//声明了变量</span></span><br><span class="line">        <span class="comment">//给变量赋值</span></span><br><span class="line">        age = <span class="number">10</span>;</span><br><span class="line">        height = <span class="number">175</span>;</span><br><span class="line">        System.out.println(age);</span><br><span class="line">        System.out.println(height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;&quot;</span>; <span class="comment">//字符串还是字符呢？  &quot;&quot;字符串没有内容是属于一个空字符串。</span></span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo2</span></span></span><br><span class="line"><span class="class"></span>&#123; </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">     <span class="comment">/* </span></span><br><span class="line"><span class="comment">     byte b= 11; // 一个字节 </span></span><br><span class="line"><span class="comment">     short s = b; // 把b变量存储的值赋予给s变量。 </span></span><br><span class="line"><span class="comment">     int i = s; // i是4字节</span></span><br><span class="line"><span class="comment">     long l = i; // l 是8个字节。 </span></span><br><span class="line"><span class="comment">     System.out.println(l);</span></span><br><span class="line"><span class="comment">     int i = 128;  //4个字节</span></span><br><span class="line"><span class="comment">     byte b =(byte) i;  // 1个字节</span></span><br><span class="line"><span class="comment">     System.out.println(b);  // -128</span></span><br><span class="line"><span class="comment">     //如果是负数，那么最高位肯定是1， 正数的二进制位的最高位是0。</span></span><br><span class="line"><span class="comment">     System.out.println(Integer.toBinaryString(-7));  //sun给我们提供一个功能 Integer.tobinaryString()  查看一个数据的二进制数据形式的。</span></span><br><span class="line"><span class="comment">     //   11111001（补码）</span></span><br><span class="line"><span class="comment">     凡是byte、short 、 char数据类型数据在运算的时候都会自动转换成int类型的数据再运算。</span></span><br><span class="line"><span class="comment">     byte b1 =1;</span></span><br><span class="line"><span class="comment">     byte b2 = 2;</span></span><br><span class="line"><span class="comment">     byte b3 = (byte)(b1+b2);</span></span><br><span class="line"><span class="comment">     System.out.println(b3); //3  </span></span><br><span class="line"><span class="comment">     System.out.println(&#x27;a&#x27;+1); //98 </span></span><br><span class="line"><span class="comment">     两个不同数据类型的数据在运算的时候，结果取决于大的数据类型</span></span><br><span class="line"><span class="comment">     int i =10;</span></span><br><span class="line"><span class="comment">     long l = 20;</span></span><br><span class="line"><span class="comment">     i = (int)(i+l); </span></span><br><span class="line"><span class="comment">     System.out.println(i);</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">     <span class="keyword">int</span> i = <span class="number">10</span>;  <span class="comment">//</span></span><br><span class="line">     <span class="keyword">byte</span> b = i;  <span class="comment">// 一个整数没有加上任何标识的时候，默认是int类型的数据。</span></span><br><span class="line">     <span class="comment">//10 是一个常量， 编译器在编译的时候就能够确认常量的值了，byte b = 10,在编译到的时候</span></span><br><span class="line">     <span class="comment">//java编译器就会检查到10并没有超出byte的表示范围，所以允许赋值。</span></span><br><span class="line">     <span class="comment">//java编译器在编译的时候并不能确认变量所存储的值，变量存储的值是在运行的时候才在内存中分配空间的</span></span><br><span class="line">     System.out.println(b); </span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/07/12/java-5/">Java SE笔记： 数据类型和常量(字面量)和变量</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2016-07-12, 21:50:00</p>
+        <p><span>最后更新:</span>2016-07-12, 21:50:00</p>
+        
+            <p>
+                <span>更新历史:</span><i class="fa fa-github"></i>
+                <a target="_blank" rel="noopener" href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2016-07-12.java-5.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
+                <a target="_blank" rel="noopener" href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2016-07-12.java-5.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
+                <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2016-07-12.java-5.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
+            </p>
+        
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/07/12/java-5/" title="Java SE笔记： 数据类型和常量(字面量)和变量">https://www.chenb.top/2016/07/12/java-5/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.chenb.top/2016/07/12/java-5/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/07/13/java-1/">
+                    Java SE笔记： 原码反码补码
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/07/12/java-4/">
+                    Java SE笔记： 注释
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%95%B0-%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">小数(浮点数)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">布尔类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">字符类型：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F-%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">常量(字面量)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%85%B7%E5%A4%87%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9"><span class="toc-number">3.1.</span> <span class="toc-text">容器具备什么特点:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%EF%BC%88%E5%AE%9A%E4%B9%89%EF%BC%89%E4%B8%80%E4%B8%AA%E5%8F%98%E9%87%8F%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">声明（定义）一个变量的格式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%90%8D%E7%9A%84%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-number">3.3.</span> <span class="toc-text">变量名的命名规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java%E8%A1%A8%E7%A4%BA%E4%B8%80%E4%B8%AA%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%B9%E9%87%8F%E5%A4%9A%E5%A4%A7%E6%98%AF%E4%BD%BF%E7%94%A8%E4%BA%86%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%8F%8F%E8%BF%B0%E7%9A%84%E3%80%82"><span class="toc-number">3.4.</span> <span class="toc-text">java表示一个变量的容量多大是使用了数据类型描述的。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="toc-number">3.5.</span> <span class="toc-text">注意：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.</span> <span class="toc-text">数据类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-1"><span class="toc-number">4.1.</span> <span class="toc-text">数据类型转换:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">4.2.</span> <span class="toc-text">强制类型转换的格式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-number">4.3.</span> <span class="toc-text">数据类型转换要注意的细节:</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： 数据类型和常量(字面量)和变量　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <!-- Gitalk 评论 start  -->
+<!-- Link Gitalk 的支持文件  -->
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+    <script type="text/javascript">
+    var gitalk = new Gitalk({
+
+    // gitalk的主要参数
+        clientID: `3f1d755fddc639a1ae4a`,
+        clientSecret: `df185eae6463b9d666073a2f317ca58647ad26f9`,
+        repo: `chenbin-353549444.github.io`,
+        owner: 'chenbin-353549444',
+        admin: ['chenbin-353549444'],
+        id: window.location.pathname,
+
+    });
+    gitalk.render('gitalk-container');
+</script>
+<!-- Gitalk end -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/07/13/java-1/" title="上一篇: Java SE笔记： 原码反码补码">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/07/12/java-4/" title="下一篇: Java SE笔记： 注释">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/27/spring-boot-test-encoding-error/">Spring boot测试类MockMvcResultHandlers.print()乱码</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/27/securing-spring-boot-admin/">Spring Boot Admin添加安全验证</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/27/windows-install/">重装系统提示无法创建新的分区，也找不到现有的分区</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/24/spring-boot-too-many-open-files/">Spring boot Too many open files错误</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/spring-boot-update-version2/">Spring boot升级到2.3.1笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/19/java-orika/">Java封装orika实现对象拷贝</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/16/java-input-stream-get-file-type/">Java获取文件真实格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/16/java-html-to-excel/">Java使用Jsoup把html流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/java-reflect/">Java反射获取和修改成员变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/18/docker-one-key/">一条命令安装docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/docker-java-mysql-redis/">Docker定制镜像</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/10/spring-boot-redisson/">Spring boot集成分布式锁Redisson</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/26/node-ffmpeg/">Node语音识别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/21/spring-boot-aop-lock/">Spring boot 自定义注解+AOP实现互斥锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/java-rpn/">Java实现数学公式计算</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/spring-data-jpa-multi-modify-unique-index/">Spring Data JPA解决批量修改与唯一索引冲突的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/git-commit-emoji/">Git提交规范，GitHub表情规范指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/06/web-crawler-tyc-num/">反爬虫：tyc-num.woff字体加密</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/spring-boot-update-version/">Spring boot升级到2.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/01/blog-way/">博客成长之路</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/17/spring-boot-ram-pager/">Java内存分页工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/java-csv-to-excel/">Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/mysql-code/">MySQL简单存储过程修复用户表</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/windows-share-folders/">Windows共享文件夹设置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/jenkins-docker-mysql-copy/">Jenkins Docker实现自动复制MySQL数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/jsoup-company-info/">Java爬虫获取企业工商信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/spring-boot-mysql-timeout/">Spring boot MySQL连接超时</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/spring-boot-gzip/">Spring boot开启Gzip压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/11/npm-publish/">发布自己的npm包，hexo文章排序插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/17/spring-boot-https/">Spring boot同时支持http和https访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/spring-boot-admin-jenkins-docker/">使用Jenkins和Docker持续集成java项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/07/jenkins-docker/">Jenkins服务器容器化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/30/mysql-procedure/">MySQL存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/mysql-command/">MySQL常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/shell-scripts/">多环境jar部署脚本示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/markdown-preview/">Markdown基本用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/programming-standard/">阿里巴巴 Java 开发手册</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/linux-command/">Linux常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/25/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/linux-run-jar/">Spring boot部署脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/05/sublime/">Windows下将Sublime Text添加到鼠标右键的方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-4/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-3/">MySQL笔记： 存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-2/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-1/">MySQL笔记： 游标</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-4/">MySQL笔记： 触发器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-3/">MySQL笔记： 临时表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-2/">MySQL笔记： 视图</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-1/">MySQL笔记： 索引</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/mysql-2/">MySQL笔记： 查询练习2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/mysql-1/">MySQL笔记： 查询练习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-8/">MySQL笔记： 函数和流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-7/">MySQL笔记： 编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-6/">MySQL笔记： 数据类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-5/">MySQL笔记： 查询-多表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-4/">MySQL笔记： 查询-单表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-3/">MySQL笔记： 关于约束条件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-2/">MySQL笔记： 关于存储引擎</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-1/">MySQL笔记： 基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-3/">Java SE笔记： 反射和Properties</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-2/">Java SE笔记： 可变长参数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-1/">Java SE笔记： 反射构造Class对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/24/java-1/">Java SE笔记： 装饰者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-4/">Java SE笔记： IO-输入输出16个流</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-3/">Java SE笔记： IO-转换流的作用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-2/">Java SE笔记： IO-输入输出规范代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-1/">Java SE笔记： IO-输入输出流概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/21/java-2/">Java SE笔记： 深入finally语句块</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/21/java-1/">Java SE笔记： 异常机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/java-2/">Java SE笔记： TreeSet实现Comparable接口的两种方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/java-1/">Java SE笔记： 集合框架，数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/java-2/">Java SE笔记： 内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/java-1/">Java SE笔记： 正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-4/">Java SE笔记： 接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-3/">Java SE笔记： 抽象类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-2/">Java SE笔记： Final关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-1/">Java SE笔记： Super关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-3/">Java SE笔记： 上下转型和多态</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-2/">Java SE笔记： 类的继承和方法的覆盖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-1/">Java SE笔记： 单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/06/java-2/">Java SE笔记： 代码块：排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/06/java-1/">Java SE笔记： 代码块：最大公约数，最小公倍数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/02/java-1/">Java SE笔记： UML， 组合和聚合、关联和依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-2/">Java SE笔记： this关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-1/">Java SE笔记： java内存的主要划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/30/java-1/">Java SE笔记： 面向对象基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/java-1/">Java SE笔记： 构造器（构造方法/构造函数）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/28/java-2/">Java SE笔记： static关键字（静态和成员）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/28/java-1/">Java SE笔记： Spring构造注入还是设置注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/22/java-1/">Java SE笔记： 递归的例子：楼梯算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-7/">Java SE笔记： 方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-6/">Java SE笔记： java内存模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-5/">Java SE笔记： 中断流程控制语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-4/">Java SE笔记： for循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-3/">Java SE笔记： while循环和do...while循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-2/">Java SE笔记： switch语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-1/">Java SE笔记： if语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-11/">Java SE笔记： 用户输入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-10/">Java SE笔记： 随机数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-9/">Java SE笔记： 运算符的优先级</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-8/">Java SE笔记： 表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-7/">Java SE笔记： 条件运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-6/">Java SE笔记： 赋值运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-5/">Java SE笔记： 位运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-4/">Java SE笔记： 逻辑运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-3/">Java SE笔记： 比较运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-2/">Java SE笔记： 算数运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-1/">Java SE笔记： java格式化输出 printf 例子</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/13/java-1/">Java SE笔记： 原码反码补码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-5/">Java SE笔记： 数据类型和常量(字面量)和变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-4/">Java SE笔记： 注释</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-3/">Java SE笔记： 标识符和关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-2/">Java SE笔记： 分隔符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-1/">Java SE笔记： 进制转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/11/java-2/">Java SE笔记： 第一个程序 设置环境变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/11/java-1/">Java SE笔记： Java简介</a></li></ul>
+
+
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<link rel="stylesheet" href="/js/jquery.gritter.min.css" />
+<script type="text/javascript" src="/js/jquery.gritter.min.js"></script>
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2018-2022 Chen Bin
+                <a href="https://beian.miit.gov.cn" target="_blank">苏ICP备17039650号-1</a>
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+            var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+            $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+             mySite: ".site a", 
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

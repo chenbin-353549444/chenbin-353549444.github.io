@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chen Bin" />
+
+
+
+<meta name="description" content="Final关键字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java SE笔记： Final关键字">
+<meta property="og:url" content="https://www.chenb.top/2016/08/08/java-2/index.html">
+<meta property="og:site_name" content="ChenBin&#39;s Blog">
+<meta property="og:description" content="Final关键字">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-08-08T13:20:00.000Z">
+<meta property="article:modified_time" content="2016-08-08T13:20:00.000Z">
+<meta property="article:author" content="Chen Bin">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java SE笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="ChenBin&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+    <link href="/css/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Java SE笔记： Final关键字 | ChenBin&#39;s Blog</title>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js", "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a637ced513007ab6ba19c15cce76962a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">收藏夹</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:353549444@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://github.com/chenbin-353549444" title="GitHub"></a>
+                            
+                                <a class="fa Gitee" target="_blank" rel="noopener" href="https://gitee.com/chenbinHongfund" title="Gitee"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/" rel="tag">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crawler/" rel="tag">Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel/" rel="tag">Excel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gzip/" rel="tag">Gzip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-SE%E7%AC%94%E8%AE%B0/" rel="tag">Java SE笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaCSV/" rel="tag">JavaCSV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jsoup/" rel="tag">Jsoup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL%E7%AC%94%E8%AE%B0/" rel="tag">MySQL笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Npm/" rel="tag">Npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POI/" rel="tag">POI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redisson/" rel="tag">Redisson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Data-JPA/" rel="tag">Spring Data JPA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-boot/" rel="tag">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/" rel="tag">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/https/" rel="tag">https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E5%9D%97/" rel="tag">代码块</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" rel="tag">持续集成</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.tywuxi.cn">TY&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://mrkaorou.github.io/">Mr.kaorou</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://blog.dengxiaobo.top">Allen.D</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.coding.me/yelee/">yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于后端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">收藏夹</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:353549444@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chenbin-353549444" title="GitHub"></a>
+                            
+                                <a class="fa Gitee" target="_blank" href="https://gitee.com/chenbinHongfund" title="Gitee"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-java-2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/08/java-2/" class="article-date">
+      <time datetime="2016-08-08T13:20:00.000Z" itemprop="datePublished">2016-08-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java SE笔记： Final关键字
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">个人笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-SE%E7%AC%94%E8%AE%B0/" rel="tag">Java SE笔记</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="final表示不可改变的含义"><a href="#final表示不可改变的含义" class="headerlink" title="final表示不可改变的含义"></a>final表示不可改变的含义</h3><ol>
+<li>采用final 修饰的类不能被继承</li>
+<li>采用final 修饰的方法不能被覆盖</li>
+<li>采用final 修饰的变量不能被修改</li>
+<li>final修饰的变量必须显示初始化<code>（该变量必须在构造方法运行结束之前赋上值，否则报错！）</code></li>
+<li><code>如果修饰的引用，那么这个引用只能指向一个对象，也就是说这个引用不能再次赋值，但被指向的对象是可以修改的</code></li>
+<li>构造方法不能被final 修饰</li>
+<li>会影响JAVA类的初始化:final 定义的静态常量调用时不会执行java 的类初始化方法，也就是说不会执行static代码块等相关语句，这是由java 虚拟机规定的。我们不需要了解的很深，有个概念就可以了。</li>
+<li><code>final修饰的成员变量一般和static联用。因为final修饰的成员变量不能改变，也就是说无论有多少对象，每个对象都会有一个值相等的成员变量，那么就没有必要把该变量放在堆中了，所以应该把该变量变为static的，从而放到方法区中！</code></li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/08/08/java-2/">Java SE笔记： Final关键字</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2016-08-08, 21:20:00</p>
+        <p><span>最后更新:</span>2016-08-08, 21:20:00</p>
+        
+            <p>
+                <span>更新历史:</span><i class="fa fa-github"></i>
+                <a target="_blank" rel="noopener" href="https://github.com/chenbin-353549444/blog/blame/master/source/_posts/2016-08-08.java-2.md" title="顺序查看文章各部分修改记录" target = "_blank">Blame</a>,
+                <a target="_blank" rel="noopener" href="https://github.com/chenbin-353549444/blog/commits/master/source/_posts/2016-08-08.java-2.md" title="查看文章有关更新记录" target = "_blank">History</a><span class="raw">文本模式:</span><i class="fa fa-file-text-o"></i>
+                <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/chenbin-353549444/blog/master/source/_posts/2016-08-08.java-2.md" title="查看 & 下载文章 Markdown 原始文本" target = "_blank"> .md Raw</a>
+            </p>
+        
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/08/08/java-2/" title="Java SE笔记： Final关键字">https://www.chenb.top/2016/08/08/java-2/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.chenb.top/2016/08/08/java-2/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/08/08/java-3/">
+                    Java SE笔记： 抽象类
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/08/08/java-1/">
+                    Java SE笔记： Super关键字
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#final%E8%A1%A8%E7%A4%BA%E4%B8%8D%E5%8F%AF%E6%94%B9%E5%8F%98%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">final表示不可改变的含义</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java SE笔记： Final关键字　| ChenBin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <!-- Gitalk 评论 start  -->
+<!-- Link Gitalk 的支持文件  -->
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+    <script type="text/javascript">
+    var gitalk = new Gitalk({
+
+    // gitalk的主要参数
+        clientID: `3f1d755fddc639a1ae4a`,
+        clientSecret: `df185eae6463b9d666073a2f317ca58647ad26f9`,
+        repo: `chenbin-353549444.github.io`,
+        owner: 'chenbin-353549444',
+        admin: ['chenbin-353549444'],
+        id: window.location.pathname,
+
+    });
+    gitalk.render('gitalk-container');
+</script>
+<!-- Gitalk end -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/08/08/java-3/" title="上一篇: Java SE笔记： 抽象类">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/08/08/java-1/" title="下一篇: Java SE笔记： Super关键字">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/27/spring-boot-test-encoding-error/">Spring boot测试类MockMvcResultHandlers.print()乱码</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/27/securing-spring-boot-admin/">Spring Boot Admin添加安全验证</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/27/windows-install/">重装系统提示无法创建新的分区，也找不到现有的分区</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/24/spring-boot-too-many-open-files/">Spring boot Too many open files错误</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/spring-boot-update-version2/">Spring boot升级到2.3.1笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/19/java-orika/">Java封装orika实现对象拷贝</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/16/java-input-stream-get-file-type/">Java获取文件真实格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/16/java-html-to-excel/">Java使用Jsoup把html流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/java-reflect/">Java反射获取和修改成员变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/18/docker-one-key/">一条命令安装docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/docker-java-mysql-redis/">Docker定制镜像</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/10/spring-boot-redisson/">Spring boot集成分布式锁Redisson</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/26/node-ffmpeg/">Node语音识别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/21/spring-boot-aop-lock/">Spring boot 自定义注解+AOP实现互斥锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/java-rpn/">Java实现数学公式计算</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/spring-data-jpa-multi-modify-unique-index/">Spring Data JPA解决批量修改与唯一索引冲突的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/11/git-commit-emoji/">Git提交规范，GitHub表情规范指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/06/web-crawler-tyc-num/">反爬虫：tyc-num.woff字体加密</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/spring-boot-update-version/">Spring boot升级到2.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/01/blog-way/">博客成长之路</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/17/spring-boot-ram-pager/">Java内存分页工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/java-csv-to-excel/">Java使用JavaCSV把CSV流转成Apache POI的EXCEL格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/mysql-code/">MySQL简单存储过程修复用户表</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/windows-share-folders/">Windows共享文件夹设置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/jenkins-docker-mysql-copy/">Jenkins Docker实现自动复制MySQL数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/jsoup-company-info/">Java爬虫获取企业工商信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/spring-boot-mysql-timeout/">Spring boot MySQL连接超时</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/spring-boot-gzip/">Spring boot开启Gzip压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/11/npm-publish/">发布自己的npm包，hexo文章排序插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/17/spring-boot-https/">Spring boot同时支持http和https访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/spring-boot-admin-jenkins-docker/">使用Jenkins和Docker持续集成java项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/07/jenkins-docker/">Jenkins服务器容器化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/30/mysql-procedure/">MySQL存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/mysql-command/">MySQL常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/shell-scripts/">多环境jar部署脚本示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/markdown-preview/">Markdown基本用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/programming-standard/">阿里巴巴 Java 开发手册</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/linux-command/">Linux常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/25/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/linux-run-jar/">Spring boot部署脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/05/sublime/">Windows下将Sublime Text添加到鼠标右键的方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-4/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-3/">MySQL笔记： 存储过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-2/">MySQL笔记： 错误处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/mysql-1/">MySQL笔记： 游标</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-4/">MySQL笔记： 触发器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-3/">MySQL笔记： 临时表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-2/">MySQL笔记： 视图</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql-1/">MySQL笔记： 索引</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/mysql-2/">MySQL笔记： 查询练习2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/mysql-1/">MySQL笔记： 查询练习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-8/">MySQL笔记： 函数和流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-7/">MySQL笔记： 编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-6/">MySQL笔记： 数据类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-5/">MySQL笔记： 查询-多表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-4/">MySQL笔记： 查询-单表查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-3/">MySQL笔记： 关于约束条件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-2/">MySQL笔记： 关于存储引擎</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql-1/">MySQL笔记： 基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-3/">Java SE笔记： 反射和Properties</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-2/">Java SE笔记： 可变长参数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/19/java-1/">Java SE笔记： 反射构造Class对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/24/java-1/">Java SE笔记： 装饰者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-4/">Java SE笔记： IO-输入输出16个流</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-3/">Java SE笔记： IO-转换流的作用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-2/">Java SE笔记： IO-输入输出规范代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/java-1/">Java SE笔记： IO-输入输出流概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/21/java-2/">Java SE笔记： 深入finally语句块</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/21/java-1/">Java SE笔记： 异常机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/java-2/">Java SE笔记： TreeSet实现Comparable接口的两种方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/java-1/">Java SE笔记： 集合框架，数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/java-2/">Java SE笔记： 内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/java-1/">Java SE笔记： 正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-4/">Java SE笔记： 接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-3/">Java SE笔记： 抽象类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-2/">Java SE笔记： Final关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/08/java-1/">Java SE笔记： Super关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-3/">Java SE笔记： 上下转型和多态</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-2/">Java SE笔记： 类的继承和方法的覆盖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/07/java-1/">Java SE笔记： 单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/06/java-2/">Java SE笔记： 代码块：排序算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/06/java-1/">Java SE笔记： 代码块：最大公约数，最小公倍数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/02/java-1/">Java SE笔记： UML， 组合和聚合、关联和依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-2/">Java SE笔记： this关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/31/java-1/">Java SE笔记： java内存的主要划分</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/30/java-1/">Java SE笔记： 面向对象基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/java-1/">Java SE笔记： 构造器（构造方法/构造函数）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/28/java-2/">Java SE笔记： static关键字（静态和成员）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/28/java-1/">Java SE笔记： Spring构造注入还是设置注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/22/java-1/">Java SE笔记： 递归的例子：楼梯算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-7/">Java SE笔记： 方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-6/">Java SE笔记： java内存模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-5/">Java SE笔记： 中断流程控制语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-4/">Java SE笔记： for循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-3/">Java SE笔记： while循环和do...while循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-2/">Java SE笔记： switch语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/21/java-1/">Java SE笔记： if语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-11/">Java SE笔记： 用户输入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-10/">Java SE笔记： 随机数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-9/">Java SE笔记： 运算符的优先级</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-8/">Java SE笔记： 表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-7/">Java SE笔记： 条件运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-6/">Java SE笔记： 赋值运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-5/">Java SE笔记： 位运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-4/">Java SE笔记： 逻辑运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-3/">Java SE笔记： 比较运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-2/">Java SE笔记： 算数运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/20/java-1/">Java SE笔记： java格式化输出 printf 例子</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/13/java-1/">Java SE笔记： 原码反码补码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-5/">Java SE笔记： 数据类型和常量(字面量)和变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-4/">Java SE笔记： 注释</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-3/">Java SE笔记： 标识符和关键字</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-2/">Java SE笔记： 分隔符</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/12/java-1/">Java SE笔记： 进制转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/11/java-2/">Java SE笔记： 第一个程序 设置环境变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/11/java-1/">Java SE笔记： Java简介</a></li></ul>
+
+
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<link rel="stylesheet" href="/js/jquery.gritter.min.css" />
+<script type="text/javascript" src="/js/jquery.gritter.min.js"></script>
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2018-2022 Chen Bin
+                <a href="https://beian.miit.gov.cn" target="_blank">苏ICP备17039650号-1</a>
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+            var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+            $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+             mySite: ".site a", 
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
