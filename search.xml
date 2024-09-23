@@ -11,6 +11,20 @@
         <content type="html"><![CDATA[<h3 id="脚本代码"><a href="#脚本代码" class="headerlink" title="脚本代码"></a>脚本代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh &amp;&amp; chmod +x ssr.sh &amp;&amp; bash ssr.sh</span><br><span class="line"><span class="comment"># 1 - 10 2 - - - - - -</span></span><br><span class="line"></span><br><span class="line">wget -N --no-check-certificate <span class="string">&quot;https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh&quot;</span></span><br><span class="line">chmod +x tcp.sh</span><br><span class="line">./tcp.sh</span><br><span class="line"><span class="comment"># 1 y 6</span></span><br></pre></td></tr></table></figure>]]></content>
       
       
+      <categories>
+          
+          <category> 技术总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> Shell </tag>
+            
+        </tags>
       
     </entry>
     
@@ -826,9 +840,9 @@
             
             <tag> Spring boot </tag>
             
-            <tag> https </tag>
-            
             <tag> Gzip </tag>
+            
+            <tag> https </tag>
             
         </tags>
       
@@ -917,11 +931,11 @@
             
             <tag> Docker </tag>
             
-            <tag> Maven </tag>
-            
             <tag> Jenkins </tag>
             
             <tag> 持续集成 </tag>
+            
+            <tag> Maven </tag>
             
         </tags>
       
@@ -1039,9 +1053,9 @@
             
             <tag> Docker </tag>
             
-            <tag> Maven </tag>
-            
             <tag> Jenkins </tag>
+            
+            <tag> Maven </tag>
             
         </tags>
       
